@@ -25,21 +25,21 @@ public class HistoriaUsuario {
 	private String descripcion;
 	
 	@Column
-	private String esfuerzo;
+	private Integer esfuerzo;
 	
 	@Column
 	private String estado;
 	
 	@Column
-	private String prioridad;
+	private Integer prioridad;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idProyecto", nullable = false)
+    @JoinColumn(name = "ID_PROYECTO", nullable = false)
 	@JsonBackReference
 	private Proyecto proyecto;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idSprint", nullable = false)
+    @JoinColumn(name = "ID_SPRINT", nullable = false)
 	@JsonBackReference
 	private Sprint sprint;
 	

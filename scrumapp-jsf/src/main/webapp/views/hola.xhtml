@@ -1,0 +1,36 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
+
+            <div class="card">
+                <h5>Equipos</h5>
+                <p:commandButton type="button" value="Actualizar" action="#{equipoController.refresh}" update="@form"/>
+                <p:dataTable var="equipo" value="#{equipoController.equipos}" draggableRows="true">
+                    <p:ajax event="rowReorder" listener="#{equipoController.onRowReorder}" update=":form:msgs"/>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{equipo.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="F.Creacion">
+                        <h:outputText value="#{equipo.fechaCreacion}" />
+                    </p:column>
+
+                    <p:column headerText="Especialidad">
+                        <h:outputText value="#{equipo.especialidad}" />
+                    </p:column>
+
+                    <p:column headerText="Observaciones">
+                        <h:outputText value="#{equipo.observaciones}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

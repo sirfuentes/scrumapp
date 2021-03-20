@@ -29,7 +29,7 @@ public class Proyecto {
 	private Date fechaInicio;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idProductOwner", nullable = false)
+    @JoinColumn(name = "ID_OWNER", nullable = false)
 	@JsonBackReference
 	private ProductOwner productOwner;
 	

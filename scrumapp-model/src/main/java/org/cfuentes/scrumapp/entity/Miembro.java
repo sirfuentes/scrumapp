@@ -40,7 +40,7 @@ public class Miembro {
 	private Date fechaNacimiento;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idEquipo", nullable = false)
+    @JoinColumn(name = "ID_EQUIPO", nullable = false)
 	@JsonBackReference
 	private Equipo equipo;
 	

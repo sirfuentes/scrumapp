@@ -1,3 +1,4 @@
+/*
 import javafx.application.Application;
 import org.cfuentes.scrumapp.service.api.EquipoService;
 import org.junit.Test;
@@ -8,8 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ScrumAppStarter.class)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = org.cfuentes.scrumapp.ScrumAppStarter.class)
 public class JsfTest {
     @Autowired
     EquipoService equipoService;
@@ -19,3 +20,4 @@ public class JsfTest {
         equipoService.findById(new Long(0));
     }
 }
+*/

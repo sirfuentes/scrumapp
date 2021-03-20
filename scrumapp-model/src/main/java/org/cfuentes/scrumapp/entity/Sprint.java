@@ -32,16 +32,16 @@ public class Sprint {
 	private Date fechaFin;
 	
 	@Column(name = "HORAS_JORNADA")
-	private Long horasJornada;
+	private Integer horasJornada;
 	
 	@Column(name = "HORAS_TOTALES")
-	private Long horasTotales;
+	private Integer horasTotales;
 	
 	@Column
 	private String version;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idProyecto", nullable = false)
+    @JoinColumn(name = "ID_PROYECTO", nullable = false)
 	@JsonBackReference
 	private Proyecto proyecto;
 	

@@ -21,7 +21,7 @@ public class Tarea {
 	private String descripcion;
 	
 	@Column
-	private Long estimacion;
+	private Integer estimacion;
 	
 	@Column(name = "FECHA_INICIO")
 	private Date fechaInicio;
@@ -33,7 +33,7 @@ public class Tarea {
 	private Date fechaFin;
 	
 	@Column(name = "HORAS_DEDICADAS")
-	private Long horasDedicadas;
+	private Integer horasDedicadas;
 	
 	@Column
 	private String observaciones;
@@ -42,17 +42,17 @@ public class Tarea {
 	private String problemas;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idEstadoTarea", nullable = false)
+    @JoinColumn(name = "ID_ESTADO_TAREA", nullable = false)
 	@JsonBackReference
 	private EstadoTarea estadoTarea;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idMiembro", nullable = false)
+    @JoinColumn(name = "ID_MIEMBRO", nullable = false)
 	@JsonBackReference
 	private Miembro miembro;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idHistoriaUsuario", nullable = false)
+    @JoinColumn(name = "ID_HISTORIA_USUARIO", nullable = false)
 	@JsonBackReference
 	private HistoriaUsuario historiaUsuario;
 }
