@@ -9,7 +9,7 @@
     <h:head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Spring Boot and JSF Integration</title>
+        <title>ScrumApp</title>
     </h:head>
     <h:body>
         <div class="jumbotron jumbotron-fluid">
@@ -19,9 +19,42 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <ui:insert name="content" />
+                <h:form id="FormMenu">
+                    <p:menubar>
+                        <p:submenu label="Item1" icon="fa fa-road">
+                            <p:submenu label="Subitem1">
+                                <p:menuitem value="Option" icon="fa fa-user"
+                                            title="Option 1" />
+                            </p:submenu>
+                        </p:submenu>
+                        <p:submenu label="Item 2" icon="fa fa-money">
+                            <p:menuitem value="Option 1" title="Option 1" />
+                        </p:submenu>
+                        <p:submenu label="Item 3" icon="fa fa-list-ol" rendered="true">
+                            <p:submenu label="Item 1">
+                                <p:menuitem value="Option 1"
+                                            title="opcioness" />
+                                <p:menuitem value="Option 2" title="eee." />
+                            </p:submenu>
+                            <p:submenu label="Item 2">
+                                <p:menuitem value="Option 1" title="dsd" />
+                                <p:menuitem value="Option 2"
+                                            title="adsads" />
+                            </p:submenu>
+                            <p:submenu label="Item 3">
+                                <p:menuitem value="Option 1" title="Option 1" />
+                                <p:submenu label="Item 2">
+                                    <p:menuitem value="Option 1"
+                                                title="Option 1" />
+                                </p:submenu>
+                            </p:submenu>
+                        </p:submenu>
+                    </p:menubar>
+                </h:form>
             </div>
         </div>
+
+        <ui:insert name="body" />
 
     </h:body>
 </f:view>

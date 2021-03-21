@@ -13,38 +13,38 @@ import java.util.List;
 @Table(name = "HISTORIA_USUARIO")
 public class HistoriaUsuario {
 
-	@Id
-	@Column(name = "ID_HISTORIA_USUARIO")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idHistoriaUsuario;
-	
-	@Column
-	private String nombre;
-	
-	@Column
-	private String descripcion;
-	
-	@Column
-	private Integer esfuerzo;
-	
-	@Column
-	private String estado;
-	
-	@Column
-	private Integer prioridad;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+    @Id
+    @Column(name = "ID_HISTORIA_USUARIO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idHistoriaUsuario;
+
+    @Column
+    private String nombre;
+
+    @Column
+    private String descripcion;
+
+    @Column
+    private Integer esfuerzo;
+
+    @Column
+    private String estado;
+
+    @Column
+    private Integer prioridad;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_PROYECTO", nullable = false)
-	@JsonBackReference
-	private Proyecto proyecto;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    private Proyecto proyecto;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_SPRINT", nullable = false)
-	@JsonBackReference
-	private Sprint sprint;
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "historiaUsuario")
-	@JsonManagedReference
-	@Fetch(FetchMode.SUBSELECT)
-	private List<Tarea> miembros = new ArrayList<Tarea>();
+    @JsonBackReference
+    private Sprint sprint;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "historiaUsuario")
+    @JsonManagedReference
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Tarea> miembros = new ArrayList<Tarea>();
 }

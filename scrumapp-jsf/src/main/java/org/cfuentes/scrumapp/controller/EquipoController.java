@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component("equipoController")
@@ -22,10 +24,17 @@ public class EquipoController {
 
     List<Equipo> equipos;
 
+    @PostConstruct
+    public void init() {
+        equipos = new ArrayList<Equipo>();
 
-    public void refresh(){
         equipos.add(equipoService.findById(new Long(1)));
 
+    }
+
+    public void refresh() {
+        equipos = new ArrayList<Equipo>();
+        equipos.add(equipoService.findById(new Long(1)));
     }
 
     public void onRowReorder(ReorderEvent event) {
