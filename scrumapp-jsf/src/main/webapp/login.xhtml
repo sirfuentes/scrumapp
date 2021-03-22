@@ -9,23 +9,30 @@
 </h:head>
 
 <h:body>
-    <h:form prependId="false">
+    <h:form prependId="false" style="text-align: -webkit-center;">
 
-        <p:panelGrid layout="flex"
+        <p:panelGrid id="grid" layout="flex"
                      style="text-align: -webkit-center; width: 400px;margin: 250px 250px 250px 250px; align: center;"
                      columns="1" styleClass="ui-fluid center ui-noborder">
 
             <h2>Please login</h2>
-
-            <p:outputLabel value="Login failed!" styleClass="red"
+			
+			<p:tooltip/>
+            <p:outputLabel value="Login failed!" style="color: red;"
                            rendered="${!empty param['error']}"/>
+        
+            <p:inputText id="username" placeholder="#{msg['login.email']}" />
+            <p:password id="password" placeholder="#{msg['login.password']}" />
 
-            <p:inputText id="username" placeholder="#{msg['login.email']}"/>
-            <p:password id="password" placeholder="#{msg['login.password']}"/>
-
-            <p:commandButton value="Login" ajax="false"/>
+            <p:commandButton value="Login" ajax="false" />
+            
+            
         </p:panelGrid>
 
     </h:form>
+    <h:form id="form1">
+    <p:commandButton action = "#{loginController.goToRegister}" value = "Register"/>
+     <h:commandButton action = "gotoregister" value = "gotoregister" />
+     </h:form>
 </h:body>
 </html>

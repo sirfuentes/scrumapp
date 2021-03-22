@@ -8,7 +8,7 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class Miembro {
     private Date fechaNacimiento;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_EQUIPO", nullable = false)
+    @JoinColumn(name = "ID_EQUIPO", nullable = true)
     @JsonBackReference
     private Equipo equipo;
 

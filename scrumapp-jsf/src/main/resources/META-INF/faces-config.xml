@@ -26,20 +26,21 @@
     </application>
 
 
+
     <navigation-rule>
-        <from-view-id>/login.xhtml</from-view-id>
+        <from-view-id>/register.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>gotohome</from-outcome>
-            <to-view-id>/views/hola.xhtml</to-view-id>
+            <from-outcome>gotologin</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
 
     <navigation-rule>
-        <from-view-id>/views/hola.xhtml</from-view-id>
+        <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>gotoequipos</from-outcome>
-            <to-view-id>/views/equipos.xhtml</to-view-id>
+            <from-outcome>gotoregister</from-outcome>
+            <to-view-id>/register.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

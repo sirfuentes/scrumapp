@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class EquipoServiceImpl implements EquipoService {
+	
     @Autowired
     private EquipoRepository equipoRepository;
 

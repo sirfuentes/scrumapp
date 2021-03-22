@@ -14,6 +14,8 @@ import java.util.List;
 @Service
 public class MiembroServiceImpl implements MiembroService {
 
+	@Autowired
+	MiembroRepository miembroRepository;
 
     @Override
     public Miembro findById(Long aLong) {
@@ -37,7 +39,7 @@ public class MiembroServiceImpl implements MiembroService {
 
     @Override
     public Miembro saveOrUpdate(Miembro entity) {
-        return null;
+    	return miembroRepository.save(entity);
     }
 
     @Override
