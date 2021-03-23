@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>ScrumApp Login</title>
+</h:head>
+
+<h:body>
+    <h:form id="form" style="text-align: -webkit-center;">
+
+        <p:panelGrid layout="flex"
+                     style="text-align: -webkit-center; width: 400px;margin: 250px 250px 250px 250px; align: center;"
+                     columns="1" styleClass="ui-fluid center ui-noborder">
+
+            <h2>Sign up for free</h2>
+
+            <p:messages id="messages" showDetail="true">
+            	<p:autoUpdate/>
+        	</p:messages>
+
+            <p:inputText id="email" value="#{loginController.miembroRegistro.email}" placeholder="#{msg['register.email']}"/>
+            <p:password id="password" value="#{loginController.miembroRegistro.password}" placeholder="#{msg['register.password']}"/>
+            <p:password id="passwordRep" value="#{loginController.passwordRep}" placeholder="#{msg['register.passwordRep']}"/>
+            <p:inputText id="nombre"  value="#{loginController.miembroRegistro.nombre}" placeholder="#{msg['register.nombre']}"/>
+            <p:inputText id="apellidos"  value="#{loginController.miembroRegistro.apellidos}" placeholder="#{msg['register.apellidos']}"/>
+            <p:inputText id="telefono" value="#{loginController.miembroRegistro.telefono}" placeholder="#{msg['register.telefono']}"/>
+            <p:datePicker id="fnac" value="#{loginController.miembroRegistro.fechaNacimiento}" placeholder="#{msg['register.fechaNacimiento']}"/>
+
+            <p:commandButton value="Register" action="#{loginController.register}" />
+            
+            <p:commandButton action = "gotologin" value = "#{msg['register.goToLogin']}" />
+        </p:panelGrid>
+
+    </h:form>
+</h:body>
+</html>
