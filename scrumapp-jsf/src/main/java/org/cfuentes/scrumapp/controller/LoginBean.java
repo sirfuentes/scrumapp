@@ -51,10 +51,6 @@ public class LoginBean {
     	
     }
     
-    public String goToRegister() {
-    	return "gotoregister";
-    }
-    
     public String goToLogin() {
     	return "gotologin";
     }

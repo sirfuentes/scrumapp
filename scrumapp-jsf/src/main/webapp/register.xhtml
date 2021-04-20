@@ -17,23 +17,27 @@
 
             <h2>Sign up for free</h2>
 
-            <p:messages id="messages" showDetail="true">
+            <p:messages id="messages" showDetail="false" closable="true">
             	<p:autoUpdate/>
         	</p:messages>
 
-            <p:inputText id="email" value="#{loginController.miembroRegistro.email}" placeholder="#{msg['register.email']}"/>
-            <p:password id="password" value="#{loginController.miembroRegistro.password}" placeholder="#{msg['register.password']}"/>
-            <p:password id="passwordRep" value="#{loginController.passwordRep}" placeholder="#{msg['register.passwordRep']}"/>
-            <p:inputText id="nombre"  value="#{loginController.miembroRegistro.nombre}" placeholder="#{msg['register.nombre']}"/>
+            <p:inputText id="email" value="#{loginController.miembroRegistro.email}" placeholder="#{msg['register.email.required']}" required="true" 
+             validatorMessage="#{loginController.miembroRegistro.email.invalid}" label="#{msg['register.email']}">
+            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+            </p:inputText>
+            <p:password id="password" value="#{loginController.miembroRegistro.password}" placeholder="#{msg['register.password.required']}" required="true" label="#{msg['register.password']}"/>
+            <p:password id="passwordRep" value="#{loginController.passwordRep}" placeholder="#{msg['register.passwordRep.required']}" required="true" label="#{msg['register.passwordRep']}"/>
+            <p:inputText id="nombre"  value="#{loginController.miembroRegistro.nombre}" placeholder="#{msg['register.nombre.required']}" required="true" label="#{msg['register.nombre']}"/>
             <p:inputText id="apellidos"  value="#{loginController.miembroRegistro.apellidos}" placeholder="#{msg['register.apellidos']}"/>
             <p:inputText id="telefono" value="#{loginController.miembroRegistro.telefono}" placeholder="#{msg['register.telefono']}"/>
-            <p:datePicker id="fnac" value="#{loginController.miembroRegistro.fechaNacimiento}" placeholder="#{msg['register.fechaNacimiento']}"/>
+            <p:datePicker id="fnac" value="#{loginController.miembroRegistro.fechaNacimiento}" placeholder="#{msg['register.fechaNacimiento']}"  monthNavigator="true" yearNavigator="true" />
 
-            <p:commandButton value="Register" action="#{loginController.register}" />
+            <p:commandButton value="#{msg['register.registerButton']}" action="#{loginController.register}" update="@form"/>
             
-            <p:commandButton action = "gotologin" value = "#{msg['register.goToLogin']}" />
+            <p:commandButton action = "gotologin" value = "#{msg['register.goToLogin']}" immediate="true"/>
         </p:panelGrid>
-
+	
     </h:form>
+    	
 </h:body>
 </html>

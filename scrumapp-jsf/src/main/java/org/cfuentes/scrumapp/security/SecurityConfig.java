@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/views/hola.xhtml")
                 .successForwardUrl("/views/hola.xhtml")
                 .failureUrl("/login.xhtml?error=true")
+                .loginProcessingUrl("/login.xhtml")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
