@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Miembro miembroApp = miembroRepository.findMiembroByEmail("jose");
+        Miembro miembroApp = miembroRepository.findMiembroByEmail(username);
 
         List<GrantedAuthority> grantList = new ArrayList();
         GrantedAuthority grantedRole = new SimpleGrantedAuthority(miembroApp.getRol());

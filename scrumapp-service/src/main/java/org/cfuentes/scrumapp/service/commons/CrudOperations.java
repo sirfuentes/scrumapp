@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface CrudOperations<T, ID> extends Serializable {
-    // cambiar a español
+
     T findById(ID id);
 
     List<T> findAll();

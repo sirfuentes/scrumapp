@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -39,6 +40,11 @@ public class LoginBean {
     	
     	
     }
+
+    public void logout() {
+        SecurityContextHolder.clearContext();
+    }
+
     public void register() {
     	if (miembroRegistro.getPassword().equals(passwordRep)) {
     		miembroRegistro.setPassword(passwordEncoder.encode(miembroRegistro.getPassword()));
@@ -47,6 +53,7 @@ public class LoginBean {
     	}
     	else {
     		//excepcion contrasena no iguales
+
     	}
     	
     }

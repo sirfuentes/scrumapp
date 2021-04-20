@@ -11,7 +11,7 @@
 
 
                 <h5>Equipos</h5>
-                <p:commandButton type="button" value="Actualizar" actionListener="#{equipoController.refresh}" update="@form"/>
+                <p:commandButton value="Actualizar" actionListener="#{equipoController.refresh}" update="@form" />
                 <p:dataTable var="equipo" value="#{equipoController.equipos}" draggableRows="true">
                     <p:ajax event="rowReorder" listener="#{equipoController.onRowReorder}" update=":form:msgs"/>
 
@@ -33,5 +33,7 @@
                 </p:dataTable>
 
         </h:form>
+        <p:commandButton type="button" value="Actualizar" action="#{equipoController.refresh}" update="@form" />
     </ui:define>
+
 </ui:composition>
