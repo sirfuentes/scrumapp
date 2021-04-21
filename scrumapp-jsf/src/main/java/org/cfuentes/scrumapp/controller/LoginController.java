@@ -15,9 +15,9 @@ import javax.annotation.PostConstruct;
 
 @Component("loginController")
 @SessionScope
-public class LoginBean {
+public class LoginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginBean.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     private String email;
     private String password;
@@ -32,7 +32,7 @@ public class LoginBean {
     
     @PostConstruct
     public void init() {
-        logger.info("LoginBean.init()");
+        logger.info("LoginController.init()");
          miembroRegistro = new Miembro();
     }
 
@@ -41,8 +41,9 @@ public class LoginBean {
     	
     }
 
-    public void logout() {
+    public String logout() {
         SecurityContextHolder.clearContext();
+        return "logout";
     }
 
     public void register() {

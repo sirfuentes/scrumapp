@@ -6,7 +6,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,4 +42,62 @@ public class Proyecto {
 	@JsonManagedReference
 	@Fetch(FetchMode.SUBSELECT)
 	private List<HistoriaUsuario> miembros = new ArrayList<HistoriaUsuario>();
+
+	public Long getIdProyecto() {
+		return idProyecto;
+	}
+
+	public void setIdProyecto(Long idProyecto) {
+		this.idProyecto = idProyecto;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public ProductOwner getProductOwner() {
+		return productOwner;
+	}
+
+	public void setProductOwner(ProductOwner productOwner) {
+		this.productOwner = productOwner;
+	}
+
+	public List<Sprint> getSprints() {
+		return sprints;
+	}
+
+	public void setSprints(List<Sprint> sprints) {
+		this.sprints = sprints;
+	}
+
+	public List<HistoriaUsuario> getMiembros() {
+		return miembros;
+	}
+
+	public void setMiembros(List<HistoriaUsuario> miembros) {
+		this.miembros = miembros;
+	}
+	
+	
 }
