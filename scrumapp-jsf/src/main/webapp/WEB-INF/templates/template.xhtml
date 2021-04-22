@@ -6,7 +6,8 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-		<link rel="stylesheet" type="text/css" href="/WEB-INF/css/style.css"/>
+		<!-- <link rel="stylesheet" href="/css/style.css"/> -->
+		<h:outputStylesheet library="css" name="style.css"  />
         <title>ScrumApp</title>
     </h:head>
     <h:body>
@@ -23,24 +24,8 @@
                         <p:submenu label="Item 2" icon="fa fa-money">
                             <p:menuitem value="Option 1" title="Option 1" />
                         </p:submenu>
-                        <p:submenu label="Item 3" icon="fa fa-list-ol" rendered="true">
-                            <p:submenu label="Item 1">
-                                <p:menuitem value="Option 1"
-                                            title="opcioness" />
-                                <p:menuitem value="Option 2" title="eee." />
-                            </p:submenu>
-                            <p:submenu label="Item 2">
-                                <p:menuitem value="Option 1" title="dsd" />
-                                <p:menuitem value="Option 2"
-                                            title="adsads" />
-                            </p:submenu>
-                            <p:submenu label="Item 3">
-                                <p:menuitem value="Option 1" title="Option 1" />
-                                <p:submenu label="Item 2">
-                                    <p:menuitem value="Option 1"
-                                                title="Option 1" />
-                                </p:submenu>
-                            </p:submenu>
+                        <p:submenu label="Administración" icon="fa fa-list-ol" rendered="true">
+                            <p:menuitem value="POs" title="POs" action="gotoproductowners"/>
                         </p:submenu>
                         <p:submenu label="#{equipoController.miembroAuth.nombre}" style="float: right;" icon="fa fa-fw fa-user">
                        	 		<p:menuitem action="#{loginController.logout}" value="Profile" immediate="true" icon="fa fa-fw fa-edit" ajax="false"/>

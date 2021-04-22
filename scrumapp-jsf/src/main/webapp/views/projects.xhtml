@@ -8,20 +8,22 @@
     <ui:define name="body">
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
-				
+				<p:panelGrid columns="3" layout="grid"
+                 columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" style="border: 0px;">
+                 <p:panelGrid/>
                 <p:dataTable id="proyectos" widgetVar="proyectos" var="proyecto" value="#{proyectoController.proyectos}"
-                     style="width: 70%" reflow="true" selection="#{proyectoController.proyectosSeleccionados}" rowKey="#{proyecto.id}" paginator="true"
+                      reflow="true" selection="#{proyectoController.proyectosSeleccionados}" rowKey="#{proyecto.id}" paginator="true"
                      rows="10" rowSelectMode="add" paginatorPosition="bottom">
                      
                      <f:facet name="header">
-		                <div>
-		                    <span align="left" style="font-weight: bold">TUS PROYECTOS</span>
-		
-		                    <span align="right" class="filter-container ui-input-icon-left">
-		                        <i class="fa fa-search"></i>
-		                        <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Search"/>
-		                    </span>
-		                </div>
+		                <p:outputPanel style="text-align: right;">
+
+			                    <p:outputLabel >
+			                        <i class="fa fa-search"></i>
+			                        <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Search"  style="margin-left:5px"/>
+			                    </p:outputLabel>
+
+		                </p:outputPanel>
 		            </f:facet>
 		            
 		            <p:ajax event="rowSelect" update="@form"/>
@@ -56,7 +58,8 @@
 		            </p:column>
             
                 </p:dataTable>
-                
+                <p:panelGrid/>
+                </p:panelGrid>
                 <p:toolbar>
 		            <p:toolbarGroup>
 		                <p:commandButton value="New" icon="fa fa-plus" actionListener="#{proyectoController.nuevoProyecto}"

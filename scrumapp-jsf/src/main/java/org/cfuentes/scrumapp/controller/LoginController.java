@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 @Component("loginController")
 @SessionScope
@@ -54,7 +56,11 @@ public class LoginController {
     	}
     	else {
     		//excepcion contrasena no iguales
-
+    		
+    		passwordRep = "";
+    		miembroRegistro.setPassword("");
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden", "Las contraseñas deben ser iguales"));
+    		//FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("");
     	}
     	
     }

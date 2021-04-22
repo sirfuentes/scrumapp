@@ -1,6 +1,5 @@
 package org.cfuentes.scrumapp.controller;
 
-
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -18,25 +17,25 @@ public class ProyectoController {
 	List<Proyecto> proyectos;
 	List<Proyecto> proyectosSeleccionados;
 	Proyecto proyectoSelec;
-	
+
 	@Autowired
 	ProyectoService proyectoService;
-	
+
 	@PostConstruct
 	public void init() {
 		proyectos = proyectoService.findAll();
-	 }
-	 
- 	public void guardarProyecto() {
-		 proyectoService.saveOrUpdate(proyectoSelec);
 	}
- 	
- 	public void eliminarProyecto() {
- 		proyectoService.delete(proyectoSelec);
+
+	public void guardarProyecto() {
+		proyectoService.saveOrUpdate(proyectoSelec);
 	}
- 	
- 	public void nuevoProyecto() {
- 		proyectoSelec = new Proyecto();
+
+	public void eliminarProyecto() {
+		proyectoService.delete(proyectoSelec);
+	}
+
+	public void nuevoProyecto() {
+		proyectoSelec = new Proyecto();
 	}
 
 	public List<Proyecto> getProyectos() {
@@ -62,7 +61,5 @@ public class ProyectoController {
 	public void setProyectoSelec(Proyecto proyectoSelec) {
 		this.proyectoSelec = proyectoSelec;
 	}
- 	
-	
- 	
+
 }
