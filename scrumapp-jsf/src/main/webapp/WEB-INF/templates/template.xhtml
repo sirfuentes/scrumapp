@@ -6,25 +6,30 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-		<!-- <link rel="stylesheet" href="/css/style.css"/> -->
-		<h:outputStylesheet library="css" name="style.css"  />
+		<!-- <h:outputStylesheet library="css" name="datatableStyle.css"  /> -->
+		<h:outputStylesheet library="css" name="style.css"  /> 
+		
         <title>ScrumApp</title>
     </h:head>
-    <h:body>
-        <div class="row">
+    <h:body style="margin: 0px;">
+        <div >
             <div class="col-md-12">
-                <h:form id="FormMenu" style="margin-bottom: 30px">
-                    <p:menubar>
-                        <p:submenu label="Item1" icon="fa fa-road">
-                            <p:submenu label="Subitem1">
-                                <p:menuitem value="Option" icon="fa fa-user"
-                                            title="Option 1" />
-                            </p:submenu>
-                        </p:submenu>
-                        <p:submenu label="Item 2" icon="fa fa-money">
-                            <p:menuitem value="Option 1" title="Option 1" />
-                        </p:submenu>
-                        <p:submenu label="Administración" icon="fa fa-list-ol" rendered="true">
+                <h:form id="formMenu">
+                <p:panelGrid id="topbar" columns="3" layout="grid" 
+                 columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" style="border: 0px; text-align:center; border: 0px;" >
+                 <p:panelGrid/>
+	                <h:link outcome="/views/dashboard.xhmtl">
+				        <p:graphicImage library="img" name="logo.png" height="100px" />
+				    </h:link>
+				    <p:panelGrid/>
+				</p:panelGrid>    
+                    <p:menubar style="background: #b8d8f5; padding-left: 50px; padding-right: 20px;">
+                        <p:menuitem value="Mis Proyectos" 
+                                            title="Mis Proyectos" style="margin-right:15px;" />
+                        <p:menuitem value="Mis Equipos" 
+                                            title="Mis Equipos" style="margin-right:15px;" />
+						                                          
+                        <p:submenu label="Administración" rendered="true" style="margin-right:15px;">
                             <p:menuitem value="POs" title="POs" action="gotoproductowners"/>
                         </p:submenu>
                         <p:submenu label="#{equipoController.miembroAuth.nombre}" style="float: right;" icon="fa fa-fw fa-user">
@@ -38,7 +43,7 @@
             </div>
         </div>
 
-        <ui:insert name="body" />
+        <ui:insert name="body"/>
 
     </h:body>
 

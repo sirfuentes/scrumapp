@@ -8,9 +8,10 @@
     <ui:define name="body">
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
-				<p:panelGrid columns="3" layout="grid"
-                 columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" style="border: 0px;">
-                 <p:panelGrid/>
+            	
+				<p:panelGrid id="container" columns="1" layout="grid" 
+                 style="border: 0px;" >
+                 <h2>Mis Proyectos</h2>
                 <p:dataTable id="proyectos" widgetVar="proyectos" var="proyecto" value="#{proyectoController.proyectos}"
                       reflow="true" selection="#{proyectoController.proyectosSeleccionados}" rowKey="#{proyecto.id}" paginator="true"
                      rows="10" rowSelectMode="add" paginatorPosition="bottom">
@@ -34,21 +35,21 @@
             
             		<p:column selectionMode="multiple" exportable="false"></p:column>
             		
-            		<p:column headerText="Nombre" sortBy="#{proyecto.nombre}" filterBy="#{proyecto.nombre}">
+            		<p:column headerText="Nombre" sortBy="#{proyecto.nombre}">
 		                <h:outputText value="#{proyecto.nombre}"/>
 		            </p:column>
 		            
-		            <p:column headerText="Descripción" sortBy="#{proyecto.descripcion}" filterBy="#{proyecto.descripcion}">
+		            <p:column headerText="Descripción" sortBy="#{proyecto.descripcion}">
 		                <h:outputText value="#{proyecto.descripcion}"/>
 		            </p:column>
 		            
-		            <p:column headerText="Fecha de inicio" sortBy="#{proyecto.fechaInicio}" filterBy="#{proyecto.fechaInicio}">
+		            <p:column headerText="Fecha de inicio" sortBy="#{proyecto.fechaInicio}">
 		                <h:outputText value="#{proyecto.fechaInicio}">
 						  <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
 						</h:outputText>
 		            </p:column>
 		            
-		            <p:column>
+		            <p:column headerText="Acciones">
 		                <p:commandButton icon="fa fa-pencil" update="@form"
 		                                 oncomplete="PF('editarProyectoDialog').show()"
 		                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
@@ -58,22 +59,19 @@
 		            </p:column>
             
                 </p:dataTable>
-                <p:panelGrid/>
-                </p:panelGrid>
+                
                 <p:toolbar>
-		            <p:toolbarGroup>
+		            <p:toolbarGroup align="right">
 		                <p:commandButton value="New" icon="fa fa-plus" actionListener="#{proyectoController.nuevoProyecto}"
 		                                 update="@form" oncomplete="PF('editarProyectoDialog').show()"
 		                                 styleClass="ui-button-success" style="margin-right: .5rem">
 		                    <p:resetInput target=":form:editarProyectoDialog"/>
 		                </p:commandButton>  
 		            </p:toolbarGroup>
-		            <p:toolbarGroup align="right">
-		                <p:commandButton value="Export" icon="fa fa-upload" styleClass="ui-button-help" ajax="false">
-		                    <p:dataExporter type="pdf" target="proyectos" fileName="proyectos"/>
-		                </p:commandButton>
-		            </p:toolbarGroup>
 		        </p:toolbar>
+                
+                </p:panelGrid>
+                
                 
                 <p:dialog id="editarProyectoDialog" header="Detalles del proyecto" showEffect="fade" modal="true"
                   widgetVar="editarProyectoDialog" responsive="true">
