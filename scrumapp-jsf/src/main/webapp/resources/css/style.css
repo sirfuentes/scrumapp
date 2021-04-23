@@ -27,3 +27,7 @@
 .ui-menuitem-icon.ui-icon {
 	padding-right: 7px;
 }
+
+.ui-menuitem-link.ui-corner-all.ui-state-hover {
+	background: #82afd8;
+}

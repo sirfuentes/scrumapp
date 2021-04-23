@@ -57,6 +57,15 @@
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
+            <from-outcome>gotoprojects</from-outcome>
+            <to-view-id>/views/projects.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
             <from-outcome>gotoproductowners</from-outcome>
             <to-view-id>/admin/productowners.xhtml</to-view-id>
             <redirect/>
