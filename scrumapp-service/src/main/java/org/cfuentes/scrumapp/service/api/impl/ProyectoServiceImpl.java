@@ -18,7 +18,7 @@ public class ProyectoServiceImpl implements ProyectoService{
 
 	@Override
 	public Proyecto findById(Long id) {
-		return proyectoRepository.findById(id).get();
+		return proyectoRepository.findById(id).orElse(null);
 	}
 
 	@Override

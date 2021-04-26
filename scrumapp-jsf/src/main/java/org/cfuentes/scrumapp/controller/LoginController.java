@@ -48,11 +48,13 @@ public class LoginController {
         return "logout";
     }
 
-    public void register() {
+    public String register() {
     	if (miembroRegistro.getPassword().equals(passwordRep)) {
     		miembroRegistro.setPassword(passwordEncoder.encode(miembroRegistro.getPassword()));
+    		miembroRegistro.setRol("ROLE_USER");
     		miembroService.saveOrUpdate(miembroRegistro);
     		miembroRegistro = new Miembro();
+    		return "gotologin";
     	}
     	else {
     		//excepcion contrasena no iguales
@@ -62,6 +64,7 @@ public class LoginController {
     		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden", "Las contraseñas deben ser iguales"));
     		//FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("");
     	}
+    	return "";
     	
     }
     

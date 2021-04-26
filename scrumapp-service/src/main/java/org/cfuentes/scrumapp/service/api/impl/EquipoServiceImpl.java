@@ -17,7 +17,7 @@ public class EquipoServiceImpl implements EquipoService {
 
     @Override
     public Equipo findById(Long id) {
-        return equipoRepository.findById(id).get();
+        return (equipoRepository.findById(id).orElse(null));
     }
 
     @Override

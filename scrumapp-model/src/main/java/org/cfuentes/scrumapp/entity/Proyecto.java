@@ -7,12 +7,13 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "PROYECTO")
-public class Proyecto {
+public class Proyecto implements Serializable {
 
 	@Id
 	@Column(name = "ID_PROYECTO")

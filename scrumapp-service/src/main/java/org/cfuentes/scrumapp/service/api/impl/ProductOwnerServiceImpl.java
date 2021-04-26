@@ -3,20 +3,25 @@ package org.cfuentes.scrumapp.service.api.impl;
 import java.util.List;
 
 import org.cfuentes.scrumapp.entity.ProductOwner;
+import org.cfuentes.scrumapp.repository.ProductOwnerRepository;
 import org.cfuentes.scrumapp.service.api.ProductOwnerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductOwnerServiceImpl implements ProductOwnerService{
 
+	@Autowired
+	ProductOwnerRepository productOwnerRepository;
+	
 	@Override
 	public ProductOwner findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return productOwnerRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public List<ProductOwner> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<ProductOwner>) productOwnerRepository.findAll();
 	}
 
 	@Override
@@ -53,6 +58,11 @@ public class ProductOwnerServiceImpl implements ProductOwnerService{
 	public void deleteById(Long id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public ProductOwner findProductOwnerByEmail(String email) {
+		return productOwnerRepository.findProductOwnerByEmail(email);
 	}
 
 }

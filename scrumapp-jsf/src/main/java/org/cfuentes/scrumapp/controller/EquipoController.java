@@ -40,6 +40,12 @@ public class EquipoController {
 
     public void refresh() {
         equipos = new ArrayList<Equipo>();
+//        try {
+//            equipos.add(equipoService.findById(new Long(1)));
+//            equipos.add(equipoService.findById(new Long(2)));
+//         } catch (Exception e) {
+//            // do nothing or add action code
+//         }
         equipos.add(equipoService.findById(new Long(1)));
         equipos.add(equipoService.findById(new Long(2)));
         SecurityContextHolder.getContext().getAuthentication().getPrincipal();

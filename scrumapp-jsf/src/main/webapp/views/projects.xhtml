@@ -13,7 +13,7 @@
                  style="border: 0px;" >
                  <h2>Mis Proyectos</h2>
                 <p:dataTable id="proyectos" widgetVar="proyectos" var="proyecto" value="#{proyectoController.proyectos}"
-                      reflow="true" selection="#{proyectoController.proyectosSeleccionados}" rowKey="#{proyecto.id}" paginator="true"
+                      reflow="true" selection="#{proyectoController.proyectosSeleccionados}" rowKey="#{proyecto.idProyecto}" paginator="true"
                      rows="10" rowSelectMode="add" paginatorPosition="bottom">
                      
                      <f:facet name="header">
@@ -21,7 +21,7 @@
 
 			                    <p:outputLabel >
 			                        <i class="fa fa-search"></i>
-			                        <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Search"  style="margin-left:5px"/>
+			                        <p:inputText id="globalFilter" onkeyup="PF('proyectos').filter()" placeholder="Search"  style="margin-left:5px"/>
 			                    </p:outputLabel>
 
 		                </p:outputPanel>
@@ -90,13 +90,20 @@
 		                    	<p:outputLabel for="fecIni">Fecha de inicio</p:outputLabel>
 		                        <p:datePicker id="fecIni" value="#{proyectoController.proyectoSelec.fechaInicio}"/>
 		                    </div>
+		                    <div class="p-field">
+		                    	<p:outputLabel for="producOwner">Product Owner</p:outputLabel>
+		                         <p:selectOneMenu id="producOwner" value="#{proyectoController.proyectoSelec.productOwner}" converter="#{POConverter}">
+                    				<f:selectItem itemLabel="Selecciona PO" itemValue="" noSelectionOption="true"/>
+                    				<f:selectItems value="#{proyectoController.pos}" var="po" itemLabel="#{po.email}" itemValue="#{po}"/>
+                   				 </p:selectOneMenu>
+		                    </div>
 		                    
 		                </p:outputPanel>
 		            </p:outputPanel>
 		            
 		             <f:facet name="footer">
-		                <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{proyectoController.guardarProyecto}"
-		                                 update="manage-proyecto-content" process="manage-proyecto-content @this"/>
+		                <p:commandButton value="Guardar" icon="fa fa-check" action="#{proyectoController.guardarProyecto}" oncomplete="PF('editarProyectoDialog').hide()"
+		                                 update="@form" />
                         <p:commandButton value="Eliminar" icon="fa fa-check" actionListener="#{proyectoController.eliminarProyecto}"
                         				update="manage-proyecto-content" process="manage-proyecto-content @this"/>
 		                <p:commandButton value="Cancelar" icon="fa fa-times" onclick="PF('editarProyectoDialog').hide()"

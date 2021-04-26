@@ -9,12 +9,13 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "MIEMBRO")
-public class Miembro {
+public class Miembro implements Serializable {
 
     @Id
     @Column(name = "ID_MIEMBRO")
