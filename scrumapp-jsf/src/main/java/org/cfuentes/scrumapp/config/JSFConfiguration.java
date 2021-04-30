@@ -11,7 +11,7 @@ public class JSFConfiguration implements WebMvcConfigurer {
 //    @Override
 //    public void addViewControllers(ViewControllerRegistry registry) {
 //        registry.addViewController("/")
-//                .setViewName("forward:/l.xhtml");
+//                .setViewName("forward:/views/projects.xhtml");
 //        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 //    }
 

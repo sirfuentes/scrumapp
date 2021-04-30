@@ -24,7 +24,7 @@ public class MiembroServiceImpl implements MiembroService {
 
     @Override
     public List<Miembro> findAll() {
-        return null;
+    	return (List<Miembro>) miembroRepository.findAll();
     }
 
     @Override
@@ -56,6 +56,11 @@ public class MiembroServiceImpl implements MiembroService {
     public void deleteById(Long aLong) {
 
     }
+    
+    @Override
+	public Miembro findMiembroByEmail(String email) {
+		return miembroRepository.findMiembroByEmail(email);
+	}
 
 
 }

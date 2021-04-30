@@ -5,11 +5,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 
-import org.cfuentes.scrumapp.entity.ProductOwner;
+import org.cfuentes.scrumapp.entity.Miembro;
 import org.cfuentes.scrumapp.entity.Proyecto;
-import org.cfuentes.scrumapp.service.api.ProductOwnerService;
+import org.cfuentes.scrumapp.entity.UsuarioAutenticado;
+import org.cfuentes.scrumapp.service.api.MiembroService;
 import org.cfuentes.scrumapp.service.api.ProyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component("proyectoController")
@@ -18,19 +20,25 @@ public class ProyectoController {
 
 	List<Proyecto> proyectos;
 	List<Proyecto> proyectosSeleccionados;
-	List<ProductOwner> pos;
+	List<Miembro> productOwnerDisponibles;
+	List<Miembro> scrumMasterDisponibles;
 	Proyecto proyectoSelec;
-
+	Miembro miembroAuth;
+	
+	
 	@Autowired
 	ProyectoService proyectoService;
 	
 	@Autowired
-	ProductOwnerService productOwnerService;
-
+	MiembroService miembroService;
+	
 	@PostConstruct
 	public void init() {
+		miembroAuth = ((UsuarioAutenticado)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 		proyectos = proyectoService.findAll();
-		pos = productOwnerService.findAll();
+		productOwnerDisponibles = miembroService.findAll();
+		scrumMasterDisponibles = miembroService.findAll();
+		
 	}
 
 	public void guardarProyecto() {
@@ -40,6 +48,7 @@ public class ProyectoController {
 
 	public void eliminarProyecto() {
 		proyectoService.delete(proyectoSelec);
+		proyectos = proyectoService.findAll();
 	}
 
 	public void nuevoProyecto() {
@@ -70,13 +79,28 @@ public class ProyectoController {
 		this.proyectoSelec = proyectoSelec;
 	}
 
-	public List<ProductOwner> getPos() {
-		return pos;
+	public List<Miembro> getProductOwnerDisponibles() {
+		return productOwnerDisponibles;
 	}
 
-	public void setPos(List<ProductOwner> pos) {
-		this.pos = pos;
+	public void setProductOwnerDisponibles(List<Miembro> productOwnerDisponibles) {
+		this.productOwnerDisponibles = productOwnerDisponibles;
 	}
-	
+
+	public List<Miembro> getScrumMasterDisponibles() {
+		return scrumMasterDisponibles;
+	}
+
+	public void setScrumMasterDisponibles(List<Miembro> scrumMasterDisponibles) {
+		this.scrumMasterDisponibles = scrumMasterDisponibles;
+	}
+
+	public Miembro getMiembroAuth() {
+		return miembroAuth;
+	}
+
+	public void setMiembroAuth(Miembro miembroAuth) {
+		this.miembroAuth = miembroAuth;
+	}
 
 }

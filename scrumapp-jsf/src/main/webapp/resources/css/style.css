@@ -31,3 +31,17 @@
 .ui-menuitem-link.ui-corner-all.ui-state-hover {
 	background: #82afd8;
 }
+
+.ui-button-red {
+	background: #dc0505 !important;
+	border: 1px solid #b70707 !important;
+}
+
+.ui-button-red.ui-state-hover {
+	border: 1px solid #630202 !important;
+	background: #c70303 !important;
+}
+
+.ui-dataview-content.ui-widget-content {
+	min-height: 100px;
+}

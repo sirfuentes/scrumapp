@@ -8,33 +8,33 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Named;
 
-import org.cfuentes.scrumapp.entity.ProductOwner;
-import org.cfuentes.scrumapp.service.api.ProductOwnerService;
+import org.cfuentes.scrumapp.entity.Miembro;
+import org.cfuentes.scrumapp.service.api.MiembroService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Named("POConverter")
-public class FacesConverter implements Converter{
+@Named("miembroConverter")
+public class MiembroConverter implements Converter{
 
 	@Autowired
-	ProductOwnerService productOwnerService;
+	MiembroService miembroService;
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value == null) {
             return null;
         }
-		ProductOwner PO = productOwnerService.findProductOwnerByEmail(value);
+		Miembro PO = miembroService.findMiembroByEmail(value);
 		if (PO==null) {
-            return new ProductOwner();
+            return new Miembro();
 		}
 		return PO;
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (!(value instanceof ProductOwner) || (value == null)) {
+		if (!(value instanceof Miembro) || (value == null)) {
             return null;
         }
-		return ((ProductOwner)value).getEmail();
+		return ((Miembro)value).getEmail();
 	}
 }

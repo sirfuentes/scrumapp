@@ -49,4 +49,85 @@ public class Sprint {
 	@JsonManagedReference
 	@Fetch(FetchMode.SUBSELECT)
 	private List<HistoriaUsuario> miembros = new ArrayList<HistoriaUsuario>();
+
+	public Long getIdSprint() {
+		return idSprint;
+	}
+
+	public void setIdSprint(Long idSprint) {
+		this.idSprint = idSprint;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	public Integer getHorasJornada() {
+		return horasJornada;
+	}
+
+	public void setHorasJornada(Integer horasJornada) {
+		this.horasJornada = horasJornada;
+	}
+
+	public Integer getHorasTotales() {
+		return horasTotales;
+	}
+
+	public void setHorasTotales(Integer horasTotales) {
+		this.horasTotales = horasTotales;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public Proyecto getProyecto() {
+		return proyecto;
+	}
+
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto = proyecto;
+	}
+
+	public List<HistoriaUsuario> getMiembros() {
+		return miembros;
+	}
+
+	public void setMiembros(List<HistoriaUsuario> miembros) {
+		this.miembros = miembros;
+	}
+	
 }

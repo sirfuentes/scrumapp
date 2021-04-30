@@ -12,19 +12,18 @@
 				<p:panelGrid id="container" columns="1" layout="grid" 
                  style="border: 0px;" >
                  <h2>Mis Proyectos</h2>
-                <p:dataTable id="proyectos" widgetVar="proyectos" var="proyecto" value="#{proyectoController.proyectos}"
+                <p:dataTable id="proyectos" widgetVar="proyectos" var="proyecto" value="#{proyectoController.proyectos}" size="large"
                       reflow="true" selection="#{proyectoController.proyectosSeleccionados}" rowKey="#{proyecto.idProyecto}" paginator="true"
                      rows="10" rowSelectMode="add" paginatorPosition="bottom">
                      
                      <f:facet name="header">
-		                <p:outputPanel style="text-align: right;">
 
-			                    <p:outputLabel >
-			                        <i class="fa fa-search"></i>
-			                        <p:inputText id="globalFilter" onkeyup="PF('proyectos').filter()" placeholder="Search"  style="margin-left:5px"/>
-			                    </p:outputLabel>
-
-		                </p:outputPanel>
+	                <p:outputPanel >							
+	                    <div style="text-align: right;">
+	                        <p:commandButton id="toggler" type="button" value="Columns" icon="pi pi-align-justify"/>
+	                        <p:columnToggler datasource="proyectos" trigger="toggler"/>
+	                    </div>
+	                </p:outputPanel>
 		            </f:facet>
 		            
 		            <p:ajax event="rowSelect" update="@form"/>
@@ -32,8 +31,6 @@
 		            <p:ajax event="rowSelectCheckbox" update="@form"/>
 		            <p:ajax event="rowUnselectCheckbox" update="@form"/>
 		            <p:ajax event="toggleSelect" update="@form"/>
-            
-            		<p:column selectionMode="multiple" exportable="false"></p:column>
             		
             		<p:column headerText="Nombre" sortBy="#{proyecto.nombre}">
 		                <h:outputText value="#{proyecto.nombre}"/>
@@ -43,19 +40,25 @@
 		                <h:outputText value="#{proyecto.descripcion}"/>
 		            </p:column>
 		            
-		            <p:column headerText="Fecha de inicio" sortBy="#{proyecto.fechaInicio}">
+		            <p:column headerText="Fecha de inicio" sortBy="#{proyecto.fechaInicio}" width="10%">
 		                <h:outputText value="#{proyecto.fechaInicio}">
 						  <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
 						</h:outputText>
 		            </p:column>
 		            
-		            <p:column headerText="Acciones">
+		            <p:column headerText="Acciones" style="text-align: -webkit-center;" width="10%">
 		                <p:commandButton icon="fa fa-pencil" update="@form"
-		                                 oncomplete="PF('editarProyectoDialog').show()"
-		                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+		                                 oncomplete="PF('editarProyectoDialog').show()" 
+		                                 styleClass="edit-button rounded-button ui-button-success" process="@this"
+		                                 rendered="#{proyecto.productOwner.idMiembro == proyectoController.miembroAuth.idMiembro or proyecto.scrumMaster.idMiembro == proyectoController.miembroAuth.idMiembro}">
 		                    <f:setPropertyActionListener value="#{proyecto}" target="#{proyectoController.proyectoSelec}"/>
 		                    <p:resetInput target=":form:manage-proyecto-content"/>
 		                </p:commandButton>
+		                <p:commandButton icon="fa fa-trash" oncomplete="PF('deleteProductDialog').show()"
+                        				styleClass="edit-button rounded-button ui-button-success ui-button-red" process="@this"
+		                                 rendered="#{proyecto.productOwner.idMiembro == proyectoController.miembroAuth.idMiembro or proyecto.scrumMaster.idMiembro == proyectoController.miembroAuth.idMiembro}">			
+                     		<f:setPropertyActionListener value="#{proyecto}" target="#{proyectoController.proyectoSelec}"/>
+                   		</p:commandButton>
 		            </p:column>
             
                 </p:dataTable>
@@ -91,10 +94,17 @@
 		                        <p:datePicker id="fecIni" value="#{proyectoController.proyectoSelec.fechaInicio}"/>
 		                    </div>
 		                    <div class="p-field">
-		                    	<p:outputLabel for="producOwner">Product Owner</p:outputLabel>
-		                         <p:selectOneMenu id="producOwner" value="#{proyectoController.proyectoSelec.productOwner}" converter="#{POConverter}">
-                    				<f:selectItem itemLabel="Selecciona PO" itemValue="" noSelectionOption="true"/>
-                    				<f:selectItems value="#{proyectoController.pos}" var="po" itemLabel="#{po.email}" itemValue="#{po}"/>
+		                    	<p:outputLabel for="productOwner">Product Owner</p:outputLabel>
+		                         <p:selectOneMenu id="productOwner" value="#{proyectoController.proyectoSelec.productOwner}" converter="#{miembroConverter}">
+                    				<f:selectItem itemLabel="Selecciona PO" itemValue="#{null}" noSelectionOption="true"/>
+                    				<f:selectItems value="#{proyectoController.productOwnerDisponibles}" var="po" itemLabel="#{po.email}" itemValue="#{po}"/>
+                   				 </p:selectOneMenu>
+		                    </div>
+		                    <div class="p-field">
+		                    	<p:outputLabel for="scrumMaster">Scrum Master</p:outputLabel>
+		                         <p:selectOneMenu id="scrumMaster" value="#{proyectoController.proyectoSelec.scrumMaster}" converter="#{miembroConverter}">
+                    				<f:selectItem itemLabel="Selecciona PO" itemValue="#{null}" noSelectionOption="true"/>
+                    				<f:selectItems value="#{proyectoController.scrumMasterDisponibles}" var="po" itemLabel="#{po.email}" itemValue="#{po}"/>
                    				 </p:selectOneMenu>
 		                    </div>
 		                    
@@ -102,7 +112,7 @@
 		            </p:outputPanel>
 		            
 		             <f:facet name="footer">
-		                <p:commandButton value="Guardar" icon="fa fa-check" action="#{proyectoController.guardarProyecto}" oncomplete="PF('editarProyectoDialog').hide()"
+		                <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{proyectoController.guardarProyecto}" oncomplete="PF('editarProyectoDialog').hide()"
 		                                 update="@form" />
                         <p:commandButton value="Eliminar" icon="fa fa-check" actionListener="#{proyectoController.eliminarProyecto}"
                         				update="manage-proyecto-content" process="manage-proyecto-content @this"/>
@@ -110,6 +120,14 @@
 		                                 class="ui-button-secondary"/>
 		            </f:facet>
 	            </p:dialog>
+	            
+	            <p:confirmDialog id="deleteProductDialog" widgetVar="deleteProductDialog" showEffect="fade" width="300" responsive="true"
+		                         message="Delete the product?" header="Confirm" severity="warn">
+		            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{proyectoController.eliminarProyecto}"
+		                             process="@this" oncomplete="PF('deleteProductDialog').hide()" update="@form"/>
+		            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+		                             onclick="PF('deleteProductDialog').hide()"/>
+		        </p:confirmDialog>
 
         </h:form>
     </ui:define>

@@ -32,7 +32,12 @@ public class Proyecto implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_OWNER", nullable = false)
 	@JsonBackReference
-	private ProductOwner productOwner;
+	private Miembro productOwner;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ID_SCRUMMASTER", nullable = false)
+	@JsonBackReference
+	private Miembro scrumMaster;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "proyecto")
 	@JsonManagedReference
@@ -76,14 +81,6 @@ public class Proyecto implements Serializable {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public ProductOwner getProductOwner() {
-		return productOwner;
-	}
-
-	public void setProductOwner(ProductOwner productOwner) {
-		this.productOwner = productOwner;
-	}
-
 	public List<Sprint> getSprints() {
 		return sprints;
 	}
@@ -98,6 +95,22 @@ public class Proyecto implements Serializable {
 
 	public void setMiembros(List<HistoriaUsuario> miembros) {
 		this.miembros = miembros;
+	}
+
+	public Miembro getProductOwner() {
+		return productOwner;
+	}
+
+	public void setProductOwner(Miembro productOwner) {
+		this.productOwner = productOwner;
+	}
+
+	public Miembro getScrumMaster() {
+		return scrumMaster;
+	}
+
+	public void setScrumMaster(Miembro scrumMaster) {
+		this.scrumMaster = scrumMaster;
 	}
 	
 	

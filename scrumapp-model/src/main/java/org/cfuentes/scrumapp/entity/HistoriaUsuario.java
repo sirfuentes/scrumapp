@@ -47,4 +47,78 @@ public class HistoriaUsuario {
     @JsonManagedReference
     @Fetch(FetchMode.SUBSELECT)
     private List<Tarea> miembros = new ArrayList<Tarea>();
+
+	public Long getIdHistoriaUsuario() {
+		return idHistoriaUsuario;
+	}
+
+	public void setIdHistoriaUsuario(Long idHistoriaUsuario) {
+		this.idHistoriaUsuario = idHistoriaUsuario;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Integer getEsfuerzo() {
+		return esfuerzo;
+	}
+
+	public void setEsfuerzo(Integer esfuerzo) {
+		this.esfuerzo = esfuerzo;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public Integer getPrioridad() {
+		return prioridad;
+	}
+
+	public void setPrioridad(Integer prioridad) {
+		this.prioridad = prioridad;
+	}
+
+	public Proyecto getProyecto() {
+		return proyecto;
+	}
+
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto = proyecto;
+	}
+
+	public Sprint getSprint() {
+		return sprint;
+	}
+
+	public void setSprint(Sprint sprint) {
+		this.sprint = sprint;
+	}
+
+	public List<Tarea> getMiembros() {
+		return miembros;
+	}
+
+	public void setMiembros(List<Tarea> miembros) {
+		this.miembros = miembros;
+	}
+    
+    
 }
