@@ -22,6 +22,7 @@ public class ProyectoController {
 	List<Proyecto> proyectosSeleccionados;
 	List<Miembro> productOwnerDisponibles;
 	List<Miembro> scrumMasterDisponibles;
+	List<Miembro> developersDisponibles;
 	Proyecto proyectoSelec;
 	Miembro miembroAuth;
 	
@@ -32,12 +33,16 @@ public class ProyectoController {
 	@Autowired
 	MiembroService miembroService;
 	
+	@Autowired
+	GlobalController globalController;
+	
 	@PostConstruct
 	public void init() {
 		miembroAuth = ((UsuarioAutenticado)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 		proyectos = proyectoService.findAll();
 		productOwnerDisponibles = miembroService.findAll();
 		scrumMasterDisponibles = miembroService.findAll();
+		developersDisponibles = miembroService.findAll();
 		
 	}
 
@@ -53,6 +58,11 @@ public class ProyectoController {
 
 	public void nuevoProyecto() {
 		proyectoSelec = new Proyecto();
+	}
+	
+	public String goToProyecto(Long id) {
+		globalController.setEntidad(proyectoService.findById(id));
+		return "gotobacklog";
 	}
 
 	public List<Proyecto> getProyectos() {
@@ -79,6 +89,15 @@ public class ProyectoController {
 		this.proyectoSelec = proyectoSelec;
 	}
 
+
+	public Miembro getMiembroAuth() {
+		return miembroAuth;
+	}
+
+	public void setMiembroAuth(Miembro miembroAuth) {
+		this.miembroAuth = miembroAuth;
+	}
+
 	public List<Miembro> getProductOwnerDisponibles() {
 		return productOwnerDisponibles;
 	}
@@ -95,12 +114,14 @@ public class ProyectoController {
 		this.scrumMasterDisponibles = scrumMasterDisponibles;
 	}
 
-	public Miembro getMiembroAuth() {
-		return miembroAuth;
+	public List<Miembro> getDevelopersDisponibles() {
+		return developersDisponibles;
 	}
 
-	public void setMiembroAuth(Miembro miembroAuth) {
-		this.miembroAuth = miembroAuth;
+	public void setDevelopersDisponibles(List<Miembro> developersDisponibles) {
+		this.developersDisponibles = developersDisponibles;
 	}
 
+	
+	
 }

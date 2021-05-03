@@ -46,9 +46,9 @@ public class Sprint {
 	private Proyecto proyecto;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sprint")
-	@JsonManagedReference
-	@Fetch(FetchMode.SUBSELECT)
-	private List<HistoriaUsuario> miembros = new ArrayList<HistoriaUsuario>();
+    @JsonManagedReference
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Tarea> tareas = new ArrayList<Tarea>();
 
 	public Long getIdSprint() {
 		return idSprint;
@@ -122,12 +122,12 @@ public class Sprint {
 		this.proyecto = proyecto;
 	}
 
-	public List<HistoriaUsuario> getMiembros() {
-		return miembros;
+	public List<Tarea> getTareas() {
+		return tareas;
 	}
 
-	public void setMiembros(List<HistoriaUsuario> miembros) {
-		this.miembros = miembros;
+	public void setTareas(List<Tarea> tareas) {
+		this.tareas = tareas;
 	}
-	
+
 }

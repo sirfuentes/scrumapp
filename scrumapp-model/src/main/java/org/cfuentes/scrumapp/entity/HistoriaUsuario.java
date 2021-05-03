@@ -38,15 +38,10 @@ public class HistoriaUsuario {
     @JsonBackReference
     private Proyecto proyecto;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_SPRINT", nullable = false)
-    @JsonBackReference
-    private Sprint sprint;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "historiaUsuario")
     @JsonManagedReference
     @Fetch(FetchMode.SUBSELECT)
-    private List<Tarea> miembros = new ArrayList<Tarea>();
+    private List<Tarea> tareas = new ArrayList<Tarea>();
 
 	public Long getIdHistoriaUsuario() {
 		return idHistoriaUsuario;
@@ -104,21 +99,11 @@ public class HistoriaUsuario {
 		this.proyecto = proyecto;
 	}
 
-	public Sprint getSprint() {
-		return sprint;
+	public List<Tarea> getTareas() {
+		return tareas;
 	}
 
-	public void setSprint(Sprint sprint) {
-		this.sprint = sprint;
+	public void setTareas(List<Tarea> tareas) {
+		this.tareas = tareas;
 	}
-
-	public List<Tarea> getMiembros() {
-		return miembros;
-	}
-
-	public void setMiembros(List<Tarea> miembros) {
-		this.miembros = miembros;
-	}
-    
-    
 }

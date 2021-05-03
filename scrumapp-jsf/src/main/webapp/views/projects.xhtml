@@ -14,7 +14,7 @@
                  <h2>Mis Proyectos</h2>
                 <p:dataTable id="proyectos" widgetVar="proyectos" var="proyecto" value="#{proyectoController.proyectos}" size="large"
                       reflow="true" selection="#{proyectoController.proyectosSeleccionados}" rowKey="#{proyecto.idProyecto}" paginator="true"
-                     rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                     rows="10" rowSelectMode="add" paginatorPosition="bottom" selectionMode="single">
                      
                      <f:facet name="header">
 
@@ -25,7 +25,7 @@
 	                    </div>
 	                </p:outputPanel>
 		            </f:facet>
-		            
+		             
 		            <p:ajax event="rowSelect" update="@form"/>
 		            <p:ajax event="rowUnselect" update="@form"/>
 		            <p:ajax event="rowSelectCheckbox" update="@form"/>
@@ -33,7 +33,10 @@
 		            <p:ajax event="toggleSelect" update="@form"/>
             		
             		<p:column headerText="Nombre" sortBy="#{proyecto.nombre}">
-		                <h:outputText value="#{proyecto.nombre}"/>
+            		<p:commandLink id="gotoproyecto" action="#{proyectoController.goToProyecto(proyecto.idProyecto)}" ajax="false">
+			             <h:outputText value="#{proyecto.nombre}"/>
+			        </p:commandLink>
+		               
 		            </p:column>
 		            
 		            <p:column headerText="Descripción" sortBy="#{proyecto.descripcion}">
@@ -107,7 +110,24 @@
                     				<f:selectItems value="#{proyectoController.scrumMasterDisponibles}" var="po" itemLabel="#{po.email}" itemValue="#{po}"/>
                    				 </p:selectOneMenu>
 		                    </div>
-		                    
+		                    <div class="p-field">
+		                    	<p:outputLabel for="developers">Developers</p:outputLabel>
+			                    <p:selectManyMenu id="developers" value="#{proyectoController.proyectoSelec.developers}"
+	                            converter="#{miembroConverter}"
+	                            var="dev" filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
+						            <f:selectItems value="#{proyectoController.developersDisponibles}" var="d" itemLabel="#{d.email}"
+						                            itemValue="#{d}"/>
+		                            <f:attribute name="collectionType" value="java.util.ArrayList" />
+						
+						            <p:column headerText="Nombre">
+						                <h:outputText value="#{dev.nombre}"/>
+						            </p:column>
+						
+						            <p:column headerText="Apellidos">
+						                <h:outputText value="#{dev.apellidos}"/>
+						            </p:column>
+						        </p:selectManyMenu>
+		                    </div>
 		                </p:outputPanel>
 		            </p:outputPanel>
 		            

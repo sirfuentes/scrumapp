@@ -1,13 +1,8 @@
 package org.cfuentes.scrumapp.controller;
 
-import org.cfuentes.scrumapp.entity.Developer;
+
 import org.cfuentes.scrumapp.entity.Miembro;
-import org.cfuentes.scrumapp.entity.ProductOwner;
-import org.cfuentes.scrumapp.entity.ScrumMaster;
-import org.cfuentes.scrumapp.service.api.DeveloperService;
 import org.cfuentes.scrumapp.service.api.MiembroService;
-import org.cfuentes.scrumapp.service.api.ProductOwnerService;
-import org.cfuentes.scrumapp.service.api.ScrumMasterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,21 +26,11 @@ public class LoginController {
 	private String password;
 	private String passwordRep;
 	private Miembro miembroRegistro;
-	private Developer devRegistro;
-    private ProductOwner poRegistro;
-    private ScrumMaster smRegistro;
+
 	
 	@Autowired
     MiembroService miembroService;
 
-    @Autowired
-    DeveloperService developerService;
-    
-    @Autowired
-    ProductOwnerService productOwnerService;
-    
-    @Autowired
-    ScrumMasterService scrumMasterService;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -71,9 +56,9 @@ public class LoginController {
 			miembroRegistro.setRol("ROLE_USER");
 
 			miembroRegistro = miembroService.saveOrUpdate(miembroRegistro);
-			developerService.insertDeveloper(miembroRegistro.getIdMiembro());
-			productOwnerService.insertProductOwner(miembroRegistro.getIdMiembro());
-			scrumMasterService.insertScrumMaster(miembroRegistro.getIdMiembro());
+			//developerService.insertDeveloper(miembroRegistro.getIdMiembro());
+			//productOwnerService.insertProductOwner(miembroRegistro.getIdMiembro());
+			//scrumMasterService.insertScrumMaster(miembroRegistro.getIdMiembro());
 			
 			miembroRegistro = new Miembro();
 			return "gotologin";

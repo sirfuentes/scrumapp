@@ -12,6 +12,7 @@ import java.util.Date;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -50,15 +51,19 @@ public class Miembro implements Serializable {
 
     @Column(name = "FECHA_NACIMIENTO")
     private Date fechaNacimiento;
+    
+    @ManyToMany(mappedBy = "developers")
+	private List<Proyecto> proyectosAsDev;
+    
+    @OneToMany(mappedBy = "productOwner")
+    private List<Proyecto> proyectosAsPO;
+    
+    @OneToMany(mappedBy = "scrumMaster")
+    private List<Proyecto> proyectosAsSM;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "ID_EQUIPO", nullable = true)
-//    @JsonBackReference
-//    private Equipo equipo;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "miembro")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "developer")
     @JsonManagedReference
-    @Fetch(FetchMode.SUBSELECT)
+    //@Fetch(FetchMode.SUBSELECT)
     private List<Tarea> tareas = new ArrayList<Tarea>();
 
     @Transient
@@ -213,6 +218,30 @@ public class Miembro implements Serializable {
         this.roles = roles;
     }
 
+	public List<Proyecto> getProyectosAsDev() {
+		return proyectosAsDev;
+	}
+
+	public void setProyectosAsDev(List<Proyecto> proyectosAsDev) {
+		this.proyectosAsDev = proyectosAsDev;
+	}
+
+	public List<Proyecto> getProyectosAsPO() {
+		return proyectosAsPO;
+	}
+
+	public void setProyectosAsPO(List<Proyecto> proyectosAsPO) {
+		this.proyectosAsPO = proyectosAsPO;
+	}
+
+	public List<Proyecto> getProyectosAsSM() {
+		return proyectosAsSM;
+	}
+
+	public void setProyectosAsSM(List<Proyecto> proyectosAsSM) {
+		this.proyectosAsSM = proyectosAsSM;
+	}
+
 	public List<Tarea> getTareas() {
 		return tareas;
 	}
@@ -220,5 +249,6 @@ public class Miembro implements Serializable {
 	public void setTareas(List<Tarea> tareas) {
 		this.tareas = tareas;
 	}
+
 
 }

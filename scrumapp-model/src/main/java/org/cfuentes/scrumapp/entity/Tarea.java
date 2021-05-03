@@ -47,12 +47,131 @@ public class Tarea {
 	private EstadoTarea estadoTarea;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_MIEMBRO", nullable = false)
+    @JoinColumn(name = "ID_DEVELOPER", nullable = false)
 	@JsonBackReference
-	private Miembro miembro;
+	private Miembro developer;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_HISTORIA_USUARIO", nullable = false)
 	@JsonBackReference
 	private HistoriaUsuario historiaUsuario;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ID_SPRINT", nullable = false)
+	@JsonBackReference
+	private Sprint sprint;
+
+	public Long getIdTarea() {
+		return idTarea;
+	}
+
+	public void setIdTarea(Long idTarea) {
+		this.idTarea = idTarea;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Integer getEstimacion() {
+		return estimacion;
+	}
+
+	public void setEstimacion(Integer estimacion) {
+		this.estimacion = estimacion;
+	}
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaEstimadaFin() {
+		return fechaEstimadaFin;
+	}
+
+	public void setFechaEstimadaFin(Date fechaEstimadaFin) {
+		this.fechaEstimadaFin = fechaEstimadaFin;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	public Integer getHorasDedicadas() {
+		return horasDedicadas;
+	}
+
+	public void setHorasDedicadas(Integer horasDedicadas) {
+		this.horasDedicadas = horasDedicadas;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	public String getProblemas() {
+		return problemas;
+	}
+
+	public void setProblemas(String problemas) {
+		this.problemas = problemas;
+	}
+
+	public EstadoTarea getEstadoTarea() {
+		return estadoTarea;
+	}
+
+	public void setEstadoTarea(EstadoTarea estadoTarea) {
+		this.estadoTarea = estadoTarea;
+	}
+
+	public Miembro getDeveloper() {
+		return developer;
+	}
+
+	public void setDeveloper(Miembro developer) {
+		this.developer = developer;
+	}
+
+	public HistoriaUsuario getHistoriaUsuario() {
+		return historiaUsuario;
+	}
+
+	public void setHistoriaUsuario(HistoriaUsuario historiaUsuario) {
+		this.historiaUsuario = historiaUsuario;
+	}
+
+	public Sprint getSprint() {
+		return sprint;
+	}
+
+	public void setSprint(Sprint sprint) {
+		this.sprint = sprint;
+	}
+	
+	
 }
