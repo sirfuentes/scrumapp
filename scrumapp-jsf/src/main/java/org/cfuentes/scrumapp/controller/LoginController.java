@@ -1,7 +1,13 @@
 package org.cfuentes.scrumapp.controller;
 
+import org.cfuentes.scrumapp.entity.Developer;
 import org.cfuentes.scrumapp.entity.Miembro;
+import org.cfuentes.scrumapp.entity.ProductOwner;
+import org.cfuentes.scrumapp.entity.ScrumMaster;
+import org.cfuentes.scrumapp.service.api.DeveloperService;
 import org.cfuentes.scrumapp.service.api.MiembroService;
+import org.cfuentes.scrumapp.service.api.ProductOwnerService;
+import org.cfuentes.scrumapp.service.api.ScrumMasterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,74 +25,90 @@ import javax.faces.context.FacesContext;
 @SessionScope
 public class LoginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    private String email;
-    private String password;
-    private String passwordRep;
-    private Miembro miembroRegistro;
+	private String email;
+	private String password;
+	private String passwordRep;
+	private Miembro miembroRegistro;
+	private Developer devRegistro;
+    private ProductOwner poRegistro;
+    private ScrumMaster smRegistro;
+	
+	@Autowired
+    MiembroService miembroService;
+
+    @Autowired
+    DeveloperService developerService;
     
     @Autowired
-    MiembroService miembroService;
+    ProductOwnerService productOwnerService;
+    
+    @Autowired
+    ScrumMasterService scrumMasterService;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
-    @PostConstruct
-    public void init() {
-        logger.info("LoginController.init()");
-         miembroRegistro = new Miembro();
-    }
 
-    public void login() {
-    	
-    	
-    }
+	@PostConstruct
+	public void init() {
+		logger.info("LoginController.init()");
+		miembroRegistro = new Miembro();
+	}
 
-    public String logout() {
-        SecurityContextHolder.clearContext();
-        return "logout";
-    }
+	public void login() {
 
-    public String register() {
-    	if (miembroRegistro.getPassword().equals(passwordRep)) {
-    		miembroRegistro.setPassword(passwordEncoder.encode(miembroRegistro.getPassword()));
-    		miembroRegistro.setRol("ROLE_USER");
-    		miembroService.saveOrUpdate(miembroRegistro);
-    		miembroRegistro = new Miembro();
-    		return "gotologin";
-    	}
-    	else {
-    		//excepcion contrasena no iguales
-    		
-    		passwordRep = "";
-    		miembroRegistro.setPassword("");
-    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden", "Las contraseñas deben ser iguales"));
-    		//FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("");
-    	}
-    	return "";
-    	
-    }
-    
-    public String goToLogin() {
-    	return "gotologin";
-    }
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String logout() {
+		SecurityContextHolder.clearContext();
+		return "logout";
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String register() {
+		if (miembroRegistro.getPassword().equals(passwordRep)) {
+			miembroRegistro.setPassword(passwordEncoder.encode(miembroRegistro.getPassword()));
+			miembroRegistro.setRol("ROLE_USER");
 
-    public String getPassword() {
-        return password;
-    }
+			miembroRegistro = miembroService.saveOrUpdate(miembroRegistro);
+			developerService.insertDeveloper(miembroRegistro.getIdMiembro());
+			productOwnerService.insertProductOwner(miembroRegistro.getIdMiembro());
+			scrumMasterService.insertScrumMaster(miembroRegistro.getIdMiembro());
+			
+			miembroRegistro = new Miembro();
+			return "gotologin";
+		} else {
+			// excepcion contrasena no iguales
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+			passwordRep = "";
+			miembroRegistro.setPassword("");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Las contraseñas no coinciden", "Las contraseñas deben ser iguales"));
+			// FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("");
+		}
+		return "";
+
+	}
+
+	public String goToLogin() {
+		return "gotologin";
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public String getPasswordRep() {
 		return passwordRep;
@@ -103,7 +125,5 @@ public class LoginController {
 	public void setMiembroRegistro(Miembro miembroRegistro) {
 		this.miembroRegistro = miembroRegistro;
 	}
-	
-	
-	
+
 }

@@ -2,10 +2,8 @@ package org.cfuentes.scrumapp.service.api.impl;
 
 import java.util.List;
 
-import org.cfuentes.scrumapp.entity.Equipo;
 import org.cfuentes.scrumapp.entity.Proyecto;
 import org.cfuentes.scrumapp.repository.ProyectoRepository;
-import org.cfuentes.scrumapp.service.api.EquipoService;
 import org.cfuentes.scrumapp.service.api.ProyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

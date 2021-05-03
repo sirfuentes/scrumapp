@@ -14,10 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "MIEMBRO")
 public class Miembro implements Serializable {
 
-    @Id
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4952392472341890932L;
+
+	@Id
     @Column(name = "ID_MIEMBRO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMiembro;
@@ -44,10 +51,10 @@ public class Miembro implements Serializable {
     @Column(name = "FECHA_NACIMIENTO")
     private Date fechaNacimiento;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_EQUIPO", nullable = true)
-    @JsonBackReference
-    private Equipo equipo;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "ID_EQUIPO", nullable = true)
+//    @JsonBackReference
+//    private Equipo equipo;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "miembro")
     @JsonManagedReference
@@ -196,14 +203,6 @@ public class Miembro implements Serializable {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public Equipo getEquipo() {
-        return equipo;
-    }
-
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
     }
 
     public List<GrantedAuthority> getRoles() {
