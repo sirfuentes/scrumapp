@@ -1,0 +1,33 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="body">
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+
+			<p:panelGrid id="container" columns="1" layout="grid"
+				style="border: 0px;">
+				<h:outputText value="#{boardController.proyecto.nombre}"
+					styleClass="tittle" />
+
+				<p:tabMenu activeIndex="1" style="border: 0px;">
+					<p:menuitem value="Backlog" action="gotobacklog" title="Backlog">
+					</p:menuitem>
+					<p:menuitem value="Board" action="gotoboard" title="Board">
+					</p:menuitem>
+					<p:menuitem value="Sprints" action="gotosprints" title="Sprints">
+					</p:menuitem>
+					<p:menuitem value="Detalles" action="gotoprojectdetails" title="Detalles">
+					</p:menuitem>
+
+				</p:tabMenu>
+			</p:panelGrid>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

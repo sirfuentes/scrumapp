@@ -12,4 +12,11 @@ public interface HistoriaUsuarioRepository extends Dao<HistoriaUsuario, Long> {
 	
 	@Query("SELECT h FROM HistoriaUsuario h")
 	List<HistoriaUsuario> findBySprintAndEstado(Long sprint, String estado);
+	
+	@Query("SELECT h FROM HistoriaUsuario h WHERE h.proyecto.idProyecto=:idProyecto ORDER BY h.prioridad")
+	List<HistoriaUsuario> findHistoriaByProyecto(Long idProyecto);
+	
+	@Query("SELECT MAX(h.prioridad) FROM HistoriaUsuario h WHERE h.proyecto.idProyecto=:idProyecto")
+	Integer siguientePrioridad(Long idProyecto);
+
 }

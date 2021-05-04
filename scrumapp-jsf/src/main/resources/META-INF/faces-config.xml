@@ -75,9 +75,20 @@
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
-            <from-outcome>gotoproductowners</from-outcome>
-            <to-view-id>/admin/productowners.xhtml</to-view-id>
+            <from-outcome>gotoboard</from-outcome>
+            <to-view-id>/views/board.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>gotoprofile</from-outcome>
+            <to-view-id>/views/profile.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    
+
 </faces-config>

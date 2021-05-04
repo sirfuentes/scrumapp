@@ -45,3 +45,28 @@
 .ui-dataview-content.ui-widget-content {
 	min-height: 100px;
 }
+
+.ui-dialog-footer.ui-widget-content {
+	float: right;
+}
+.p-field {
+	margin-top:20px;
+}
+
+.tittle {
+	font-size:25px; 
+	font-weight:bold;
+	font-family: "latoregular","Trebuchet MS",Arial,Helvetica,sans-serif;
+	color: #135580;
+}
+
+.subtittle {
+	font-size:18px; 
+	font-weight:bold;
+	font-family: "latoregular","Trebuchet MS",Arial,Helvetica,sans-serif;
+	color: #135580;
+}
+
+.ui-tabmenu-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all {
+	background: transparent;
+}

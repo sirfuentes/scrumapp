@@ -1,19 +1,146 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="body">
-        <h:form id="form">
-            <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
-            	
-				
-                 <h2>Mis Proyectos</h2>
-                <h:outputText value="#{backlogController.proyecto.nombre}"/>
+	<ui:define name="body">
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
 
-        </h:form>
-    </ui:define>
+			<p:panelGrid id="container" columns="1" layout="grid"
+				style="border: 0px;">
+				<h:outputText value="#{backlogController.proyecto.nombre}"
+					styleClass="tittle" />
+
+				<p:tabMenu activeIndex="0" style="border: 0px;">
+					<p:menuitem value="Backlog" action="gotobacklog" title="Backlog">
+					</p:menuitem>
+					<p:menuitem value="Board" action="gotoboard" title="Board">
+					</p:menuitem>
+					<p:menuitem value="Sprints" action="gotosprints" title="Sprints">
+					</p:menuitem>
+					<p:menuitem value="Detalles" action="gotoprojectdetails" title="Detalles">
+					</p:menuitem>
+
+				</p:tabMenu>
+
+
+				<p:dataTable var="historia" value="#{backlogController.historias}"
+					draggableRows="true">
+					<p:ajax event="rowReorder"
+						listener="#{backlogController.onRowReorder}" update=":form:msgs :form:container" />
+
+					<p:column headerText="Nombre">
+						<h:outputText value="#{historia.nombre}" />
+					</p:column>
+
+					<p:column headerText="Descripcion">
+						<h:outputText value="#{historia.descripcion}" />
+					</p:column>
+
+					<p:column headerText="Esfuerzo">
+						<h:outputText value="#{historia.esfuerzo}" />
+					</p:column>
+					
+					<p:column headerText="Prioridad">
+						<h:outputText value="#{historia.prioridad}" />
+					</p:column>
+
+					<p:column headerText="Acciones" style="text-align: -webkit-center;"
+						width="10%">
+						<p:commandButton icon="fa fa-pencil" update="@form"
+							oncomplete="PF('editarHistoriaDialog').show()"
+							styleClass="edit-button rounded-button ui-button-success"
+							process="@this"
+							rendered="#{historia.proyecto.productOwner.idMiembro == backlogController.miembroAuth.idMiembro or historia.proyecto.scrumMaster.idMiembro == backlogController.miembroAuth.idMiembro}">
+							<f:setPropertyActionListener value="#{historia}"
+								target="#{backlogController.historiaSelec}" />
+							<p:resetInput target=":form:containerDialog" />
+						</p:commandButton>
+						<p:commandButton icon="fa fa-trash"
+							oncomplete="PF('deleteHistoriaDialog').show()"
+							styleClass="edit-button rounded-button ui-button-success ui-button-red"
+							process="@this"
+							rendered="#{historia.proyecto.productOwner.idMiembro == backlogController.miembroAuth.idMiembro or historia.proyecto.scrumMaster.idMiembro == backlogController.miembroAuth.idMiembro}">
+							<f:setPropertyActionListener value="#{historia}"
+								target="#{backlogController.historiaSelec}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:toolbar style="float:right;">
+					<p:toolbarGroup>
+						<p:commandButton value="New" icon="fa fa-plus"
+							actionListener="#{backlogController.nuevaHistoria}"
+							update="@form" oncomplete="PF('editarHistoriaDialog').show()"
+							styleClass="ui-button-success" style="margin-right: .5rem">
+							<p:resetInput target=":form:editarHistoriaDialog" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+
+			</p:panelGrid>
+
+
+			<p:dialog id="editarHistoriaDialog" header="Historia de Usuario"
+				showEffect="fade" modal="true" widgetVar="editarHistoriaDialog"
+				responsive="true" width="80%">
+
+				<p:panelGrid id="containerDialog" columns="1" layout="grid"
+					style="border: 0px;"
+					rendered="#{not empty backlogController.historiaSelec}">
+					<p:outputPanel id="manage-historia-content-nombre" class="ui-fluid">
+						<div class="p-field">
+							<p:outputLabel for="nombre">Nombre</p:outputLabel>
+							<p:inputText id="nombre"
+								value="#{backlogController.historiaSelec.nombre}"
+								required="true" />
+						</div>
+					</p:outputPanel>
+					<p:outputPanel id="manage-historia-content-desc" class="ui-fluid">
+						<div class="p-field">
+							<p:outputLabel for="descripcion">Descripcion</p:outputLabel>
+							<p:inputTextarea id="descripcion"
+								value="#{backlogController.historiaSelec.descripcion}" rows="9" />
+						</div>
+					</p:outputPanel>
+					<p:outputPanel id="manage-historia-content-esfuerzo"
+						class="ui-fluid">
+						<div class="p-field">
+							<p:outputLabel for="esfuerzo">Nombre</p:outputLabel>
+							<p:inputText id="esfuerzo"
+								value="#{backlogController.historiaSelec.esfuerzo}"
+								required="true" />
+						</div>
+					</p:outputPanel>
+				</p:panelGrid>
+
+				<f:facet name="footer">
+					<p:commandButton value="Cancelar" icon="fa fa-times"
+						onclick="PF('editarHistoriaDialog').hide()"
+						class="ui-button-secondary" />
+					<p:commandButton value="Guardar" icon="fa fa-check"
+						actionListener="#{backlogController.guardarHistoria}"
+						oncomplete="PF('editarHistoriaDialog').hide()" update="@form" />
+				</f:facet>
+			</p:dialog>
+
+
+			<p:confirmDialog id="deleteHistoriaDialog"
+				widgetVar="deleteHistoriaDialog" showEffect="fade" width="300"
+				responsive="true" message="Desea eliminar la Historia de Usuario?" header="Confirm"
+				severity="warn">
+				<p:commandButton value="Sí" icon="pi pi-check"
+					actionListener="#{backlogController.eliminarHistoria}"
+					process="@this" oncomplete="PF('deleteHistoriaDialog').hide()"
+					update="@form" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-button-secondary" icon="pi pi-times"
+					onclick="PF('deleteHistoriaDialog').hide()" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
 
 </ui:composition>

@@ -8,4 +8,8 @@ import org.cfuentes.scrumapp.service.commons.CrudOperations;
 public interface HistoriaUsuarioService extends CrudOperations<HistoriaUsuario, Long> {
 
 	List<HistoriaUsuario> findBySprintAndEstado(Long sprint, String estado);
+	
+	List<HistoriaUsuario> findHistoriaByProyecto(Long idProyecto);
+
+	Integer siguientePrioridad(Long idProyecto);
 }

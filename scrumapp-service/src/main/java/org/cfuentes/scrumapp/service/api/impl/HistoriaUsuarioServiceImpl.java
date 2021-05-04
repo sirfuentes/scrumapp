@@ -50,7 +50,7 @@ public class HistoriaUsuarioServiceImpl implements HistoriaUsuarioService {
 
 	@Override
 	public void delete(HistoriaUsuario entity) {
-		// TODO Auto-generated method stub
+		historiaUsuarioRepository.delete(entity);
 		
 	}
 
@@ -63,6 +63,16 @@ public class HistoriaUsuarioServiceImpl implements HistoriaUsuarioService {
 	@Override
 	public List<HistoriaUsuario> findBySprintAndEstado(Long sprint, String estado) {
 		return historiaUsuarioRepository.findBySprintAndEstado(sprint, estado);
+	}
+
+	@Override
+	public Integer siguientePrioridad(Long idProyecto) {
+		return historiaUsuarioRepository.siguientePrioridad(idProyecto);
+	}
+
+	@Override
+	public List<HistoriaUsuario> findHistoriaByProyecto(Long idProyecto) {
+		return historiaUsuarioRepository.findHistoriaByProyecto(idProyecto);
 	}
 
 }

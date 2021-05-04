@@ -1,0 +1,79 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="body">
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+
+			<p:panelGrid id="container" columns="1" layout="grid"
+				style="text-align: -webkit-center; width: 400px;margin: 250px 250px 250px 250px; align: center; border: 0px;">
+				<h:outputText value="Mi Perfil" styleClass="tittle" />
+
+				<p:outputPanel id="manage-historia-content-nombre" class="ui-fluid" style="text-align: left;">
+					<div class="p-field">
+						<p:outputLabel for="nombre">Nombre</p:outputLabel>
+						<p:inputText id="nombre"
+							value="#{perfilController.miembro.nombre}" required="true" />
+					</div>
+				</p:outputPanel>
+
+				<p:outputPanel id="manage-historia-content-v" class="ui-fluid" style="text-align: left;">
+					<div class="p-field">
+						<p:outputLabel for="apellidos">Apellidos</p:outputLabel>
+						<p:inputText id="apellidos"
+							value="#{perfilController.miembro.apellidos}" required="true" />
+					</div>
+				</p:outputPanel>
+
+				<p:outputPanel id="manage-historia-content-email" class="ui-fluid" style="text-align: left;">
+					<div class="p-field">
+						<p:outputLabel for="email">Email</p:outputLabel>
+						<p:inputText id="email" value="#{perfilController.miembro.email}"
+							required="true" />
+					</div>
+				</p:outputPanel>
+
+				<p:outputPanel id="manage-historia-content-telefono" class="ui-fluid" style="text-align: left;">
+					<div class="p-field">
+						<p:outputLabel for="telefono">Teléfono</p:outputLabel>
+						<p:inputText id="telefono"
+							value="#{perfilController.miembro.telefono}" required="true" />
+					</div>
+				</p:outputPanel>
+
+				<p:outputPanel id="manage-historia-content-pwd" class="ui-fluid" style="text-align: left;">
+					<div class="p-field">
+						<p:outputLabel for="password">Contraseña</p:outputLabel>
+						<p:password id="password"
+							value="#{perfilController.miembro.password}" />
+					</div>
+				</p:outputPanel>
+
+				<p:outputPanel id="manage-historia-content-pwd2" class="ui-fluid" style="text-align: left;">
+					<div class="p-field">
+						<p:outputLabel for="passwordRep">Repite la Contraseña</p:outputLabel>
+						<p:password id="passwordRep" value="#{perfilController.passwordRep}" />
+					</div>
+				</p:outputPanel>
+
+				<p:toolbar style="float:right;">
+					<p:toolbarGroup>
+						<p:commandButton value="Guardar" icon="fa fa-save"
+							actionListener="#{perfilController.guardarPerfil}" update=":formMenu @form"
+							styleClass="ui-button-success" style="margin-right: .5rem">
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+
+			</p:panelGrid>
+
+
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
