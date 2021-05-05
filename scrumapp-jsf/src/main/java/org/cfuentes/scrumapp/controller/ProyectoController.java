@@ -1,5 +1,7 @@
 package org.cfuentes.scrumapp.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -7,9 +9,11 @@ import javax.faces.view.ViewScoped;
 
 import org.cfuentes.scrumapp.entity.Miembro;
 import org.cfuentes.scrumapp.entity.Proyecto;
+import org.cfuentes.scrumapp.entity.Sprint;
 import org.cfuentes.scrumapp.entity.UsuarioAutenticado;
 import org.cfuentes.scrumapp.service.api.MiembroService;
 import org.cfuentes.scrumapp.service.api.ProyectoService;
+import org.cfuentes.scrumapp.service.api.SprintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -34,6 +38,9 @@ public class ProyectoController {
 	MiembroService miembroService;
 	
 	@Autowired
+	SprintService sprintService;
+	
+	@Autowired
 	GlobalController globalController;
 	
 	@PostConstruct
@@ -47,8 +54,23 @@ public class ProyectoController {
 	}
 
 	public void guardarProyecto() {
-		proyectoService.saveOrUpdate(proyectoSelec);
+		boolean editando = false;
+		
+		if (proyectoSelec.getIdProyecto() != null) {
+			editando = true;
+		}
+		
+		proyectoSelec = proyectoService.saveOrUpdate(proyectoSelec);
 		proyectos = proyectoService.findAll();
+		
+		if (!editando) {
+			Sprint nuevo = new Sprint();
+			nuevo.setNombre("Sprint 1");
+			nuevo.setEstado("current");
+			nuevo.setProyecto(proyectoSelec);
+			nuevo.setFechaInicio(Date.valueOf(LocalDate.now()));
+			sprintService.saveOrUpdate(nuevo);
+		}
 	}
 
 	public void eliminarProyecto() {
@@ -58,6 +80,7 @@ public class ProyectoController {
 
 	public void nuevoProyecto() {
 		proyectoSelec = new Proyecto();
+		proyectoSelec.setProductOwner(miembroAuth);
 	}
 	
 	public String goToProyecto(Long id) {

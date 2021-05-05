@@ -7,6 +7,15 @@
 
 	<ui:define name="body">
 		<h:form id="form">
+		
+		<script type="text/javascript">
+		    function handleDrop(event, ui) {
+		        var droppedProduct = ui.draggable;
+		
+		        droppedProduct.fadeOut('fast');
+		    }
+		</script>
+		
 			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
 
 			<p:panelGrid id="container" columns="1" layout="grid"
@@ -25,9 +34,122 @@
 					</p:menuitem>
 
 				</p:tabMenu>
+				
+				</p:panelGrid>
+				<p:panelGrid id="boardContainer" columns="4" layout="grid" 
+                 style="border: 0px;" >
+                 
+                 
+                 <p:dataView id="historiasUsuarioNew" var="historia" value="#{boardController.historiasUsuarioNuevas}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
+		            <f:facet name="header">
+			            Nuevas
+			        </f:facet>
+		            <p:dataViewGridItem>
+		                <p:panel id="pnl1" header="#{historia.nombre}" style="text-align:center" styleClass="pnl1">
+		                    <h:panelGrid columns="1" style="width:100%">
+		                        <h:outputText value="#{historia.descripcion}"/>
+		                        <h:outputText value="#{historia.estado}"/>
+		                        <h:outputText value="#{historia.prioridad}"/>
+		                        <h:outputText value="#{historia.esfuerzo}"/>
+		                    </h:panelGrid>
+		                </p:panel>
+		
+		                <p:draggable for="pnl1" revert="true" stack=".ui-panel"/>
+		            </p:dataViewGridItem>
+	        	</p:dataView>
+	        	
+	        	<p:dataView id="historiasUsuarioApproved" var="historia" value="#{boardController.historiasUsuarioAprobadas}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
+		            <f:facet name="header">
+			            Aprobadas
+			        </f:facet>
+		            <p:dataViewGridItem>
+		                <p:panel id="pnl2" header="#{historia.nombre}" style="text-align:center" styleClass="pnl2">
+		                    <h:panelGrid columns="1" style="width:100%">
+		                        <h:outputText value="#{historia.descripcion}"/>
+		                        <h:outputText value="#{historia.estado}"/>
+		                        <h:outputText value="#{historia.prioridad}"/>
+		                        <h:outputText value="#{historia.esfuerzo}"/>
+		                    </h:panelGrid>
+		                </p:panel>
+		
+		                <p:draggable for="pnl2" revert="true" stack=".ui-panel"/>
+		            </p:dataViewGridItem>
+	        	</p:dataView>
+	        	
+	        	<p:dataView id="historiasUsuarioCommited" var="historia" value="#{boardController.historiasUsuarioEntregadas}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
+		            <f:facet name="header">
+			            Entregadas
+			        </f:facet>
+		            <p:dataViewGridItem>
+		                <p:panel id="pnl3" header="#{historia.nombre}" style="text-align:center" styleClass="pnl3">
+		                    <h:panelGrid columns="1" style="width:100%">
+		                        <h:outputText value="#{historia.descripcion}"/>
+		                        <h:outputText value="#{historia.estado}"/>
+		                        <h:outputText value="#{historia.prioridad}"/>
+		                        <h:outputText value="#{historia.esfuerzo}"/>
+		                    </h:panelGrid>
+		                </p:panel>
+		
+		                <p:draggable for="pnl3" revert="true" stack=".ui-panel"/>
+		            </p:dataViewGridItem>
+	        	</p:dataView>
+	        	
+	        	<p:dataView id="historiasUsuarioCompleted" var="historia" value="#{boardController.historiasUsuarioCompletadas}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
+		            <f:facet name="header">
+			            Completadas
+			        </f:facet>
+		            <p:dataViewGridItem>
+		                <p:panel id="pnl4" header="#{historia.nombre}" style="text-align:center" styleClass="pnl4">
+		                    <h:panelGrid columns="1" style="width:100%">
+		                        <h:outputText value="#{historia.descripcion}"/>
+		                        <h:outputText value="#{historia.estado}"/>
+		                        <h:outputText value="#{historia.prioridad}"/>
+		                        <h:outputText value="#{historia.esfuerzo}"/>
+		                    </h:panelGrid>
+		                </p:panel>
+		
+		                <p:draggable for="pnl4" revert="true" stack=".ui-panel"/>
+		            </p:dataViewGridItem>
+	        	</p:dataView>
+				
+				<p:droppable for="historiasUsuarioNew" tolerance="pointer" activeStyleClass="ui-state-highlight"
+		                     datasource="historiasUsuarioApproved" accept=".pnl2">
+		            <p:ajax listener="#{boardController.historiaToNew}" update="@form"/>
+		        </p:droppable> 
+	        	
+                <p:droppable for="historiasUsuarioApproved" tolerance="pointer" activeStyleClass="ui-state-highlight"
+		                     datasource="historiasUsuarioNew" accept=".pnl1">
+		            <p:ajax listener="#{boardController.historiaToApproved}" update="@form"/>
+		        </p:droppable>   
+		        
+		        <p:droppable for="historiasUsuarioCommited" tolerance="pointer" activeStyleClass="ui-state-highlight"
+		                     datasource="historiasUsuarioApproved" accept=".pnl2">
+		            <p:ajax listener="#{boardController.historiaToCommited}" update="@form"/>
+		        </p:droppable>    
+
+		        
+		        <p:droppable for="historiasUsuarioCompleted" tolerance="pointer" activeStyleClass="ui-state-highlight"
+		                     datasource="historiasUsuarioCommited" accept=".pnl3">
+		            <p:ajax listener="#{boardController.historiaToCompleted}" update="@form"/>
+		        </p:droppable>
+
 			</p:panelGrid>
 
+			<p:ajaxExceptionHandler type="javax.faces.model.NoRowAvailableException"
+                                update="@form" onexception="PF('exceptionDialog').show()"/>
+                <p:dialog id="exceptionDialog" header="Exception occured!"
+		                  widgetVar="exceptionDialog"
+		                  height="500px">
+		            Error <br/>
+		            No permitido <h:outputText value="Movimiento no permitido" escape="false"/> <br/>
+		
+		            
+		        </p:dialog>
+
+
 		</h:form>
+		
+		
 	</ui:define>
 
 </ui:composition>

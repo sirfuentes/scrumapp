@@ -39,8 +39,7 @@ public class SprintServiceImpl implements SprintService {
 
 	@Override
 	public Sprint saveOrUpdate(Sprint entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return sprintRepository.save(entity);
 	}
 
 	@Override
@@ -59,6 +58,11 @@ public class SprintServiceImpl implements SprintService {
 	public void deleteById(Long id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Sprint findByProyecto(Long idProyecto) {
+		return sprintRepository.findByProyecto(idProyecto);
 	}
 
 }

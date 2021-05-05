@@ -8,4 +8,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public interface MiembroService extends CrudOperations<Miembro, Long> {
     //List<Miembro> findMiembrosByEmailPassword()
 	Miembro findMiembroByEmail(String email);
+
+	Boolean existsByEmail(String email);
 }

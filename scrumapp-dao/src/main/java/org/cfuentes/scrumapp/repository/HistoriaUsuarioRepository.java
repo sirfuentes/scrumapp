@@ -19,4 +19,7 @@ public interface HistoriaUsuarioRepository extends Dao<HistoriaUsuario, Long> {
 	@Query("SELECT MAX(h.prioridad) FROM HistoriaUsuario h WHERE h.proyecto.idProyecto=:idProyecto")
 	Integer siguientePrioridad(Long idProyecto);
 
+	@Query("SELECT h FROM HistoriaUsuario h WHERE h.proyecto.idProyecto=:idProyecto AND h.estado=:estado")
+	List<HistoriaUsuario> findByProyectoAndEstado(Long idProyecto, String estado);
+	
 }

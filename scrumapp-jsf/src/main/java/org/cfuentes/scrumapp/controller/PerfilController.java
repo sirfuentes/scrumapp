@@ -20,6 +20,7 @@ public class PerfilController {
 	Miembro miembro;
 	String password;
 	String passwordRep;
+	String email;
 	
 	@Autowired
 	MiembroService miembroService;
@@ -30,9 +31,22 @@ public class PerfilController {
 	@PostConstruct
 	public void init() {
 		miembro = ((UsuarioAutenticado)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+		email = miembro.getEmail();
 	}
 	
 	public void guardarPerfil() {
+		
+		if (!email.equals(miembro.getEmail())) {
+			if (miembroService.existsByEmail(email)) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Email inválido", "Ya existe una cuenta con ese email."));
+				return;
+			}
+			else {
+				miembro.setEmail(email);
+			}
+		}
+		
 		if (password == null || password.isEmpty()
 				&& passwordRep == null || passwordRep.isEmpty()) {
 			miembroService.saveOrUpdate(miembro);
@@ -44,6 +58,8 @@ public class PerfilController {
 			if (password.equals(passwordRep)) {
 				miembro.setPassword(passwordEncoder.encode(password));
 				miembroService.saveOrUpdate(miembro);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Perfil actualizado", "La informacion se ha guardado correctamente."));
 			}
 			else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -77,6 +93,14 @@ public class PerfilController {
 
 	public void setPasswordRep(String passwordRep) {
 		this.passwordRep = passwordRep;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

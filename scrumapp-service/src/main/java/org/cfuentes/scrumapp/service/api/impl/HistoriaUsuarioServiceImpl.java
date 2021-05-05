@@ -67,12 +67,18 @@ public class HistoriaUsuarioServiceImpl implements HistoriaUsuarioService {
 
 	@Override
 	public Integer siguientePrioridad(Long idProyecto) {
-		return historiaUsuarioRepository.siguientePrioridad(idProyecto);
+		Integer p = historiaUsuarioRepository.siguientePrioridad(idProyecto);
+		return p != null ? p : Integer.valueOf(0);
 	}
 
 	@Override
 	public List<HistoriaUsuario> findHistoriaByProyecto(Long idProyecto) {
 		return historiaUsuarioRepository.findHistoriaByProyecto(idProyecto);
+	}
+
+	@Override
+	public List<HistoriaUsuario> findByProyectoAndEstado(Long idProyecto, String estado) {
+		return historiaUsuarioRepository.findByProyectoAndEstado(idProyecto, estado);
 	}
 
 }

@@ -26,15 +26,15 @@
                     <p:menubar style="background: #b8d8f5; padding-left: 50px; padding-right: 20px;">
                         <p:menuitem value="Mis Proyectos"  action="gotoprojects"
                                             title="Mis Proyectos" style="margin-right:15px;" />
-                        <p:menuitem value="Mis Equipos" 
-                                            title="Mis Equipos" style="margin-right:15px;" />
+                        <p:menuitem value="Mis Tickets" 
+                                            title="Mis Tickets" style="margin-right:15px;" />
 						                                          
                         <p:submenu label="Administración" rendered="true" style="margin-right:15px;">
                             <p:menuitem value="POs" title="POs" action="gotoproductowners"/>
                         </p:submenu>
-                        <p:submenu label="#{proyectoController.miembroAuth.nombre}" style="float: right;" icon="fa fa-fw fa-user">
+                        <p:submenu label="#{proyectoController.miembroAuth.apellidos}, #{proyectoController.miembroAuth.nombre}" style="float: right;" icon="fa fa-fw fa-user">
                        	 		<p:menuitem action="gotoprofile" value="Profile"  immediate="true" icon="fa fa-fw fa-edit" ajax="false"/>
-                       	 		<p:menuitem action="#{loginController.logout}" value="Settings" immediate="true" icon="fa fa-fw fa-cog" ajax="false"/>
+                       	 		<p:menuitem value="Settings" immediate="true" icon="fa fa-fw fa-cog" ajax="false"/>
                        	 		<p:separator/>
 				                <p:menuitem action="#{loginController.logout}" value="Logout" immediate="true" icon="fa fa-fw fa-sign-out" ajax="false"/>
 				            </p:submenu>

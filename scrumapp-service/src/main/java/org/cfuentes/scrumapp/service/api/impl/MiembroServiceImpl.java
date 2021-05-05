@@ -62,5 +62,10 @@ public class MiembroServiceImpl implements MiembroService {
 		return miembroRepository.findMiembroByEmail(email);
 	}
 
+	@Override
+	public Boolean existsByEmail(String email) {
+		return miembroRepository.existsByEmail(email);
+	}
+
 
 }

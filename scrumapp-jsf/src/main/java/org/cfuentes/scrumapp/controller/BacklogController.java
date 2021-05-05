@@ -49,13 +49,20 @@ public class BacklogController {
 	}
 	
 	public void guardarHistoria() {
+		
+		guardarPrioridades();
+		
+		//Si es una historia nueva
 		if (historiaSelec.getProyecto() == null) {
 			historiaSelec.setProyecto(proyecto);
+			historiaSelec.setEstado("new");
 			historiaSelec.setPrioridad(historiaUsuarioService.siguientePrioridad(proyecto.getIdProyecto()) + 1);
-			//historiaSelec.setPrioridad(Integer.valueOf(1));
+			historiaSelec = historiaUsuarioService.saveOrUpdate(historiaSelec);
+			historias.add(historiaSelec);
+		} 
+		else {
+			historiaSelec = historiaUsuarioService.saveOrUpdate(historiaSelec);
 		}
-		historiaUsuarioService.saveOrUpdate(historiaSelec);
-		historias.add(historiaSelec);
 	}
 	
 	public void nuevaHistoria() {

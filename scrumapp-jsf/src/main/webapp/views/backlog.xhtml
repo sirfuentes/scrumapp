@@ -57,7 +57,6 @@
 							rendered="#{historia.proyecto.productOwner.idMiembro == backlogController.miembroAuth.idMiembro or historia.proyecto.scrumMaster.idMiembro == backlogController.miembroAuth.idMiembro}">
 							<f:setPropertyActionListener value="#{historia}"
 								target="#{backlogController.historiaSelec}" />
-							<p:resetInput target=":form:containerDialog" />
 						</p:commandButton>
 						<p:commandButton icon="fa fa-trash"
 							oncomplete="PF('deleteHistoriaDialog').show()"
@@ -76,7 +75,6 @@
 							actionListener="#{backlogController.nuevaHistoria}"
 							update="@form" oncomplete="PF('editarHistoriaDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">
-							<p:resetInput target=":form:editarHistoriaDialog" />
 						</p:commandButton>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -87,7 +85,7 @@
 			<p:dialog id="editarHistoriaDialog" header="Historia de Usuario"
 				showEffect="fade" modal="true" widgetVar="editarHistoriaDialog"
 				responsive="true" width="80%">
-
+				<p:ajax event="close" update=":form:editarHistoriaDialog" resetValues="true" />
 				<p:panelGrid id="containerDialog" columns="1" layout="grid"
 					style="border: 0px;"
 					rendered="#{not empty backlogController.historiaSelec}">
@@ -109,7 +107,7 @@
 					<p:outputPanel id="manage-historia-content-esfuerzo"
 						class="ui-fluid">
 						<div class="p-field">
-							<p:outputLabel for="esfuerzo">Nombre</p:outputLabel>
+							<p:outputLabel for="esfuerzo">Esfuerzo</p:outputLabel>
 							<p:inputText id="esfuerzo"
 								value="#{backlogController.historiaSelec.esfuerzo}"
 								required="true" />
@@ -120,7 +118,9 @@
 				<f:facet name="footer">
 					<p:commandButton value="Cancelar" icon="fa fa-times"
 						onclick="PF('editarHistoriaDialog').hide()"
-						class="ui-button-secondary" />
+						class="ui-button-secondary" >
+						<p:resetInput target=":form:editarProyectoDialog" />
+						</p:commandButton>
 					<p:commandButton value="Guardar" icon="fa fa-check"
 						actionListener="#{backlogController.guardarHistoria}"
 						oncomplete="PF('editarHistoriaDialog').hide()" update="@form" />

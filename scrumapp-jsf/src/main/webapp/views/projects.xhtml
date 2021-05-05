@@ -57,14 +57,14 @@
 
 					<p:column headerText="Acciones" style="text-align: -webkit-center;"
 						width="10%">
-						<p:commandButton icon="fa fa-pencil" update="@form"
+						<p:commandButton icon="fa fa-pencil" update="@form :form1"
 							oncomplete="PF('editarProyectoDialog').show()"
 							styleClass="edit-button rounded-button ui-button-success"
 							process="@this"
 							rendered="#{proyecto.productOwner.idMiembro == proyectoController.miembroAuth.idMiembro or proyecto.scrumMaster.idMiembro == proyectoController.miembroAuth.idMiembro}">
 							<f:setPropertyActionListener value="#{proyecto}"
 								target="#{proyectoController.proyectoSelec}" />
-							<p:resetInput target=":form:containerDialog" />
+							<p:resetInput target=":form1:containerDialog" />
 						</p:commandButton>
 						<p:commandButton icon="fa fa-trash"
 							oncomplete="PF('deleteProyectoDialog').show()"
@@ -80,11 +80,11 @@
 
 				<p:toolbar style="float:right;">
 					<p:toolbarGroup>
-						<p:commandButton value="New" icon="fa fa-plus"
+						<p:commandButton value="New" icon="fa fa-plus" process="@this"
 							actionListener="#{proyectoController.nuevoProyecto}"
-							update="@form" oncomplete="PF('editarProyectoDialog').show()"
+							update="@form :form1" oncomplete="PF('editarProyectoDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">
-							<p:resetInput target=":form:editarProyectoDialog" />
+							<p:resetInput target=":form1:editarProyectoDialog" />
 						</p:commandButton>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -92,9 +92,31 @@
 			</p:panelGrid>
 
 
-			<p:dialog id="editarProyectoDialog" header="Detalles del proyecto"
+			
+
+			<p:confirmDialog id="deleteProyectoDialog"
+				widgetVar="deleteProyectoDialog" showEffect="fade" width="300"
+				responsive="true" message="Delete the product?" header="Confirm"
+				severity="warn">
+				<p:commandButton value="Yes" icon="pi pi-check"
+					actionListener="#{proyectoController.eliminarProyecto}"
+					process="@this" oncomplete="PF('deleteProyectoDialog').hide()"
+					update="@form" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-button-secondary" icon="pi pi-times"
+					onclick="PF('deleteProyectoDialog').hide()" />
+			</p:confirmDialog>
+
+		</h:form>
+		
+		
+		<h:form id="form1">
+		<p:dialog id="editarProyectoDialog" header="Detalles del proyecto"
 				showEffect="fade" modal="true" widgetVar="editarProyectoDialog"
 				responsive="true" width="80%">
+				
+				<p:ajax event="close" update=":form1:editarProyectoDialog" resetValues="true" />
+				
 				<p:panelGrid id="containerDialog" columns="2" layout="grid"
 					style="border: 0px;" rendered="#{not empty proyectoController.proyectoSelec}">
 					<p:outputPanel id="manage-proyecto-content-nombre" class="ui-fluid">
@@ -139,7 +161,7 @@
 
 						<div class="p-field">
 							<p:outputLabel for="productOwner">Product Owner</p:outputLabel>
-							<p:selectOneMenu id="productOwner"
+							<p:selectOneMenu id="productOwner" disabled="true"
 								value="#{proyectoController.proyectoSelec.productOwner}"
 								converter="#{miembroConverter}">
 								<f:selectItem itemLabel="Selecciona PO" itemValue="#{null}"
@@ -182,26 +204,14 @@
 				<f:facet name="footer">
 					<p:commandButton value="Cancelar" icon="fa fa-times"
 						onclick="PF('editarProyectoDialog').hide()"
-						class="ui-button-secondary" />
+						class="ui-button-secondary" >
+						<p:resetInput target=":form1:editarProyectoDialog" />
+						</p:commandButton>
 					<p:commandButton value="Guardar" icon="fa fa-check"
 						actionListener="#{proyectoController.guardarProyecto}"
-						oncomplete="PF('editarProyectoDialog').hide()" update="@form" />
+						oncomplete="PF('editarProyectoDialog').hide()" update="@form :form" />
 				</f:facet>
 			</p:dialog>
-
-			<p:confirmDialog id="deleteProyectoDialog"
-				widgetVar="deleteProyectoDialog" showEffect="fade" width="300"
-				responsive="true" message="Delete the product?" header="Confirm"
-				severity="warn">
-				<p:commandButton value="Yes" icon="pi pi-check"
-					actionListener="#{proyectoController.eliminarProyecto}"
-					process="@this" oncomplete="PF('deleteProyectoDialog').hide()"
-					update="@form" />
-				<p:commandButton value="No" type="button"
-					styleClass="ui-button-secondary" icon="pi pi-times"
-					onclick="PF('deleteProyectoDialog').hide()" />
-			</p:confirmDialog>
-
 		</h:form>
 	</ui:define>
 

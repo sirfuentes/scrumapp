@@ -40,10 +40,10 @@ public class Proyecto implements Serializable {
     @JoinColumn(name = "ID_SCRUM_MASTER", nullable = false)
 	private Miembro scrumMaster;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proyecto")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proyecto", cascade = CascadeType.REMOVE)
 	private List<Sprint> sprints = new ArrayList<Sprint>();
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proyecto")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proyecto", cascade = CascadeType.REMOVE)
 	private List<HistoriaUsuario> historias = new ArrayList<HistoriaUsuario>();
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)

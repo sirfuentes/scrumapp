@@ -6,11 +6,11 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="body">
-		<h:form id="form">
+		<h:form id="form" style="text-align: -webkit-center;">
 			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
 
 			<p:panelGrid id="container" columns="1" layout="grid"
-				style="text-align: -webkit-center; width: 400px;margin: 250px 250px 250px 250px; align: center; border: 0px;">
+				style="text-align: -webkit-center; width: 400px; align: center; border: 0px;">
 				<h:outputText value="Mi Perfil" styleClass="tittle" />
 
 				<p:outputPanel id="manage-historia-content-nombre" class="ui-fluid" style="text-align: left;">
@@ -32,24 +32,25 @@
 				<p:outputPanel id="manage-historia-content-email" class="ui-fluid" style="text-align: left;">
 					<div class="p-field">
 						<p:outputLabel for="email">Email</p:outputLabel>
-						<p:inputText id="email" value="#{perfilController.miembro.email}"
+						<p:inputText id="email" value="#{perfilController.email}"
 							required="true" />
 					</div>
 				</p:outputPanel>
 
-				<p:outputPanel id="manage-historia-content-telefono" class="ui-fluid" style="text-align: left;">
+				<p:outputPanel id="manage-historia-content-telefono" class="ui-fluid" style="text-align: left; margin-bottom: 20px;">
 					<div class="p-field">
 						<p:outputLabel for="telefono">Teléfono</p:outputLabel>
 						<p:inputText id="telefono"
 							value="#{perfilController.miembro.telefono}" required="true" />
 					</div>
 				</p:outputPanel>
-
+				
+				<h:outputText value="Cambiar contraseña" styleClass="subtittle"/>
 				<p:outputPanel id="manage-historia-content-pwd" class="ui-fluid" style="text-align: left;">
 					<div class="p-field">
 						<p:outputLabel for="password">Contraseña</p:outputLabel>
 						<p:password id="password"
-							value="#{perfilController.miembro.password}" />
+							value="#{perfilController.password}" />
 					</div>
 				</p:outputPanel>
 

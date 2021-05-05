@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MiembroRepository extends Dao<Miembro, Long> {
     Miembro findMiembroByEmail(String email);
+
+	Boolean existsByEmail(String email);
 }
