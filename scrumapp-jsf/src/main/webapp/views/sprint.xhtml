@@ -1,134 +1,259 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="body">
-        <h:form id="form">
-        
-        <script type="text/javascript">
-		    function handleDrop(event, ui) {
-		        var droppedProduct = ui.draggable;
-		
-		        droppedProduct.fadeOut('fast');
-		    }
-		</script>
-            <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
-            	<h2>Sprint 1</h2>
-				<p:panelGrid id="container" columns="4" layout="grid" 
-                 style="border: 0px;" >
-                 
-                 
-                 <p:dataView id="historiasUsuarioToDo" var="historia" value="#{sprintController.historiasUsuarioToDo}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
-		            <f:facet name="header">
-			            To Do
-			        </f:facet>
-		            <p:dataViewGridItem>
-		                <p:panel id="pnl1" header="#{historia.nombre}" style="text-align:center" styleClass="pnl1">
-		                    <h:panelGrid columns="1" style="width:100%">
-		                        <h:outputText value="#{historia.descripcion}"/>
-		                        <h:outputText value="#{historia.estado}"/>
-		                        <h:outputText value="#{historia.prioridad}"/>
-		                        <h:outputText value="#{historia.esfuerzo}"/>
-		                    </h:panelGrid>
-		                </p:panel>
-		
-		                <p:draggable for="pnl1" revert="true" stack=".ui-panel"/>
-		            </p:dataViewGridItem>
-	        	</p:dataView>
-	        	
-	        	<p:dataView id="historiasUsuarioDoing" var="hist" value="#{sprintController.historiasUsuarioDoing}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
-		            <f:facet name="header">
-			            Doing
-			        </f:facet>
-		            <p:dataViewGridItem>
-		                <p:panel id="pnl2" header="#{hist.nombre}" style="text-align:center" styleClass="pnl2">
-		                    <h:panelGrid columns="1" style="width:100%">
-		                        <h:outputText value="#{hist.descripcion}"/>
-		                        <h:outputText value="#{hist.estado}"/>
-		                        <h:outputText value="#{hist.prioridad}"/>
-		                        <h:outputText value="#{hist.esfuerzo}"/>
-		                    </h:panelGrid>
-		                </p:panel>
-		
-		                <p:draggable for="pnl2" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
-		            </p:dataViewGridItem>
-	        	</p:dataView>
-	        	
-	        	<p:dataView id="historiasUsuarioTesting" var="historia" value="#{sprintController.historiasUsuarioTesting}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
-		            <f:facet name="header">
-			            Testing
-			        </f:facet>
-		            <p:dataViewGridItem>
-		                <p:panel id="pnl3" header="#{historia.nombre}" style="text-align:center" styleClass="pnl3">
-		                    <h:panelGrid columns="1" style="width:100%">
-		                        <h:outputText value="#{historia.descripcion}"/>
-		                        <h:outputText value="#{historia.estado}"/>
-		                        <h:outputText value="#{historia.prioridad}"/>
-		                        <h:outputText value="#{historia.esfuerzo}"/>
-		                    </h:panelGrid>
-		                </p:panel>
-		
-		                <p:draggable for="pnl3" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
-		            </p:dataViewGridItem>
-	        	</p:dataView>
-	        	
-	        	<p:dataView id="historiasUsuarioCompleted" var="historia" value="#{sprintController.historiasUsuarioCompleted}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
-		            <f:facet name="header">
-			            Completed
-			        </f:facet>
-		            <p:dataViewGridItem>
-		                <p:panel id="pnl4" header="#{historia.nombre}" style="text-align:center" styleClass="pnl4">
-		                    <h:panelGrid columns="1" style="width:100%">
-		                        <h:outputText value="#{historia.descripcion}"/>
-		                        <h:outputText value="#{historia.estado}"/>
-		                        <h:outputText value="#{historia.prioridad}"/>
-		                        <h:outputText value="#{historia.esfuerzo}"/>
-		                    </h:panelGrid>
-		                </p:panel>
-		
-		                <p:draggable for="pnl4" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
-		            </p:dataViewGridItem>
-	        	</p:dataView>
-				
-				
-	        	
-	        	 <p:droppable for="historiasUsuarioToDo" tolerance="pointer" activeStyleClass="ui-state-highlight"
-		                     datasource="historiasUsuarioDoing" accept=".pnl2">
-		            <p:ajax listener="#{sprintController.historiaToDo}" update="@form"/>
-		        </p:droppable> 
-	        	
-                <p:droppable for="historiasUsuarioDoing" tolerance="pointer" activeStyleClass="ui-state-highlight"
-		                     datasource="historiasUsuarioToDo" accept=".pnl1">
-		            <p:ajax listener="#{sprintController.historiaToDoing}" update="@form"/>
-		        </p:droppable>   
-		        
-		        <p:droppable for="historiasUsuarioTesting" tolerance="pointer" activeStyleClass="ui-state-highlight"
-		                     datasource="historiasUsuarioDoing" accept=".pnl2">
-		            <p:ajax listener="#{sprintController.historiaToTesting}" update="@form"/>
-		        </p:droppable>    
+	<ui:define name="body">
+		<h:form id="form">
 
-		        
-		        <p:droppable for="historiasUsuarioCompleted" tolerance="pointer" activeStyleClass="ui-state-highlight"
-		                     datasource="historiasUsuarioTesting" accept=".pnl3">
-		            <p:ajax listener="#{sprintController.historiaToCompleted}" update="@form"/>
-		        </p:droppable>          
-                
-                </p:panelGrid>
-                <p:ajaxExceptionHandler type="javax.faces.model.NoRowAvailableException"
-                                update="@form" onexception="PF('exceptionDialog').show()"/>
-                <p:dialog id="exceptionDialog" header="Exception occured!"
-		                  widgetVar="exceptionDialog"
-		                  height="500px">
-		            Error <br/>
-		            No permitido <h:outputText value="Movimiento no permitido" escape="false"/> <br/>
-		
-		            
-		        </p:dialog>
+			<script type="text/javascript">
+				function handleDrop(event, ui) {
+					var droppedProduct = ui.draggable;
 
-        </h:form>
-    </ui:define>
+					droppedProduct.fadeOut('fast');
+				}
+			</script>
+
+			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+
+			<p:panelGrid id="container" columns="1" layout="grid"
+				style="border: 0px;">
+				<h:outputText value="#{sprintController.proyecto.nombre}"
+					styleClass="tittle" />
+
+				<p:tabMenu activeIndex="1" style="border: 0px;">
+					<p:menuitem value="Backlog" action="gotobacklog" title="Backlog">
+					</p:menuitem>
+					<p:menuitem value="Board" action="gotoboard" title="Board">
+					</p:menuitem>
+					<p:menuitem value="Sprints" action="gotosprints" title="Sprints">
+					</p:menuitem>
+					<p:menuitem value="Detalles" action="gotoprojectdetails"
+						title="Detalles">
+					</p:menuitem>
+
+				</p:tabMenu>
+
+			</p:panelGrid>
+			<p:panelGrid id="taskContainer" columns="4" layout="grid"
+				columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+				style="border: 0px;">
+
+
+				<p:dataView id="tareasToDo" var="tarea" 
+					value="#{sprintController.tareasToDo}" layout="grid">
+					<f:facet name="header">
+			            <h:outputText value="Para hacer"/>
+			        </f:facet>
+					<p:dataViewGridItem>
+						<p:panel id="pnl1" header="#{tarea.nombre}" collapsed="true"
+							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true"
+							toggleSpeed="500" styleClass="pnl1">
+							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
+								style="width:100%">
+								<p:outputLabel for="descripcion">Descripcion</p:outputLabel>
+								<h:outputText id="descripcion" value="#{tarea.descripcion}" />
+								<p:separator />
+								<h:outputText value="#{tarea.estimacion}" />
+								<p:separator />
+								<h:outputText value="#{tarea.horasDedicadas}" />
+								<p:separator />
+								<h:outputText value="#{tarea.observaciones}" />
+							</h:panelGrid>
+							<p:commandButton value="Editar" style="background: #5085b1;"
+								update=":formDialog:editartareaDialog" icon="fa fa-edit"
+								oncomplete="PF('editartareaDialog').show()">
+								<f:setPropertyActionListener value="#{tarea}"
+									target="#{sprintController.tareaSelec}" />
+							</p:commandButton>
+						</p:panel>
+
+						<p:draggable for="pnl1" revert="true" stack=".ui-panel" />
+					</p:dataViewGridItem>
+					<f:facet name="footer">
+			            <p:commandButton value="Nueva tarea" icon="fa fa-plus" 
+							update=":formDialog" oncomplete="PF('editartareaDialog').show()"
+							styleClass="ui-button-success" style="margin-right: .5rem">
+							<p:resetInput target=":formDialog:editartareaDialog" />
+					</p:commandButton>
+			        </f:facet>
+					
+							
+				</p:dataView>
+
+				<p:dataView id="tareasInProgress" var="tarea"
+					value="#{sprintController.tareasInProgress}" rows="1"
+					layout="grid" gridIcon="pi pi-th-large">
+					<f:facet name="header">
+					 <h:outputText value="In Progress"/>		            
+			        </f:facet>
+					<p:dataViewGridItem>
+						<p:panel id="pnl2" header="#{tarea.nombre}" collapsed="true"
+							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true" toggleSpeed="500"
+							styleClass="pnl2">
+							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
+								style="width:100%">
+								<p:outputLabel for="descripcion">Descripcion</p:outputLabel>
+								<h:outputText id="descripcion" value="#{tarea.descripcion}" />
+								<p:separator />
+								<h:outputText value="#{tarea.estimacion}" />
+								<p:separator />
+								<h:outputText value="#{tarea.horasDedicadas}" />
+								<p:separator />
+								<h:outputText value="#{tarea.observaciones}" />
+							</h:panelGrid>
+							<p:commandButton value="Editar" style="background: #5085b1;"
+								update=":formDialog:editartareaDialog" icon="fa fa-edit"
+								oncomplete="PF('editartareaDialog').show()">
+								<f:setPropertyActionListener value="#{tarea}"
+									target="#{sprintController.tareaSelec}" />
+							</p:commandButton>
+						</p:panel>
+
+						<p:draggable for="pnl2" revert="true" stack=".ui-panel" />
+					</p:dataViewGridItem>
+				</p:dataView>
+
+				<p:dataView id="tareasTesting" var="tarea"
+					value="#{sprintController.tareasTesting}" rows="1"
+					layout="grid" gridIcon="pi pi-th-large">
+					<f:facet name="header">			            
+			            <h:outputText value="Probando"/>
+			        </f:facet>
+					<p:dataViewGridItem>
+						<p:panel id="pnl3" header="#{tarea.nombre}" collapsed="true"
+							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true" toggleSpeed="500"
+							styleClass="pnl3">
+							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
+								style="width:100%">
+								<h:outputText id="descripcion" value="#{tarea.descripcion}" />
+								<p:separator />
+								<h:outputText value="#{tarea.estimacion}" />
+								<p:separator />
+								<h:outputText value="#{tarea.horasDedicadas}" />
+								<p:separator />
+								<h:outputText value="#{tarea.observaciones}" />
+							</h:panelGrid>
+							<p:commandButton value="Editar" style="background: #5085b1;"
+								update=":formDialog:editartareaDialog" icon="fa fa-edit"
+								oncomplete="PF('editartareaDialog').show()">
+								<f:setPropertyActionListener value="#{tarea}"
+									target="#{sprintController.tareaSelec}" />
+							</p:commandButton>
+						</p:panel>
+
+						<p:draggable for="pnl3" revert="true" stack=".ui-panel" />
+					</p:dataViewGridItem>
+				</p:dataView>
+
+				<p:dataView id="tareasCompleted" var="tarea"
+					value="#{sprintController.tareasCompletadas}" rows="1"
+					layout="grid" gridIcon="pi pi-th-large">
+					<f:facet name="header">
+			            
+			             <h:outputText value="Completadas"/>
+			        </f:facet>
+					<p:dataViewGridItem>
+						<p:panel id="pnl4" header="#{tarea.nombre}" collapsed="true"
+							toggleable="true" toggleSpeed="500" style="text-align:center; min-width:100%; background: #fffbe9;"
+							styleClass="pnl4">
+							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
+								style="width:100%">
+								<h:outputText id="descripcion" value="#{tarea.descripcion}" />
+								<p:separator />
+								<h:outputText value="#{tarea.estimacion}" />
+								<p:separator />
+								<h:outputText value="#{tarea.horasDedicadas}" />
+								<p:separator />
+								<h:outputText value="#{tarea.observaciones}" />
+							</h:panelGrid>
+							<p:commandButton value="Editar" style="background: #5085b1;"
+								update=":formDialog:editartareaDialog" icon="fa fa-edit"
+								oncomplete="PF('editartareaDialog').show()">
+								<f:setPropertyActionListener value="#{tarea}"
+									target="#{sprintController.tareaSelec}" />
+							</p:commandButton>
+						</p:panel>
+
+						<p:draggable for="pnl4" revert="true" stack=".ui-panel" />
+					</p:dataViewGridItem>
+				</p:dataView>
+
+				<p:droppable for="tareasToDo" tolerance="pointer"
+					activeStyleClass="ui-state-highlight"
+					datasource="tareasInProgress" accept=".pnl2">
+					<p:ajax listener="#{sprintController.tareaToDo}" update="@form" />
+				</p:droppable>
+
+				<p:droppable for="tareasInProgress" tolerance="pointer"
+					activeStyleClass="ui-state-highlight"
+					datasource="tareasToDo" accept=".pnl1">
+					<p:ajax listener="#{sprintController.tareaToDoing}"
+						update="@form" />
+				</p:droppable>
+
+				<p:droppable for="tareasTesting" tolerance="pointer"
+					activeStyleClass="ui-state-highlight"
+					datasource="tareasInProgress" accept=".pnl2">
+					<p:ajax listener="#{sprintController.tareaToTesting}"
+						update="@form" />
+				</p:droppable>
+
+
+				<p:droppable for="tareasCompleted" tolerance="pointer"
+					activeStyleClass="ui-state-highlight"
+					datasource="tareasTesting" accept=".pnl3">
+					<p:ajax listener="#{sprintController.tareaToCompleted}"
+						update="@form" />
+				</p:droppable>
+
+			</p:panelGrid>
+
+
+
+
+		</h:form>
+		<h:form id="formDialog">
+			<p:dialog id="editartareaDialog" header="tarea de Usuario"
+				showEffect="fade" modal="true" widgetVar="editartareaDialog"
+				responsive="true" width="50%">
+				<p:ajax event="close" update=":formDialog:editartareaDialog"
+					resetValues="true" />
+				<p:panelGrid id="containerDialog" columns="1" layout="grid"
+					style="border: 0px;">
+					<p:outputPanel id="manage-tarea-content-nombre" class="ui-fluid">
+						<div class="p-field">
+							<p:outputLabel for="nombre">Nombre</p:outputLabel>
+							<p:inputText id="nombre"
+								value="#{sprintController.tareaSelec.nombre}" required="true" />
+						</div>
+					</p:outputPanel>
+					<p:outputPanel id="manage-tarea-content-desc" class="ui-fluid">
+						<div class="p-field">
+							<p:outputLabel for="descripcion">Descripcion</p:outputLabel>
+							<p:inputTextarea id="descripcion"
+								value="#{sprintController.tareaSelec.descripcion}" rows="9" />
+						</div>
+					</p:outputPanel>
+
+					
+				</p:panelGrid>
+
+				<f:facet name="footer">
+					<p:commandButton value="Cancelar" icon="fa fa-times"
+						onclick="PF('editartareaDialog').hide()"
+						class="ui-button-secondary">
+						<p:resetInput target=":formDialog:editartareaDialog" />
+					</p:commandButton>
+					<p:commandButton value="Guardar" icon="fa fa-check"
+						actionListener="#{sprintController.guardartarea}"
+						oncomplete="PF('editartareaDialog').hide()" update=":form" />
+				</f:facet>
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
 
 </ui:composition>

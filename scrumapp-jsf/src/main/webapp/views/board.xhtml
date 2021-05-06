@@ -7,15 +7,15 @@
 
 	<ui:define name="body">
 		<h:form id="form">
-		
-		<script type="text/javascript">
-		    function handleDrop(event, ui) {
-		        var droppedProduct = ui.draggable;
-		
-		        droppedProduct.fadeOut('fast');
-		    }
-		</script>
-		
+
+			<script type="text/javascript">
+				function handleDrop(event, ui) {
+					var droppedProduct = ui.draggable;
+
+					droppedProduct.fadeOut('fast');
+				}
+			</script>
+
 			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
 
 			<p:panelGrid id="container" columns="1" layout="grid"
@@ -30,126 +30,251 @@
 					</p:menuitem>
 					<p:menuitem value="Sprints" action="gotosprints" title="Sprints">
 					</p:menuitem>
-					<p:menuitem value="Detalles" action="gotoprojectdetails" title="Detalles">
+					<p:menuitem value="Detalles" action="gotoprojectdetails"
+						title="Detalles">
 					</p:menuitem>
 
 				</p:tabMenu>
-				
-				</p:panelGrid>
-				<p:panelGrid id="boardContainer" columns="4" layout="grid" 
-                 style="border: 0px;" >
-                 
-                 
-                 <p:dataView id="historiasUsuarioNew" var="historia" value="#{boardController.historiasUsuarioNuevas}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
-		            <f:facet name="header">
-			            Nuevas
-			        </f:facet>
-		            <p:dataViewGridItem>
-		                <p:panel id="pnl1" header="#{historia.nombre}" style="text-align:center" styleClass="pnl1">
-		                    <h:panelGrid columns="1" style="width:100%">
-		                        <h:outputText value="#{historia.descripcion}"/>
-		                        <h:outputText value="#{historia.estado}"/>
-		                        <h:outputText value="#{historia.prioridad}"/>
-		                        <h:outputText value="#{historia.esfuerzo}"/>
-		                    </h:panelGrid>
-		                </p:panel>
-		
-		                <p:draggable for="pnl1" revert="true" stack=".ui-panel"/>
-		            </p:dataViewGridItem>
-	        	</p:dataView>
-	        	
-	        	<p:dataView id="historiasUsuarioApproved" var="historia" value="#{boardController.historiasUsuarioAprobadas}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
-		            <f:facet name="header">
-			            Aprobadas
-			        </f:facet>
-		            <p:dataViewGridItem>
-		                <p:panel id="pnl2" header="#{historia.nombre}" style="text-align:center" styleClass="pnl2">
-		                    <h:panelGrid columns="1" style="width:100%">
-		                        <h:outputText value="#{historia.descripcion}"/>
-		                        <h:outputText value="#{historia.estado}"/>
-		                        <h:outputText value="#{historia.prioridad}"/>
-		                        <h:outputText value="#{historia.esfuerzo}"/>
-		                    </h:panelGrid>
-		                </p:panel>
-		
-		                <p:draggable for="pnl2" revert="true" stack=".ui-panel"/>
-		            </p:dataViewGridItem>
-	        	</p:dataView>
-	        	
-	        	<p:dataView id="historiasUsuarioCommited" var="historia" value="#{boardController.historiasUsuarioEntregadas}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
-		            <f:facet name="header">
-			            Entregadas
-			        </f:facet>
-		            <p:dataViewGridItem>
-		                <p:panel id="pnl3" header="#{historia.nombre}" style="text-align:center" styleClass="pnl3">
-		                    <h:panelGrid columns="1" style="width:100%">
-		                        <h:outputText value="#{historia.descripcion}"/>
-		                        <h:outputText value="#{historia.estado}"/>
-		                        <h:outputText value="#{historia.prioridad}"/>
-		                        <h:outputText value="#{historia.esfuerzo}"/>
-		                    </h:panelGrid>
-		                </p:panel>
-		
-		                <p:draggable for="pnl3" revert="true" stack=".ui-panel"/>
-		            </p:dataViewGridItem>
-	        	</p:dataView>
-	        	
-	        	<p:dataView id="historiasUsuarioCompleted" var="historia" value="#{boardController.historiasUsuarioCompletadas}" rows="1" layout="grid" gridIcon="pi pi-th-large" >
-		            <f:facet name="header">
-			            Completadas
-			        </f:facet>
-		            <p:dataViewGridItem>
-		                <p:panel id="pnl4" header="#{historia.nombre}" style="text-align:center" styleClass="pnl4">
-		                    <h:panelGrid columns="1" style="width:100%">
-		                        <h:outputText value="#{historia.descripcion}"/>
-		                        <h:outputText value="#{historia.estado}"/>
-		                        <h:outputText value="#{historia.prioridad}"/>
-		                        <h:outputText value="#{historia.esfuerzo}"/>
-		                    </h:panelGrid>
-		                </p:panel>
-		
-		                <p:draggable for="pnl4" revert="true" stack=".ui-panel"/>
-		            </p:dataViewGridItem>
-	        	</p:dataView>
-				
-				<p:droppable for="historiasUsuarioNew" tolerance="pointer" activeStyleClass="ui-state-highlight"
-		                     datasource="historiasUsuarioApproved" accept=".pnl2">
-		            <p:ajax listener="#{boardController.historiaToNew}" update="@form"/>
-		        </p:droppable> 
-	        	
-                <p:droppable for="historiasUsuarioApproved" tolerance="pointer" activeStyleClass="ui-state-highlight"
-		                     datasource="historiasUsuarioNew" accept=".pnl1">
-		            <p:ajax listener="#{boardController.historiaToApproved}" update="@form"/>
-		        </p:droppable>   
-		        
-		        <p:droppable for="historiasUsuarioCommited" tolerance="pointer" activeStyleClass="ui-state-highlight"
-		                     datasource="historiasUsuarioApproved" accept=".pnl2">
-		            <p:ajax listener="#{boardController.historiaToCommited}" update="@form"/>
-		        </p:droppable>    
 
-		        
-		        <p:droppable for="historiasUsuarioCompleted" tolerance="pointer" activeStyleClass="ui-state-highlight"
-		                     datasource="historiasUsuarioCommited" accept=".pnl3">
-		            <p:ajax listener="#{boardController.historiaToCompleted}" update="@form"/>
-		        </p:droppable>
+			</p:panelGrid>
+			<p:panelGrid id="boardContainer" columns="4" layout="grid"
+				columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+				style="border: 0px;">
+
+
+				<p:dataView id="historiasUsuarioNew" var="historia" 
+					value="#{boardController.historiasUsuarioNuevas}" layout="grid">
+					<f:facet name="header">
+			            <h:outputText value="Nuevas"/>
+			        </f:facet>
+					<p:dataViewGridItem>
+						<p:panel id="pnl1" header="#{historia.nombre}" collapsed="true"
+							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true"
+							toggleSpeed="500" styleClass="pnl1">
+							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
+								style="width:100%">
+								<p:outputLabel for="descripcion">Descripcion</p:outputLabel>
+								<h:outputText id="descripcion" value="#{historia.descripcion}" />
+								<p:separator />
+								<h:outputText value="#{historia.estado}" />
+								<p:separator />
+								<h:outputText value="#{historia.prioridad}" />
+								<p:separator />
+								<h:outputText value="#{historia.esfuerzo}" />
+							</h:panelGrid>
+							<p:commandButton value="Editar" style="background: #5085b1;"
+								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
+								oncomplete="PF('editarHistoriaDialog').show()">
+								<f:setPropertyActionListener value="#{historia}"
+									target="#{boardController.historiaSelec}" />
+							</p:commandButton>
+						</p:panel>
+
+						<p:draggable for="pnl1" revert="true" stack=".ui-panel" />
+					</p:dataViewGridItem>
+					<f:facet name="footer">
+			            <p:commandButton value="Nueva Historia" icon="fa fa-plus" 
+							update=":formDialog" oncomplete="PF('editarHistoriaDialog').show()"
+							styleClass="ui-button-success" style="margin-right: .5rem">
+							<p:resetInput target=":formDialog:editarHistoriaDialog" />
+					</p:commandButton>
+			        </f:facet>
+					
+							
+				</p:dataView>
+
+				<p:dataView id="historiasUsuarioApproved" var="historia"
+					value="#{boardController.historiasUsuarioAprobadas}" rows="1"
+					layout="grid" gridIcon="pi pi-th-large">
+					<f:facet name="header">
+					 <h:outputText value="Aprobadas"/>
+			            
+			        </f:facet>
+					<p:dataViewGridItem>
+						<p:panel id="pnl2" header="#{historia.nombre}" collapsed="true"
+							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true" toggleSpeed="500"
+							styleClass="pnl2">
+							<h:panelGrid columns="1" style="width:100%">
+								<h:outputText value="#{historia.descripcion}" />
+								<p:separator />
+								<h:outputText value="#{historia.estado}" />
+								<p:separator />
+								<h:outputText value="#{historia.prioridad}" />
+								<p:separator />
+								<h:outputText value="#{historia.esfuerzo}" />
+							</h:panelGrid>
+							<p:commandButton value="Editar" style="background: #5085b1;"
+								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
+								oncomplete="PF('editarHistoriaDialog').show()">
+								<f:setPropertyActionListener value="#{historia}"
+									target="#{boardController.historiaSelec}" />
+							</p:commandButton>
+						</p:panel>
+
+						<p:draggable for="pnl2" revert="true" stack=".ui-panel" />
+					</p:dataViewGridItem>
+				</p:dataView>
+
+				<p:dataView id="historiasUsuarioCommited" var="historia"
+					value="#{boardController.historiasUsuarioEntregadas}" rows="1"
+					layout="grid" gridIcon="pi pi-th-large">
+					<f:facet name="header">			            
+			            <h:outputText value="Entregadas"/>
+			        </f:facet>
+					<p:dataViewGridItem>
+						<p:panel id="pnl3" header="#{historia.nombre}" collapsed="true"
+							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true" toggleSpeed="500"
+							styleClass="pnl3">
+							<h:panelGrid columns="1" style="width:100%">
+								<h:outputText value="#{historia.descripcion}" />
+								<p:separator />
+								<h:outputText value="#{historia.estado}" />
+								<p:separator />
+								<h:outputText value="#{historia.prioridad}" />
+								<p:separator />
+								<h:outputText value="#{historia.esfuerzo}" />
+							</h:panelGrid>
+							<p:commandButton value="Editar" style="background: #5085b1;"
+								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
+								oncomplete="PF('editarHistoriaDialog').show()">
+								<f:setPropertyActionListener value="#{historia}"
+									target="#{boardController.historiaSelec}" />
+							</p:commandButton>
+						</p:panel>
+
+						<p:draggable for="pnl3" revert="true" stack=".ui-panel" />
+					</p:dataViewGridItem>
+				</p:dataView>
+
+				<p:dataView id="historiasUsuarioCompleted" var="historia"
+					value="#{boardController.historiasUsuarioCompletadas}" rows="1"
+					layout="grid" gridIcon="pi pi-th-large">
+					<f:facet name="header">
+			            
+			             <h:outputText value="Completadas"/>
+			        </f:facet>
+					<p:dataViewGridItem>
+						<p:panel id="pnl4" header="#{historia.nombre}" collapsed="true"
+							toggleable="true" toggleSpeed="500" style="text-align:center; min-width:100%; background: #fffbe9;"
+							styleClass="pnl4">
+							<h:panelGrid columns="1" style="width:100%">
+								<h:outputText value="#{historia.descripcion}" />
+								<p:separator />
+								<h:outputText value="#{historia.estado}" />
+								<p:separator />
+								<h:outputText value="#{historia.prioridad}" />
+								<p:separator />
+								<h:outputText value="#{historia.esfuerzo}" />
+
+							</h:panelGrid>
+							<p:commandButton value="Editar" style="background: #5085b1;"
+								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
+								oncomplete="PF('editarHistoriaDialog').show()">
+								<f:setPropertyActionListener value="#{historia}"
+									target="#{boardController.historiaSelec}" />
+							</p:commandButton>
+						</p:panel>
+
+						<p:draggable for="pnl4" revert="true" stack=".ui-panel" />
+					</p:dataViewGridItem>
+				</p:dataView>
+
+				<p:droppable for="historiasUsuarioNew" tolerance="pointer"
+					activeStyleClass="ui-state-highlight"
+					datasource="historiasUsuarioApproved" accept=".pnl2">
+					<p:ajax listener="#{boardController.historiaToNew}" update="@form" />
+				</p:droppable>
+
+				<p:droppable for="historiasUsuarioApproved" tolerance="pointer"
+					activeStyleClass="ui-state-highlight"
+					datasource="historiasUsuarioNew" accept=".pnl1">
+					<p:ajax listener="#{boardController.historiaToApproved}"
+						update="@form" />
+				</p:droppable>
+
+				<p:droppable for="historiasUsuarioCommited" tolerance="pointer"
+					activeStyleClass="ui-state-highlight"
+					datasource="historiasUsuarioApproved" accept=".pnl2">
+					<p:ajax listener="#{boardController.historiaToCommited}"
+						update="@form" />
+				</p:droppable>
+
+
+				<p:droppable for="historiasUsuarioCompleted" tolerance="pointer"
+					activeStyleClass="ui-state-highlight"
+					datasource="historiasUsuarioCommited" accept=".pnl3">
+					<p:ajax listener="#{boardController.historiaToCompleted}"
+						update="@form" />
+				</p:droppable>
 
 			</p:panelGrid>
 
-			<p:ajaxExceptionHandler type="javax.faces.model.NoRowAvailableException"
-                                update="@form" onexception="PF('exceptionDialog').show()"/>
-                <p:dialog id="exceptionDialog" header="Exception occured!"
-		                  widgetVar="exceptionDialog"
-		                  height="500px">
-		            Error <br/>
-		            No permitido <h:outputText value="Movimiento no permitido" escape="false"/> <br/>
-		
-		            
-		        </p:dialog>
+
 
 
 		</h:form>
-		
-		
+		<h:form id="formDialog">
+			<p:dialog id="editarHistoriaDialog" header="Historia de Usuario"
+				showEffect="fade" modal="true" widgetVar="editarHistoriaDialog"
+				responsive="true" width="50%">
+				<p:ajax event="close" update=":formDialog:editarHistoriaDialog"
+					resetValues="true" />
+				<p:panelGrid id="containerDialog" columns="1" layout="grid"
+					style="border: 0px;">
+					<p:outputPanel id="manage-historia-content-nombre" class="ui-fluid">
+						<div class="p-field">
+							<p:outputLabel for="nombre">Nombre</p:outputLabel>
+							<p:inputText id="nombre"
+								value="#{boardController.historiaSelec.nombre}" required="true" />
+						</div>
+					</p:outputPanel>
+					<p:outputPanel id="manage-historia-content-desc" class="ui-fluid">
+						<div class="p-field">
+							<p:outputLabel for="descripcion">Descripcion</p:outputLabel>
+							<p:inputTextarea id="descripcion"
+								value="#{boardController.historiaSelec.descripcion}" rows="9" />
+						</div>
+					</p:outputPanel>
+					<p:outputPanel id="manage-historia-content-esfuerzo"
+						class="ui-fluid">
+						<div class="p-field">
+							<p:outputLabel for="esfuerzo">Esfuerzo</p:outputLabel>
+							<p:inputText id="esfuerzo"
+								value="#{boardController.historiaSelec.esfuerzo}"
+								required="true" />
+						</div>
+					</p:outputPanel>
+					<p:outputPanel id="manage-historia-content-estado"
+						class="ui-fluid">
+						<div class="p-field">
+							<p:outputLabel for="estado">Estado</p:outputLabel>
+							<p:selectOneMenu id="estado"
+								value="#{boardController.historiaSelec.estado}"
+								required="true" >
+								<f:selectItem itemLabel="Seleccione estado" itemValue=""/>
+			                    <f:selectItem itemLabel="Nueva" itemValue="new"/>
+			                    <f:selectItem itemLabel="Aprobada" itemValue="approved"/>
+			                    <f:selectItem itemLabel="Entregada" itemValue="commited"/>
+			                    <f:selectItem itemLabel="Completada" itemValue="completed"/>
+                    		</p:selectOneMenu>
+						</div>
+					</p:outputPanel>
+					
+				</p:panelGrid>
+
+				<f:facet name="footer">
+					<p:commandButton value="Cancelar" icon="fa fa-times"
+						onclick="PF('editarHistoriaDialog').hide()"
+						class="ui-button-secondary">
+						<p:resetInput target=":formDialog:editarHistoriaDialog" />
+					</p:commandButton>
+					<p:commandButton value="Guardar" icon="fa fa-check"
+						actionListener="#{boardController.guardarHistoria}"
+						oncomplete="PF('editarHistoriaDialog').hide()" update=":form" />
+				</f:facet>
+			</p:dialog>
+		</h:form>
+
 	</ui:define>
 
 </ui:composition>

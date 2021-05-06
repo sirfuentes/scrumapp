@@ -16,8 +16,7 @@ public class HistoriaUsuarioServiceImpl implements HistoriaUsuarioService {
 	
 	@Override
 	public HistoriaUsuario findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return historiaUsuarioRepository.findById(id).orElse(null);
 	}
 
 	@Override

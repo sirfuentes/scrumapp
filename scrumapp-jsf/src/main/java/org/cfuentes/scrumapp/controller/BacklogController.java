@@ -24,6 +24,7 @@ public class BacklogController {
 	HistoriaUsuario historiaSelec;
 	Miembro miembroAuth;
 	Proyecto proyecto;
+	Boolean editando;
 	
 	@Autowired
 	GlobalController globalController;
@@ -39,13 +40,16 @@ public class BacklogController {
 		proyecto = (Proyecto) globalController.getEntidad();
 		//historias = historiaUsuarioService.findByIdProyecto(proyecto.getIdProyecto());
 		historias = historiaUsuarioService.findHistoriaByProyecto(proyecto.getIdProyecto());
+		editando = false;
 	}
 	
 	@PreDestroy
 	public void guardarPrioridades() {
-		for (HistoriaUsuario h : historias) {
-			historiaUsuarioService.saveOrUpdate(h);
-		}	
+		if (editando) {
+			for (HistoriaUsuario h : historias) {
+				historiaUsuarioService.saveOrUpdate(h);
+			}	
+		}
 	}
 	
 	public void guardarHistoria() {
@@ -70,6 +74,7 @@ public class BacklogController {
 	}
 	
 	public void onRowReorder(ReorderEvent event) {
+		editando = true;
 		int i = 1;
 		for (HistoriaUsuario h : historias) {
 			h.setPrioridad(i);

@@ -50,13 +50,14 @@
 
 					<p:column headerText="Acciones" style="text-align: -webkit-center;"
 						width="10%">
-						<p:commandButton icon="fa fa-pencil" update="@form"
+						<p:commandButton icon="fa fa-pencil" update=":dialogForm"
 							oncomplete="PF('editarHistoriaDialog').show()"
 							styleClass="edit-button rounded-button ui-button-success"
 							process="@this"
 							rendered="#{historia.proyecto.productOwner.idMiembro == backlogController.miembroAuth.idMiembro or historia.proyecto.scrumMaster.idMiembro == backlogController.miembroAuth.idMiembro}">
 							<f:setPropertyActionListener value="#{historia}"
 								target="#{backlogController.historiaSelec}" />
+							<p:resetInput target=":dialogForm:editarHistoriaDialog" />
 						</p:commandButton>
 						<p:commandButton icon="fa fa-trash"
 							oncomplete="PF('deleteHistoriaDialog').show()"
@@ -73,8 +74,9 @@
 					<p:toolbarGroup>
 						<p:commandButton value="New" icon="fa fa-plus"
 							actionListener="#{backlogController.nuevaHistoria}"
-							update="@form" oncomplete="PF('editarHistoriaDialog').show()"
+							update="@form :dialogForm" oncomplete="PF('editarHistoriaDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">
+							<p:resetInput target=":dialogForm:editarHistoriaDialog" />
 						</p:commandButton>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -82,10 +84,27 @@
 			</p:panelGrid>
 
 
+			<p:confirmDialog id="deleteHistoriaDialog"
+				widgetVar="deleteHistoriaDialog" showEffect="fade" width="300"
+				responsive="true" message="Desea eliminar la Historia de Usuario?" header="Confirm"
+				severity="warn">
+				<p:commandButton value="Sí" icon="pi pi-check"
+					actionListener="#{backlogController.eliminarHistoria}"
+					process="@this" oncomplete="PF('deleteHistoriaDialog').hide()"
+					update="@form" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-button-secondary" icon="pi pi-times"
+					onclick="PF('deleteHistoriaDialog').hide()" />
+			</p:confirmDialog>
+
+			</h:form>
+			
+			<h:form id="dialogForm">
+
 			<p:dialog id="editarHistoriaDialog" header="Historia de Usuario"
 				showEffect="fade" modal="true" widgetVar="editarHistoriaDialog"
 				responsive="true" width="80%">
-				<p:ajax event="close" update=":form:editarHistoriaDialog" resetValues="true" />
+				<p:ajax event="close" update=":dialogForm:editarHistoriaDialog" resetValues="true" />
 				<p:panelGrid id="containerDialog" columns="1" layout="grid"
 					style="border: 0px;"
 					rendered="#{not empty backlogController.historiaSelec}">
@@ -119,27 +138,16 @@
 					<p:commandButton value="Cancelar" icon="fa fa-times"
 						onclick="PF('editarHistoriaDialog').hide()"
 						class="ui-button-secondary" >
-						<p:resetInput target=":form:editarProyectoDialog" />
+						<p:resetInput target=":dialogForm:editarHistoriaDialog" />
 						</p:commandButton>
 					<p:commandButton value="Guardar" icon="fa fa-check"
 						actionListener="#{backlogController.guardarHistoria}"
-						oncomplete="PF('editarHistoriaDialog').hide()" update="@form" />
+						oncomplete="PF('editarHistoriaDialog').hide()" update=":form" />
 				</f:facet>
 			</p:dialog>
 
 
-			<p:confirmDialog id="deleteHistoriaDialog"
-				widgetVar="deleteHistoriaDialog" showEffect="fade" width="300"
-				responsive="true" message="Desea eliminar la Historia de Usuario?" header="Confirm"
-				severity="warn">
-				<p:commandButton value="Sí" icon="pi pi-check"
-					actionListener="#{backlogController.eliminarHistoria}"
-					process="@this" oncomplete="PF('deleteHistoriaDialog').hide()"
-					update="@form" />
-				<p:commandButton value="No" type="button"
-					styleClass="ui-button-secondary" icon="pi pi-times"
-					onclick="PF('deleteHistoriaDialog').hide()" />
-			</p:confirmDialog>
+			
 		</h:form>
 	</ui:define>
 

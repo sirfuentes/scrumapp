@@ -141,14 +141,6 @@ public class Tarea {
 		this.problemas = problemas;
 	}
 
-	public EstadoTarea getEstadoTarea() {
-		return estadoTarea;
-	}
-
-	public void setEstadoTarea(EstadoTarea estadoTarea) {
-		this.estadoTarea = estadoTarea;
-	}
-
 	public Miembro getDeveloper() {
 		return developer;
 	}
@@ -172,6 +164,15 @@ public class Tarea {
 	public void setSprint(Sprint sprint) {
 		this.sprint = sprint;
 	}
+
+	public EstadoTarea getEstadoTarea() {
+		return estadoTarea;
+	}
+
+	public void setEstadoTarea(EstadoTarea estadoTarea) {
+		this.estadoTarea = estadoTarea;
+	}
+
 	
 	
 }

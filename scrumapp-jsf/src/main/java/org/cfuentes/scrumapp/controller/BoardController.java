@@ -14,6 +14,7 @@ import org.cfuentes.scrumapp.entity.Sprint;
 import org.cfuentes.scrumapp.entity.UsuarioAutenticado;
 import org.cfuentes.scrumapp.service.api.HistoriaUsuarioService;
 import org.cfuentes.scrumapp.service.api.SprintService;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.DragDropEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +31,8 @@ public class BoardController {
 	List<HistoriaUsuario> historiasUsuarioEntregadas;
 	List<HistoriaUsuario> historiasUsuarioCompletadas;
 	Sprint sprintActual;
+	HistoriaUsuario historiaSelec;
+	
 	
 	@Autowired
 	HistoriaUsuarioService historiaUsuarioService;
@@ -50,7 +53,8 @@ public class BoardController {
 			historiasUsuarioAprobadas = historiaUsuarioService.findByProyectoAndEstado(proyecto.getIdProyecto(), "approved");
 			historiasUsuarioEntregadas = historiaUsuarioService.findByProyectoAndEstado(proyecto.getIdProyecto(), "commited");
 			historiasUsuarioCompletadas = historiaUsuarioService.findByProyectoAndEstado(proyecto.getIdProyecto(), "completed");
-		
+			historiaSelec = new HistoriaUsuario();
+			
 	}
 	
 	public void historiaToNew(DragDropEvent<HistoriaUsuario> ddEvent) {
@@ -103,6 +107,70 @@ public class BoardController {
 		else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No permitido", "Ese movimiento no está permitido"));
 		}		
+	}
+
+	public void guardarHistoria() {
+		Boolean nueva = false;
+		HistoriaUsuario old = new HistoriaUsuario();
+		if (historiaSelec.getProyecto()==null) {
+			nueva = true;
+			historiaSelec.setProyecto(proyecto);
+			historiaSelec.setPrioridad(historiaUsuarioService.siguientePrioridad(proyecto.getIdProyecto()) + 1);
+		}
+		
+		
+		
+		if (!nueva) { 
+			
+			old = historiaUsuarioService.findById(historiaSelec.getIdHistoriaUsuario());
+			//si ha cambiado el estado se elimina de la lista anterior y se añade a la actual
+			if (!historiaSelec.getEstado().equals(old.getEstado())) {
+				if (historiasUsuarioNuevas.contains(historiaSelec)) {
+					historiasUsuarioNuevas.remove(historiaSelec);
+				}
+				else if (historiasUsuarioAprobadas.contains(historiaSelec)) {
+					historiasUsuarioAprobadas.remove(historiaSelec);
+				}
+				else if (historiasUsuarioEntregadas.contains(historiaSelec)) {
+					historiasUsuarioEntregadas.remove(historiaSelec);
+				}
+				else if (historiasUsuarioCompletadas.contains(historiaSelec)) {
+					historiasUsuarioCompletadas.remove(historiaSelec);
+				}
+				
+				//se inserta en la lista del estado correspondiente
+				if (historiaSelec.getEstado().equals("new")) {
+					 historiasUsuarioNuevas.add(historiaSelec);
+				 }
+				 else if (historiaSelec.getEstado().equals("approved")) {
+					 historiasUsuarioAprobadas.add(historiaSelec);
+				 }
+				 else if (historiaSelec.getEstado().equals("commited")) {
+					 historiasUsuarioEntregadas.add(historiaSelec);
+				 }
+				 else if (historiaSelec.getEstado().equals("completed")) {
+					 historiasUsuarioCompletadas.add(historiaSelec);
+				 }
+			}
+		}
+		
+		historiaSelec = historiaUsuarioService.saveOrUpdate(historiaSelec);
+		
+		if (nueva) { 
+			if (historiaSelec.getEstado().equals("new")) {
+				 historiasUsuarioNuevas.add(historiaSelec);
+			 }
+			 else if (historiaSelec.getEstado().equals("approved")) {
+				 historiasUsuarioAprobadas.add(historiaSelec);
+			 }
+			 else if (historiaSelec.getEstado().equals("commited")) {
+				 historiasUsuarioEntregadas.add(historiaSelec);
+			 }
+			 else if (historiaSelec.getEstado().equals("completed")) {
+				 historiasUsuarioCompletadas.add(historiaSelec);
+			 }	
+		}
+		
 	}
 
 
@@ -163,6 +231,14 @@ public class BoardController {
 
 	public void setSprintActual(Sprint sprintActual) {
 		this.sprintActual = sprintActual;
+	}
+
+	public HistoriaUsuario getHistoriaSelec() {
+		return historiaSelec;
+	}
+
+	public void setHistoriaSelec(HistoriaUsuario historiaSelec) {
+		this.historiaSelec = historiaSelec;
 	}
 	
 }

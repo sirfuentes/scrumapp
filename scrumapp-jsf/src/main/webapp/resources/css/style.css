@@ -70,3 +70,55 @@
 .ui-tabmenu-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all {
 	background: transparent;
 }
+
+.pnl1 .ui-panel-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+	padding: 8px !important;
+}
+
+.pnl1 .ui-panel-title {
+	margin: 0px !important;
+}
+
+.pnl2 .ui-panel-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+	padding: 8px !important;
+}
+
+.pnl2 .ui-panel-title {
+	margin: 0px !important;
+}
+
+.pnl3 .ui-panel-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+	padding: 8px !important;
+}
+
+.pnl3 .ui-panel-title {
+	margin: 0px !important;
+}
+
+.pnl4 .ui-panel-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+	padding: 8px !important;
+}
+
+.pnl4 .ui-panel-title {
+	margin: 0px !important;
+}
+
+.ui-dataview-column.ui-g-12.ui-md-4 {
+	min-width: 50% !important;
+}
+
+.ui-dataview-layout-options.ui-selectonebutton.ui-buttonset {
+	display: none;
+}
+
+.ui-dataview-header.ui-widget-header.ui-helper-clearfix.ui-corner-top {
+	background: aliceblue;
+}
+
+.ui-dataview-footer.ui-widget-header.ui-corner-bottom {
+	background: aliceblue;
+}
+
+.ui-panel-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+	background: antiquewhite;
+}

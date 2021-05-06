@@ -29,9 +29,6 @@
                         <p:menuitem value="Mis Tickets" 
                                             title="Mis Tickets" style="margin-right:15px;" />
 						                                          
-                        <p:submenu label="Administración" rendered="true" style="margin-right:15px;">
-                            <p:menuitem value="POs" title="POs" action="gotoproductowners"/>
-                        </p:submenu>
                         <p:submenu label="#{proyectoController.miembroAuth.apellidos}, #{proyectoController.miembroAuth.nombre}" style="float: right;" icon="fa fa-fw fa-user">
                        	 		<p:menuitem action="gotoprofile" value="Profile"  immediate="true" icon="fa fa-fw fa-edit" ajax="false"/>
                        	 		<p:menuitem value="Settings" immediate="true" icon="fa fa-fw fa-cog" ajax="false"/>

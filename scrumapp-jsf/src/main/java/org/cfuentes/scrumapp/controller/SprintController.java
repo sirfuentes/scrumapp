@@ -9,132 +9,173 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 import org.cfuentes.scrumapp.entity.HistoriaUsuario;
+import org.cfuentes.scrumapp.entity.Miembro;
+import org.cfuentes.scrumapp.entity.Proyecto;
 import org.cfuentes.scrumapp.entity.Sprint;
+import org.cfuentes.scrumapp.entity.Tarea;
+import org.cfuentes.scrumapp.entity.UsuarioAutenticado;
+import org.cfuentes.scrumapp.service.api.EstadoTareaService;
 import org.cfuentes.scrumapp.service.api.HistoriaUsuarioService;
 import org.cfuentes.scrumapp.service.api.SprintService;
+import org.cfuentes.scrumapp.service.api.TareaService;
 import org.primefaces.event.DragDropEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component("sprintController")
 @ViewScoped
 public class SprintController {
 
-	List<HistoriaUsuario> historiasUsuarioToDo;
-	List<HistoriaUsuario> historiasUsuarioDoing;
-	List<HistoriaUsuario> historiasUsuarioCompleted;
-	List<HistoriaUsuario> historiasUsuarioTesting;
-	HistoriaUsuario historiaSelec;
+	Miembro miembroAuth;
+	Proyecto proyecto;
 	Sprint sprintActual;
+	List<Tarea> tareasToDo;
+	List<Tarea> tareasInProgress;
+	List<Tarea> tareasTesting;
+	List<Tarea> tareasCompletadas;
+	Tarea tareaSelec;
+	
 	@Autowired
-	HistoriaUsuarioService historiaUsuarioService;
+	TareaService tareaService;
+	
+	@Autowired
+	EstadoTareaService estadoTareaService;
 	
 	@Autowired
 	SprintService sprintService;
+	
+	@Autowired
+	GlobalController globalController;
 
 	@PostConstruct
 	public void init() {
-		sprintActual = sprintService.findById(new Long(1));
-		historiasUsuarioToDo = historiaUsuarioService.findBySprintAndEstado(sprintActual.getIdSprint(), "todo");
-		historiasUsuarioDoing = historiaUsuarioService.findBySprintAndEstado(sprintActual.getIdSprint(), "doing");
-		historiasUsuarioCompleted = historiaUsuarioService.findBySprintAndEstado(sprintActual.getIdSprint(), "completed");
-		historiasUsuarioTesting = historiaUsuarioService.findBySprintAndEstado(sprintActual.getIdSprint(), "testing");
+		miembroAuth = ((UsuarioAutenticado)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+		proyecto = (Proyecto) globalController.getEntidad();
+		sprintActual = sprintService.findByProyecto(proyecto.getIdProyecto());
+		tareasToDo = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "todo");
+		tareasInProgress = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "doing");
+		tareasTesting = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "testing");
+		tareasCompletadas = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "completed");
+		tareaSelec = new Tarea();
 	}
 	
-	public void historiaToDo(DragDropEvent<HistoriaUsuario> ddEvent) {
-		HistoriaUsuario historia = ddEvent.getData();
-		if (historia.getEstado().equals("doing")) {
-			historia.setEstado("todo");
-			historiaUsuarioService.saveOrUpdate(historia);
-			historiasUsuarioToDo.add(historia);
-			historiasUsuarioDoing.remove(historia);
+	public void tareaToDo(DragDropEvent<Tarea> ddEvent) {
+		Tarea tarea = ddEvent.getData();
+		if (tarea.getEstadoTarea().getCodigo().equals("doing")) {
+			tarea.setEstadoTarea(estadoTareaService.findEstadoTareaByCodigo("todo"));
+			tareaService.saveOrUpdate(tarea);
+			tareasToDo.add(tarea);
+			tareasInProgress.remove(tarea);
 		}
-		else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No permitido", "Ese movimiento no está permitido"));
-		}		
 	}
-
-	public void historiaToDoing(DragDropEvent<HistoriaUsuario> ddEvent) {
-		HistoriaUsuario historia = ddEvent.getData();
-
-		if (historia.getEstado().equals("todo")) {
-			historia.setEstado("doing");
-			historiaUsuarioService.saveOrUpdate(historia);
-			historiasUsuarioDoing.add(historia);
-			historiasUsuarioToDo.remove(historia);
+	
+	public void tareaToDoing(DragDropEvent<Tarea> ddEvent) {
+		Tarea tarea = ddEvent.getData();
+		if (tarea.getEstadoTarea().getCodigo().equals("todo")) {
+			tarea.setEstadoTarea(estadoTareaService.findEstadoTareaByCodigo("doing"));
+			tareaService.saveOrUpdate(tarea);
+			tareasInProgress.add(tarea);
+			tareasToDo.remove(tarea);
 		}
-		else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No permitido", "Ese movimiento no está permitido"));
+	}
+	
+	public void tareaToTesting(DragDropEvent<Tarea> ddEvent) {
+		Tarea tarea = ddEvent.getData();
+		if (tarea.getEstadoTarea().getCodigo().equals("doing")) {
+			tarea.setEstadoTarea(estadoTareaService.findEstadoTareaByCodigo("testing"));
+			tareaService.saveOrUpdate(tarea);
+			tareasTesting.add(tarea);
+			tareasInProgress.remove(tarea);
 		}
+	}
+	
+	public void tareaToCompleted(DragDropEvent<Tarea> ddEvent) {
+		Tarea tarea = ddEvent.getData();
+		if (tarea.getEstadoTarea().getCodigo().equals("testing")) {
+			tarea.setEstadoTarea(estadoTareaService.findEstadoTareaByCodigo("completed"));
+			tareaService.saveOrUpdate(tarea);
+			tareasCompletadas.add(tarea);
+			tareasTesting.remove(tarea);
+		}
+	}
+	
+	public void guardarHistoria() {
 		
 	}
+
+	public Miembro getMiembroAuth() {
+		return miembroAuth;
+	}
+
+	public void setMiembroAuth(Miembro miembroAuth) {
+		this.miembroAuth = miembroAuth;
+	}
+
+	public Proyecto getProyecto() {
+		return proyecto;
+	}
+
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto = proyecto;
+	}
+
+	public Sprint getSprintActual() {
+		return sprintActual;
+	}
+
+	public void setSprintActual(Sprint sprintActual) {
+		this.sprintActual = sprintActual;
+	}
+
+	public List<Tarea> getTareasToDo() {
+		return tareasToDo;
+	}
+
+	public void setTareasToDo(List<Tarea> tareasToDo) {
+		this.tareasToDo = tareasToDo;
+	}
+
+	public List<Tarea> getTareasInProgress() {
+		return tareasInProgress;
+	}
+
+	public void setTareasInProgress(List<Tarea> tareasInProgress) {
+		this.tareasInProgress = tareasInProgress;
+	}
+
+	public List<Tarea> getTareasTesting() {
+		return tareasTesting;
+	}
+
+	public void setTareasTesting(List<Tarea> tareasTesting) {
+		this.tareasTesting = tareasTesting;
+	}
+
+	public List<Tarea> getTareasCompletadas() {
+		return tareasCompletadas;
+	}
+
+	public void setTareasCompletadas(List<Tarea> tareasCompletadas) {
+		this.tareasCompletadas = tareasCompletadas;
+	}
+
+	public Tarea getTareaSelec() {
+		return tareaSelec;
+	}
+
+	public void setTareaSelec(Tarea tareaSelec) {
+		this.tareaSelec = tareaSelec;
+	}
+
+	public TareaService getTareaService() {
+		return tareaService;
+	}
+
+	public void setTareaService(TareaService tareaService) {
+		this.tareaService = tareaService;
+	}
 	
-	public void historiaToTesting(DragDropEvent<HistoriaUsuario> ddEvent) {
-		HistoriaUsuario historia = ddEvent.getData();
-
-		if (historia.getEstado().equals("doing")) {
-			historia.setEstado("testing");
-			historiaUsuarioService.saveOrUpdate(historia);
-			historiasUsuarioTesting.add(historia);
-			historiasUsuarioDoing.remove(historia);
-		}
-		else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No permitido", "Ese movimiento no está permitido"));
-		}
-	}
 	
-	public void historiaToCompleted(DragDropEvent<HistoriaUsuario> ddEvent) {
-		HistoriaUsuario historia = ddEvent.getData();
-		
-		if (historia.getEstado().equals("testing")) {
-			historia.setEstado("completed");
-			historiaUsuarioService.saveOrUpdate(historia);
-			historiasUsuarioCompleted.add(historia);
-			historiasUsuarioTesting.remove(historia);
-		}
-		else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No permitido", "Ese movimiento no está permitido"));
-		}
-	}
-
-	public List<HistoriaUsuario> getHistoriasUsuarioToDo() {
-		return historiasUsuarioToDo;
-	}
-
-	public void setHistoriasUsuarioToDo(List<HistoriaUsuario> historiasUsuarioToDo) {
-		this.historiasUsuarioToDo = historiasUsuarioToDo;
-	}
-
-	public List<HistoriaUsuario> getHistoriasUsuarioDoing() {
-		return historiasUsuarioDoing;
-	}
-
-	public void setHistoriasUsuarioDoing(List<HistoriaUsuario> historiasUsuarioDoing) {
-		this.historiasUsuarioDoing = historiasUsuarioDoing;
-	}
-
-	public List<HistoriaUsuario> getHistoriasUsuarioCompleted() {
-		return historiasUsuarioCompleted;
-	}
-
-	public void setHistoriasUsuarioCompleted(List<HistoriaUsuario> historiasUsuarioCompleted) {
-		this.historiasUsuarioCompleted = historiasUsuarioCompleted;
-	}
-
-	public List<HistoriaUsuario> getHistoriasUsuarioTesting() {
-		return historiasUsuarioTesting;
-	}
-
-	public void setHistoriasUsuarioTesting(List<HistoriaUsuario> historiasUsuarioTesting) {
-		this.historiasUsuarioTesting = historiasUsuarioTesting;
-	}
-
-	public HistoriaUsuario getHistoriaSelec() {
-		return historiaSelec;
-	}
-
-	public void setHistoriaSelec(HistoriaUsuario historiaSelec) {
-		this.historiaSelec = historiaSelec;
-	}
 
 }
