@@ -43,6 +43,68 @@ public class HistoriaUsuario {
     @Fetch(FetchMode.SUBSELECT)
     private List<Tarea> tareas = new ArrayList<Tarea>();
 
+    
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
+		result = prime * result + ((esfuerzo == null) ? 0 : esfuerzo.hashCode());
+		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
+		result = prime * result + ((idHistoriaUsuario == null) ? 0 : idHistoriaUsuario.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((prioridad == null) ? 0 : prioridad.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HistoriaUsuario other = (HistoriaUsuario) obj;
+		if (descripcion == null) {
+			if (other.descripcion != null)
+				return false;
+		} else if (!descripcion.equals(other.descripcion))
+			return false;
+		if (esfuerzo == null) {
+			if (other.esfuerzo != null)
+				return false;
+		} else if (!esfuerzo.equals(other.esfuerzo))
+			return false;
+		if (estado == null) {
+			if (other.estado != null)
+				return false;
+		} else if (!estado.equals(other.estado))
+			return false;
+		if (idHistoriaUsuario == null) {
+			if (other.idHistoriaUsuario != null)
+				return false;
+		} else if (!idHistoriaUsuario.equals(other.idHistoriaUsuario))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (prioridad == null) {
+			if (other.prioridad != null)
+				return false;
+		} else if (!prioridad.equals(other.prioridad))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "HistoriaUsuario [idHistoriaUsuario=" + idHistoriaUsuario + ", nombre=" + nombre + ", descripcion="
+				+ descripcion + ", esfuerzo=" + esfuerzo + ", estado=" + estado + ", prioridad=" + prioridad + "]";
+	}
+
 	public Long getIdHistoriaUsuario() {
 		return idHistoriaUsuario;
 	}

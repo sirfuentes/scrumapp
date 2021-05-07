@@ -16,32 +16,27 @@ public class TareaServiceImpl implements TareaService{
 	
 	@Override
 	public Tarea findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return tareaRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public List<Tarea> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Tarea>) tareaRepository.findAll();
 	}
 
 	@Override
 	public boolean exists(Tarea entity) {
-		// TODO Auto-generated method stub
-		return false;
+		return tareaRepository.existsById(entity.getIdTarea());
 	}
 
 	@Override
 	public boolean existsById(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		return tareaRepository.existsById(id);
 	}
 
 	@Override
 	public Tarea saveOrUpdate(Tarea entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return tareaRepository.save(entity);
 	}
 
 	@Override

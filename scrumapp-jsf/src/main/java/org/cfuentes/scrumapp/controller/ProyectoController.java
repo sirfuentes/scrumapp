@@ -1,7 +1,8 @@
 package org.cfuentes.scrumapp.controller;
 
-import java.sql.Date;
+
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -68,7 +69,7 @@ public class ProyectoController {
 			nuevo.setNombre("Sprint 1");
 			nuevo.setEstado("current");
 			nuevo.setProyecto(proyectoSelec);
-			nuevo.setFechaInicio(Date.valueOf(LocalDate.now()));
+			nuevo.setFechaInicio(new Date());
 			sprintService.saveOrUpdate(nuevo);
 		}
 	}

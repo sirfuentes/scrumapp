@@ -48,7 +48,7 @@ public class BoardController {
 	public void init() {
 		miembroAuth = ((UsuarioAutenticado)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 		proyecto = (Proyecto) globalController.getEntidad();
-		sprintActual = sprintService.findByProyecto(proyecto.getIdProyecto());
+		sprintActual = sprintService.findLastByProyecto(proyecto.getIdProyecto());
 			historiasUsuarioNuevas = historiaUsuarioService.findByProyectoAndEstado(proyecto.getIdProyecto(), "new");
 			historiasUsuarioAprobadas = historiaUsuarioService.findByProyectoAndEstado(proyecto.getIdProyecto(), "approved");
 			historiasUsuarioEntregadas = historiaUsuarioService.findByProyectoAndEstado(proyecto.getIdProyecto(), "commited");
@@ -171,6 +171,10 @@ public class BoardController {
 			 }	
 		}
 		
+	}
+	
+	public void nuevaHistoria() {
+		historiaSelec = new HistoriaUsuario();
 	}
 
 

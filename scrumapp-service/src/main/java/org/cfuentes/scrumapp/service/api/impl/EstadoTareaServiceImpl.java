@@ -66,4 +66,9 @@ public class EstadoTareaServiceImpl implements EstadoTareaService{
 		return estadoTareaRepository.findEstadoTareaByCodigo(codigo);
 	}
 
+	@Override
+	public EstadoTarea findEstadoTareaByNombre(String nombre) {
+		return estadoTareaRepository.findEstadoTareaByNombre(nombre);
+	}
+
 }

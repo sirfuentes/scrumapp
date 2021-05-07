@@ -67,5 +67,10 @@ public class MiembroServiceImpl implements MiembroService {
 		return miembroRepository.existsByEmail(email);
 	}
 
+//	@Override
+//	public List<Miembro> findMiembroByProyecto(Long idProyecto) {
+//		return miembroRepository.findMiembroByProyecto(idProyecto);
+//	}
+
 
 }

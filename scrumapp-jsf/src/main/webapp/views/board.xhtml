@@ -73,7 +73,8 @@
 						<p:draggable for="pnl1" revert="true" stack=".ui-panel" />
 					</p:dataViewGridItem>
 					<f:facet name="footer">
-			            <p:commandButton value="Nueva Historia" icon="fa fa-plus" 
+			            <p:commandButton value="Nueva Historia" icon="fa fa-plus"
+			           		actionListener="#{boardController.nuevaHistoria}"
 							update=":formDialog" oncomplete="PF('editarHistoriaDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">
 							<p:resetInput target=":formDialog:editarHistoriaDialog" />

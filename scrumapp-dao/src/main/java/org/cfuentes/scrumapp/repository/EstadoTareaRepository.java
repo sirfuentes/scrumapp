@@ -10,4 +10,6 @@ public interface EstadoTareaRepository extends Dao<EstadoTarea, Long> {
 
 	EstadoTarea findEstadoTareaByCodigo(String codigo);
 
+	EstadoTarea findEstadoTareaByNombre(String nombre);
+
 }

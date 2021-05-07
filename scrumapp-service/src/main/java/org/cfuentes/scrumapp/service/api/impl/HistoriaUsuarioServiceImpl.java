@@ -3,6 +3,7 @@ package org.cfuentes.scrumapp.service.api.impl;
 import java.util.List;
 
 import org.cfuentes.scrumapp.entity.HistoriaUsuario;
+import org.cfuentes.scrumapp.entity.Miembro;
 import org.cfuentes.scrumapp.repository.HistoriaUsuarioRepository;
 import org.cfuentes.scrumapp.service.api.HistoriaUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,11 @@ public class HistoriaUsuarioServiceImpl implements HistoriaUsuarioService {
 	@Override
 	public List<HistoriaUsuario> findByProyectoAndEstado(Long idProyecto, String estado) {
 		return historiaUsuarioRepository.findByProyectoAndEstado(idProyecto, estado);
+	}
+
+	@Override
+	public HistoriaUsuario findMiembroByNombre(String value) {
+		return historiaUsuarioRepository.findMiembroByNombre(value);
 	}
 
 }

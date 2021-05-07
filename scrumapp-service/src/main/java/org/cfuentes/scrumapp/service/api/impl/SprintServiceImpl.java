@@ -61,8 +61,14 @@ public class SprintServiceImpl implements SprintService {
 	}
 
 	@Override
-	public Sprint findByProyecto(Long idProyecto) {
-		return sprintRepository.findByProyecto(idProyecto);
+	public List<Sprint> findByProyecto(Long idProyecto) {
+		return sprintRepository.findByProyectoOrderByFechaInicioAsc(idProyecto);
+	}
+	
+	@Override
+	public Sprint findLastByProyecto(Long idProyecto) {
+		Sprint s = sprintRepository.findByProyectoOrderByFechaInicioDesc(idProyecto).get(0);
+		return s;
 	}
 
 }

@@ -7,4 +7,6 @@ public interface EstadoTareaService extends CrudOperations<EstadoTarea, Long> {
 
 	EstadoTarea findEstadoTareaByCodigo(String codigo);
 
+	EstadoTarea findEstadoTareaByNombre(String nombre);
+
 }

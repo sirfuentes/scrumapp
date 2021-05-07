@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.cfuentes.scrumapp.dao.Dao;
 import org.cfuentes.scrumapp.entity.HistoriaUsuario;
+import org.cfuentes.scrumapp.entity.Miembro;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +22,7 @@ public interface HistoriaUsuarioRepository extends Dao<HistoriaUsuario, Long> {
 
 	@Query("SELECT h FROM HistoriaUsuario h WHERE h.proyecto.idProyecto=:idProyecto AND h.estado=:estado")
 	List<HistoriaUsuario> findByProyectoAndEstado(Long idProyecto, String estado);
+
+	HistoriaUsuario findMiembroByNombre(String value);
 	
 }

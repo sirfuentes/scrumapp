@@ -2,8 +2,10 @@ package org.cfuentes.scrumapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import java.util.Date;
+
 import javax.persistence.*;
-import java.sql.Date;
+
 
 @Entity
 @Table(name = "TAREA")

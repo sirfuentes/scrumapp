@@ -1,5 +1,7 @@
 package org.cfuentes.scrumapp.service.api;
 
+import java.util.List;
+
 import org.cfuentes.scrumapp.entity.Miembro;
 import org.cfuentes.scrumapp.service.commons.CrudOperations;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,4 +12,6 @@ public interface MiembroService extends CrudOperations<Miembro, Long> {
 	Miembro findMiembroByEmail(String email);
 
 	Boolean existsByEmail(String email);
+
+//	List<Miembro> findMiembroByProyecto(Long idProyecto);
 }
