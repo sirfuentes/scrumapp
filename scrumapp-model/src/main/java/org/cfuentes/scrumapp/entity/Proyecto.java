@@ -27,6 +27,9 @@ public class Proyecto implements Serializable {
 	private String nombre;
 	
 	@Column
+	private String codigo;
+	
+	@Column
 	private String descripcion;
 	
 	@Column(name = "FECHA_INICIO")
@@ -124,6 +127,14 @@ public class Proyecto implements Serializable {
 
 	public void setHistorias(List<HistoriaUsuario> historias) {
 		this.historias = historias;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 

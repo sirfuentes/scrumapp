@@ -43,7 +43,11 @@
 						</p:commandLink>
 
 					</p:column>
-
+					
+					<p:column headerText="Código" sortBy="#{proyecto.codigo}">
+						<h:outputText value="#{proyecto.codigo}" />
+					</p:column>
+					
 					<p:column headerText="Descripción" sortBy="#{proyecto.descripcion}">
 						<h:outputText value="#{proyecto.descripcion}" />
 					</p:column>
@@ -64,6 +68,8 @@
 							rendered="#{proyecto.productOwner.idMiembro == proyectoController.miembroAuth.idMiembro or proyecto.scrumMaster.idMiembro == proyectoController.miembroAuth.idMiembro}">
 							<f:setPropertyActionListener value="#{proyecto}"
 								target="#{proyectoController.proyectoSelec}" />
+							<f:setPropertyActionListener value="#{true}"
+								target="#{proyectoController.editando}" />
 							<p:resetInput target=":form1:containerDialog" />
 						</p:commandButton>
 						<p:commandButton icon="fa fa-trash"
@@ -85,6 +91,8 @@
 							update="@form :form1" oncomplete="PF('editarProyectoDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">
 							<p:resetInput target=":form1:editarProyectoDialog" />
+						<f:setPropertyActionListener value="#{false}"
+							target="#{proyectoController.editando}" />
 						</p:commandButton>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -195,6 +203,17 @@
 							<p:outputLabel for="fecIni">Fecha de inicio</p:outputLabel>
 							<p:datePicker id="fecIni"
 								value="#{proyectoController.proyectoSelec.fechaInicio}" />
+						</div>
+					</p:outputPanel>
+					
+					<p:outputPanel id="manage-proyecto-content-codigo" class="ui-fluid">
+
+						<div class="p-field">
+							<p:outputLabel for="codigo">Código de proyecto (max. 5 carac.)</p:outputLabel>
+							<p:inputText id="codigo"
+								value="#{proyectoController.proyectoSelec.codigo}"
+								required="true" maxlength="5" onblur="value=value.toUpperCase()"
+								disabled="#{proyectoController.editando}"/>
 						</div>
 					</p:outputPanel>
 

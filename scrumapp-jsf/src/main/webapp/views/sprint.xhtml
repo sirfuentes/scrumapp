@@ -20,7 +20,7 @@
 
 			<p:panelGrid id="container" columns="1" layout="grid"
 				style="border: 0px;">
-				<h:outputText value="#{sprintController.proyecto.nombre}"
+				<h:outputText value="#{sprintController.proyecto.nombre} - #{backlogController.proyecto.codigo}"
 					styleClass="tittle" />
 
 				<p:tabMenu activeIndex="2" style="border: 0px;">
@@ -35,10 +35,19 @@
 					</p:menuitem>
 
 				</p:tabMenu>
-				<p:commandButton value="Cambiar Sprint" icon="fa fa-plus"
+				
+				<p:panelGrid id="sprintTittle" columns="2" layout="grid"
+				style="border: 0px;" columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3">
+				<h:outputText value="#{sprintController.sprintSelec.nombre} | #{sprintController.sprintSelec.estado}"
+					styleClass="subtittle" >
+				</h:outputText>
+
+				<p:commandButton value="Cambiar Sprint" 	
 					update=":sprintsForm" oncomplete="PF('sprintsDialog').show()"
 					styleClass="ui-button-success" style="margin-right: .5rem">
 				</p:commandButton>
+				</p:panelGrid>
+				
 			</p:panelGrid>
 			<p:panelGrid id="taskContainer" columns="4" layout="grid"
 				columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
@@ -78,7 +87,8 @@
 					<f:facet name="footer">
 						<p:commandButton value="Nueva tarea" icon="fa fa-plus"
 							update=":formDialog" oncomplete="PF('editartareaDialog').show()"
-							styleClass="ui-button-success" style="margin-right: .5rem">
+							styleClass="ui-button-success" style="margin-right: .5rem"
+							actionListener="#{sprintController.nuevaTarea}">
 							<p:resetInput target=":formDialog:editartareaDialog" />
 						</p:commandButton>
 					</f:facet>
@@ -332,18 +342,7 @@
 							
 						</p:column>
 						
-						<p:column headerText="Estado" width="20%"
-							sortBy="#{sprint.estado}">
-							
-							<p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{sprint.estado}" />
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="estadoInput" value="#{sprint.estado}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-						</p:column>
+						
 						
 						<p:column headerText="Fecha de inicio"
 							sortBy="#{sprint.fechaInicio}" width="25%">
@@ -355,9 +354,32 @@
 							</h:outputText>
 			                    </f:facet>
 			                    <f:facet name="input">
-			                        <p:datePicker id="fecIni" value="#{sprint.fechaInicio}" />
+			                        <p:datePicker id="fecIni" pattern="dd/MM/yyyy" value="#{sprint.fechaInicio}" />
 			                    </f:facet>
 			                </p:cellEditor>
+						</p:column>
+						
+						<p:column headerText="Fecha de fin"
+							sortBy="#{sprint.fechaFin}" width="25%">
+							
+							<p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{sprint.fechaFin}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</h:outputText>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:datePicker id="fecFin" pattern="dd/MM/yyyy" value="#{sprint.fechaFin}" />
+			                    </f:facet>
+			                </p:cellEditor>
+						</p:column>
+						
+						<p:column headerText="Estado" width="20%"
+							sortBy="#{sprint.estado}">
+							
+							
+			                        <h:outputText value="#{sprint.estado}" />
+			                    
 						</p:column>
 						
 						<p:column headerText="Acciones" style="text-align: -webkit-center;"

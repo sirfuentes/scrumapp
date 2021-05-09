@@ -5,4 +5,6 @@ import org.cfuentes.scrumapp.service.commons.CrudOperations;
 
 public interface ProyectoService extends CrudOperations<Proyecto, Long> {
 
+	Boolean existsByCodigo(String codigo);
+
 }

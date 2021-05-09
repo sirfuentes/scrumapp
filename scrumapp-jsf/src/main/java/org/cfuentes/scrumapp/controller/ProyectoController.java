@@ -2,10 +2,13 @@ package org.cfuentes.scrumapp.controller;
 
 
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 import org.cfuentes.scrumapp.entity.Miembro;
@@ -30,7 +33,7 @@ public class ProyectoController {
 	List<Miembro> developersDisponibles;
 	Proyecto proyectoSelec;
 	Miembro miembroAuth;
-	
+	Boolean editando;
 	
 	@Autowired
 	ProyectoService proyectoService;
@@ -55,10 +58,18 @@ public class ProyectoController {
 	}
 
 	public void guardarProyecto() {
-		boolean editando = false;
+//		boolean editando = false;
+//		
+//		if (proyectoSelec.getIdProyecto() != null) {
+//			editando = true;
+//		}
 		
-		if (proyectoSelec.getIdProyecto() != null) {
-			editando = true;
+		if (!editando) {
+			if (proyectoService.existsByCodigo(proyectoSelec.getCodigo())) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Codigo ya existe", "Ya existe un proyecto con ese código."));
+				return;
+			}
 		}
 		
 		proyectoSelec = proyectoService.saveOrUpdate(proyectoSelec);
@@ -69,7 +80,10 @@ public class ProyectoController {
 			nuevo.setNombre("Sprint 1");
 			nuevo.setEstado("current");
 			nuevo.setProyecto(proyectoSelec);
-			nuevo.setFechaInicio(new Date());
+			Calendar fecIni = Calendar.getInstance();
+			nuevo.setFechaInicio(fecIni.getTime());
+			fecIni.add(Calendar.DAY_OF_YEAR, 30);
+			nuevo.setFechaFin(fecIni.getTime());
 			sprintService.saveOrUpdate(nuevo);
 		}
 	}
@@ -144,6 +158,14 @@ public class ProyectoController {
 
 	public void setDevelopersDisponibles(List<Miembro> developersDisponibles) {
 		this.developersDisponibles = developersDisponibles;
+	}
+
+	public Boolean getEditando() {
+		return editando;
+	}
+
+	public void setEditando(Boolean editando) {
+		this.editando = editando;
 	}
 
 	

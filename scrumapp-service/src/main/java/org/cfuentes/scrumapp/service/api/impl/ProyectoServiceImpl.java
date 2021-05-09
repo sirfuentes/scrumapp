@@ -58,6 +58,12 @@ public class ProyectoServiceImpl implements ProyectoService{
 		proyectoRepository.deleteById(id);
 		
 	}
+
+	@Override
+	public Boolean existsByCodigo(String codigo) {
+		// TODO Auto-generated method stub
+		return proyectoRepository.existsByCodigo(codigo);
+	}
 	
 	
 

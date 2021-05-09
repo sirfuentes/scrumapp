@@ -71,4 +71,9 @@ public class SprintServiceImpl implements SprintService {
 		return s;
 	}
 
+	@Override
+	public Sprint findActualByProyecto(Long idProyecto) {
+		return sprintRepository.findActualByProyecto(idProyecto);
+	}
+
 }

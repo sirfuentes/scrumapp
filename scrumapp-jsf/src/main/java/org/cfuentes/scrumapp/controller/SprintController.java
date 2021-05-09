@@ -2,6 +2,8 @@ package org.cfuentes.scrumapp.controller;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -43,6 +45,7 @@ public class SprintController {
 	List<HistoriaUsuario> historias;
 	List<Sprint> sprints;
 	Tarea tareaSelec;
+	String estadoSprint;
 	
 	@Autowired
 	ProyectoService proyectoService;
@@ -66,7 +69,8 @@ public class SprintController {
 	public void init() {
 		miembroAuth = ((UsuarioAutenticado)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 		proyecto = proyectoService.findById(((Proyecto)globalController.getEntidad()).getIdProyecto());
-		sprintActual = sprintService.findLastByProyecto(proyecto.getIdProyecto());
+//		sprintActual = sprintService.findLastByProyecto(proyecto.getIdProyecto());
+		sprintActual = sprintService.findActualByProyecto(proyecto.getIdProyecto());
 		tareasToDo = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "todo");
 		tareasInProgress = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "doing");
 		tareasTesting = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "testing");
@@ -75,6 +79,10 @@ public class SprintController {
 		developers = proyecto.getDevelopers();
 		historias = proyecto.getHistorias();
 		sprints = sprintService.findByProyecto(proyecto.getIdProyecto());
+		sprintSelec = sprintActual;
+		for (Sprint s : sprints) {
+			insertarEstadoSprint(s);
+		}
 	}
 	
 	public void tareaToDo(DragDropEvent<Tarea> ddEvent) {
@@ -118,11 +126,26 @@ public class SprintController {
 	}
 	
 	public void cambiarSprint() {
-		//sprintActual = 
-		tareasToDo = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "todo");
-		tareasInProgress = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "doing");
-		tareasTesting = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "testing");
-		tareasCompletadas = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "completed");
+		
+		tareasToDo = tareaService.findBySprintAndEstado(sprintSelec.getIdSprint(), "todo");
+		tareasInProgress = tareaService.findBySprintAndEstado(sprintSelec.getIdSprint(), "doing");
+		tareasTesting = tareaService.findBySprintAndEstado(sprintSelec.getIdSprint(), "testing");
+		tareasCompletadas = tareaService.findBySprintAndEstado(sprintSelec.getIdSprint(), "completed");
+		
+		//insertarEstadoSprint(sprintSelec);
+	}
+	
+	public void insertarEstadoSprint(Sprint s) {
+		if (s.getFechaInicio().before(new Date()) && 
+				s.getFechaFin().after(new Date())) {
+			s.setEstado("Actual");		
+		}
+		else if (s.getFechaInicio().after(new Date())) {
+			s.setEstado("Futuro");
+		}
+		else if (s.getFechaFin().before(new Date())) {
+			s.setEstado("Pasado");
+		}
 	}
 	
 	public void nuevoSprint() {
@@ -130,9 +153,16 @@ public class SprintController {
 		nuevo.setNombre(new String("Sprint " + (sprints.size() + 1)));
 		nuevo.setProyecto(proyecto);
 		nuevo.setEstado("future");
-		nuevo.setFechaInicio(sprints.get(sprints.size()-1).getFechaFin());
+		
+		Calendar fecIni = Calendar.getInstance();
+		fecIni.setTime(sprints.get(sprints.size()-1).getFechaFin());
+		fecIni.add(Calendar.DAY_OF_YEAR, 1);
+		nuevo.setFechaInicio(fecIni.getTime());
+		fecIni.add(Calendar.DAY_OF_YEAR, 30);
+		nuevo.setFechaFin(fecIni.getTime());
 		//nuevo.setFechaFin(nuevo.getFechaInicio().after());
 		nuevo = sprintService.saveOrUpdate(nuevo);
+		insertarEstadoSprint(nuevo);
 		sprints.add(nuevo);
 	}
 	
@@ -141,11 +171,16 @@ public class SprintController {
 		 sprintSelec = sprintService.saveOrUpdate(sprintSelec);
 	 }
 	
+	public void nuevaTarea() {
+		tareaSelec = new Tarea();
+		
+	}
+	
 	public void guardarTarea() {
 		Boolean nueva = false;
 		Tarea old;
 		if (tareaSelec.getSprint()==null) {
-			tareaSelec.setSprint(sprintActual);
+			tareaSelec.setSprint(sprintSelec);
 			tareaSelec.setEstadoTarea(estadoTareaService.findEstadoTareaByCodigo("todo"));
 			nueva = true;
 		}
@@ -296,6 +331,14 @@ public class SprintController {
 
 	public void setSprintSelec(Sprint sprintSelec) {
 		this.sprintSelec = sprintSelec;
+	}
+
+	public String getEstadoSprint() {
+		return estadoSprint;
+	}
+
+	public void setEstadoSprint(String estadoSprint) {
+		this.estadoSprint = estadoSprint;
 	}
 	
 	

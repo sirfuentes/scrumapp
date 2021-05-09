@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProyectoRepository extends Dao<Proyecto, Long> {
 
+	Boolean existsByCodigo(String codigo);
+
 }

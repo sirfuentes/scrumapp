@@ -11,5 +11,7 @@ public interface SprintService extends CrudOperations<Sprint, Long> {
 	
 	Sprint findLastByProyecto(Long idProyecto);
 
+	Sprint findActualByProyecto(Long idProyecto);
+
 
 }
