@@ -24,5 +24,7 @@ public interface HistoriaUsuarioRepository extends Dao<HistoriaUsuario, Long> {
 	List<HistoriaUsuario> findByProyectoAndEstado(Long idProyecto, String estado);
 
 	HistoriaUsuario findMiembroByNombre(String value);
+
+	HistoriaUsuario findHistoriaUsuarioByCodigo(String codigo);
 	
 }

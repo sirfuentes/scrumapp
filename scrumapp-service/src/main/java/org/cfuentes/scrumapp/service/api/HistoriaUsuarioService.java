@@ -17,4 +17,6 @@ public interface HistoriaUsuarioService extends CrudOperations<HistoriaUsuario, 
 	List<HistoriaUsuario> findByProyectoAndEstado(Long idProyecto, String estado);
 
 	HistoriaUsuario findMiembroByNombre(String value);
+
+	HistoriaUsuario findHistoriaUsuarioByCodigo(String codigo);
 }

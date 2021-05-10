@@ -155,6 +155,7 @@ public class BoardController {
 		}
 		
 		historiaSelec = historiaUsuarioService.saveOrUpdate(historiaSelec);
+		proyecto.getHistorias().add(historiaSelec);
 		
 		if (nueva) { 
 			if (historiaSelec.getEstado().equals("new")) {
@@ -171,10 +172,13 @@ public class BoardController {
 			 }	
 		}
 		
+		
 	}
 	
 	public void nuevaHistoria() {
 		historiaSelec = new HistoriaUsuario();
+		Integer n = proyecto.getHistorias().size()+1;
+		historiaSelec.setCodigo(new String(proyecto.getCodigo()+"-"+ n));
 	}
 
 

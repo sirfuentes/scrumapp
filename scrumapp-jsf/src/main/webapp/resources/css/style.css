@@ -122,3 +122,11 @@
 .ui-panel-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-all {
 	background: antiquewhite;
 }
+
+#formDialog\:containerEstimacion .ui-panelgrid-cell {
+	padding-left: 0px;
+}
+
+#formDialog\:containerFecIni .ui-panelgrid-cell {
+	padding-left: 0px;
+}

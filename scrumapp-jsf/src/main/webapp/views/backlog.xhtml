@@ -31,7 +31,11 @@
 					draggableRows="true">
 					<p:ajax event="rowReorder"
 						listener="#{backlogController.onRowReorder}" update=":form:msgs :form:container" />
-
+					
+					<p:column headerText="Código">
+						<h:outputText value="#{historia.codigo}" />
+					</p:column>
+					
 					<p:column headerText="Nombre">
 						<h:outputText value="#{historia.nombre}" />
 					</p:column>
@@ -101,7 +105,7 @@
 			
 			<h:form id="dialogForm">
 
-			<p:dialog id="editarHistoriaDialog" header="Historia de Usuario"
+			<p:dialog id="editarHistoriaDialog" header="#{backlogController.historiaSelec.codigo}"
 				showEffect="fade" modal="true" widgetVar="editarHistoriaDialog"
 				responsive="true" width="80%">
 				<p:ajax event="close" update=":dialogForm:editarHistoriaDialog" resetValues="true" />

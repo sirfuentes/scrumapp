@@ -67,10 +67,13 @@ public class BacklogController {
 		else {
 			historiaSelec = historiaUsuarioService.saveOrUpdate(historiaSelec);
 		}
+		proyecto.getHistorias().add(historiaSelec);
 	}
 	
 	public void nuevaHistoria() {
 		historiaSelec = new HistoriaUsuario();
+		Integer n = proyecto.getHistorias().size()+1;
+		historiaSelec.setCodigo(new String(proyecto.getCodigo()+"-"+ n));
 	}
 	
 	public void onRowReorder(ReorderEvent event) {

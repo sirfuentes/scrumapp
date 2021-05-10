@@ -86,4 +86,9 @@ public class HistoriaUsuarioServiceImpl implements HistoriaUsuarioService {
 		return historiaUsuarioRepository.findMiembroByNombre(value);
 	}
 
+	@Override
+	public HistoriaUsuario findHistoriaUsuarioByCodigo(String codigo) {
+		return historiaUsuarioRepository.findHistoriaUsuarioByCodigo(codigo);
+	}
+
 }

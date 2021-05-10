@@ -21,7 +21,7 @@ public class HistoriaConverter implements Converter{
 		if (value == null) {
             return null;
         }
-		HistoriaUsuario historia = historiaUsuarioService.findMiembroByNombre(value);
+		HistoriaUsuario historia = historiaUsuarioService.findHistoriaUsuarioByCodigo(value);
 		if (historia==null) {
             return new HistoriaUsuario();
 		}
@@ -33,7 +33,7 @@ public class HistoriaConverter implements Converter{
 		if (!(value instanceof HistoriaUsuario) || (value == null)) {
             return null;
         }
-		return ((HistoriaUsuario)value).getNombre();
+		return ((HistoriaUsuario)value).getCodigo();
 	}
 
 }

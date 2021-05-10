@@ -48,19 +48,16 @@
 			            <h:outputText value="Nuevas"/>
 			        </f:facet>
 					<p:dataViewGridItem>
-						<p:panel id="pnl1" header="#{historia.nombre}" collapsed="true"
+						<p:panel id="pnl1" header="#{historia.codigo}" collapsed="true"
 							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true"
 							toggleSpeed="500" styleClass="pnl1">
 							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
 								style="width:100%">
-								<p:outputLabel for="descripcion">Descripcion</p:outputLabel>
-								<h:outputText id="descripcion" value="#{historia.descripcion}" />
+								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
-								<h:outputText value="#{historia.estado}" />
+								<h:outputText value="Prioridad: #{historia.prioridad}" />
 								<p:separator />
-								<h:outputText value="#{historia.prioridad}" />
-								<p:separator />
-								<h:outputText value="#{historia.esfuerzo}" />
+								<h:outputText value="Esfuerzo: #{historia.esfuerzo}" />
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
@@ -92,17 +89,15 @@
 			            
 			        </f:facet>
 					<p:dataViewGridItem>
-						<p:panel id="pnl2" header="#{historia.nombre}" collapsed="true"
+						<p:panel id="pnl2" header="#{historia.codigo}" collapsed="true"
 							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true" toggleSpeed="500"
 							styleClass="pnl2">
 							<h:panelGrid columns="1" style="width:100%">
-								<h:outputText value="#{historia.descripcion}" />
+								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
-								<h:outputText value="#{historia.estado}" />
+								<h:outputText value="Prioridad: #{historia.prioridad}" />
 								<p:separator />
-								<h:outputText value="#{historia.prioridad}" />
-								<p:separator />
-								<h:outputText value="#{historia.esfuerzo}" />
+								<h:outputText value="Esfuerzo: #{historia.esfuerzo}" />
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
@@ -123,17 +118,15 @@
 			            <h:outputText value="Entregadas"/>
 			        </f:facet>
 					<p:dataViewGridItem>
-						<p:panel id="pnl3" header="#{historia.nombre}" collapsed="true"
+						<p:panel id="pnl3" header="#{historia.codigo}" collapsed="true"
 							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true" toggleSpeed="500"
 							styleClass="pnl3">
 							<h:panelGrid columns="1" style="width:100%">
-								<h:outputText value="#{historia.descripcion}" />
+								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
-								<h:outputText value="#{historia.estado}" />
+								<h:outputText value="Prioridad: #{historia.prioridad}" />
 								<p:separator />
-								<h:outputText value="#{historia.prioridad}" />
-								<p:separator />
-								<h:outputText value="#{historia.esfuerzo}" />
+								<h:outputText value="Esfuerzo: #{historia.esfuerzo}" />
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
@@ -155,18 +148,15 @@
 			             <h:outputText value="Completadas"/>
 			        </f:facet>
 					<p:dataViewGridItem>
-						<p:panel id="pnl4" header="#{historia.nombre}" collapsed="true"
+						<p:panel id="pnl4" header="#{historia.codigo}" collapsed="true"
 							toggleable="true" toggleSpeed="500" style="text-align:center; min-width:100%; background: #fffbe9;"
 							styleClass="pnl4">
 							<h:panelGrid columns="1" style="width:100%">
-								<h:outputText value="#{historia.descripcion}" />
+								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
-								<h:outputText value="#{historia.estado}" />
+								<h:outputText value="Prioridad: #{historia.prioridad}" />
 								<p:separator />
-								<h:outputText value="#{historia.prioridad}" />
-								<p:separator />
-								<h:outputText value="#{historia.esfuerzo}" />
-
+								<h:outputText value="Esfuerzo: #{historia.esfuerzo}" />
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
@@ -215,7 +205,7 @@
 
 		</h:form>
 		<h:form id="formDialog">
-			<p:dialog id="editarHistoriaDialog" header="Historia de Usuario"
+			<p:dialog id="editarHistoriaDialog" header="#{boardController.historiaSelec.codigo}"
 				showEffect="fade" modal="true" widgetVar="editarHistoriaDialog"
 				responsive="true" width="50%">
 				<p:ajax event="close" update=":formDialog:editarHistoriaDialog"

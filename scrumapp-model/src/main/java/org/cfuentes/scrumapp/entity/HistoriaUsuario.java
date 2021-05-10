@@ -25,6 +25,9 @@ public class HistoriaUsuario {
     private String descripcion;
 
     @Column
+    private String codigo;
+    
+    @Column
     private Integer esfuerzo;
 
     @Column
@@ -44,10 +47,13 @@ public class HistoriaUsuario {
     private List<Tarea> tareas = new ArrayList<Tarea>();
 
     
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
 		result = prime * result + ((esfuerzo == null) ? 0 : esfuerzo.hashCode());
 		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
@@ -66,6 +72,11 @@ public class HistoriaUsuario {
 		if (getClass() != obj.getClass())
 			return false;
 		HistoriaUsuario other = (HistoriaUsuario) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
 		if (descripcion == null) {
 			if (other.descripcion != null)
 				return false;
@@ -168,4 +179,13 @@ public class HistoriaUsuario {
 	public void setTareas(List<Tarea> tareas) {
 		this.tareas = tareas;
 	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+	
 }
