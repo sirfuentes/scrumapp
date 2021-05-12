@@ -55,13 +55,20 @@
 								style="width:100%">
 								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
-								<h:outputText value="Prioridad: #{historia.prioridad}" />
-								<p:separator />
-								<h:outputText value="Esfuerzo: #{historia.esfuerzo}" />
+							<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}">
+							<f:facet name="header">
+								<h:outputText id="header"
+							            value="Tareas" />
+							</f:facet>
+								<p:column style="width:20px">
+							        <h:outputText id="code"
+							            value="#{tarea.nombre}" />
+							    </p:column>
+						    </p:dataTable>
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()">
+								oncomplete="PF('editarHistoriaDialog').show()" action="#{boardController.vacio}">
 								<f:setPropertyActionListener value="#{historia}"
 									target="#{boardController.historiaSelec}" />
 							</p:commandButton>
@@ -101,7 +108,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()">
+								oncomplete="PF('editarHistoriaDialog').show()" action="#{boardController.vacio}">
 								<f:setPropertyActionListener value="#{historia}"
 									target="#{boardController.historiaSelec}" />
 							</p:commandButton>
@@ -130,7 +137,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()">
+								oncomplete="PF('editarHistoriaDialog').show()" action="#{boardController.vacio}">
 								<f:setPropertyActionListener value="#{historia}"
 									target="#{boardController.historiaSelec}" />
 							</p:commandButton>
@@ -160,7 +167,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()">
+								oncomplete="PF('editarHistoriaDialog').show()" action="#{boardController.vacio}">
 								<f:setPropertyActionListener value="#{historia}"
 									target="#{boardController.historiaSelec}" />
 							</p:commandButton>

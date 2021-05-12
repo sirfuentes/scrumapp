@@ -180,6 +180,10 @@ public class BoardController {
 		Integer n = proyecto.getHistorias().size()+1;
 		historiaSelec.setCodigo(new String(proyecto.getCodigo()+"-"+ n));
 	}
+	
+	public void vacio() {
+		
+	}
 
 
 	public Miembro getMiembroAuth() {

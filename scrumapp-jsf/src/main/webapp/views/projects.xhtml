@@ -22,7 +22,7 @@
 
 						<p:outputPanel>
 							<div style="text-align: right;">
-								<p:commandButton id="toggler" type="button" value="Columns"
+								<p:commandButton id="toggler" type="button" value="Mostrar/Ocultar columnas"
 									icon="pi pi-align-justify" />
 								<p:columnToggler datasource="proyectos" trigger="toggler" />
 							</div>
@@ -44,7 +44,7 @@
 
 					</p:column>
 					
-					<p:column headerText="Código" sortBy="#{proyecto.codigo}">
+					<p:column headerText="Código" sortBy="#{proyecto.codigo}" width="10%">
 						<h:outputText value="#{proyecto.codigo}" />
 					</p:column>
 					
@@ -86,7 +86,7 @@
 
 				<p:toolbar style="float:right;">
 					<p:toolbarGroup>
-						<p:commandButton value="New" icon="fa fa-plus" process="@this"
+						<p:commandButton value="Nuevo" icon="fa fa-plus" process="@this"
 							actionListener="#{proyectoController.nuevoProyecto}"
 							update="@form :form1" oncomplete="PF('editarProyectoDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">

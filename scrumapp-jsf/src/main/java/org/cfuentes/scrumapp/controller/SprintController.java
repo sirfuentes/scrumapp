@@ -228,6 +228,10 @@ public class SprintController {
 			tareasCompletadas.add(tareaSelec);
 		}
 	}
+	
+	public void vacio() {
+		
+	}
 
 	public Miembro getMiembroAuth() {
 		return miembroAuth;

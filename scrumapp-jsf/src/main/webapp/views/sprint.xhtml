@@ -75,7 +75,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()">
+								oncomplete="PF('editartareaDialog').show()" actionListener="#{sprintController.vacio}">
 								<f:setPropertyActionListener value="#{tarea}"
 									target="#{sprintController.tareaSelec}" />
 							</p:commandButton>
@@ -117,7 +117,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()">
+								oncomplete="PF('editartareaDialog').show()" actionListener="#{sprintController.vacio}">
 								<f:setPropertyActionListener value="#{tarea}"
 									target="#{sprintController.tareaSelec}" />
 							</p:commandButton>
@@ -149,7 +149,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()">
+								oncomplete="PF('editartareaDialog').show()" actionListener="#{sprintController.vacio}">
 								<f:setPropertyActionListener value="#{tarea}"
 									target="#{sprintController.tareaSelec}" />
 							</p:commandButton>
@@ -183,7 +183,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()">
+								oncomplete="PF('editartareaDialog').show()" actionListener="#{sprintController.vacio}">
 								<f:setPropertyActionListener value="#{tarea}"
 									target="#{sprintController.tareaSelec}" />
 							</p:commandButton>
@@ -331,7 +331,7 @@
 					<p:dataTable id="sprints" widgetVar="sprints" var="sprint"
 						value="#{sprintController.sprints}" size="large" reflow="true"
 						selection="#{sprintController.sprintSelec}" editable="true"
-						rowKey="#{sprint.idSprint}" scrollable="true" rows="10"
+						rowKey="#{sprint.idSprint}" paginator="true" rows="10"
 						rowSelectMode="add" scrollHeight="70%">
 						
 					<p:ajax event="rowEdit" listener="#{sprintController.actualizarSprint}" >
@@ -343,7 +343,7 @@
 
 							<p:outputPanel>
 								<div style="text-align: right;">
-									<p:commandButton id="toggler" type="button" value="Columns"
+									<p:commandButton id="toggler" type="button" value="Mostrar/Ocultar columnas"
 										icon="pi pi-align-justify" />
 									<p:columnToggler datasource="sprints" trigger="toggler" />
 								</div>
@@ -359,7 +359,13 @@
 						<p:column headerText="Nombre" sortBy="#{sprint.nombre}">
 							<p:cellEditor>
 			                    <f:facet name="output">
-			                        <h:outputText value="#{sprint.nombre}" />
+				                    <p:commandLink value="#{sprint.nombre}" update="@form :form"
+										oncomplete="PF('sprintsDialog').hide()"
+										styleClass="edit-button rounded-button ui-button-success"
+										process="@this" action="#{sprintController.cambiarSprint}">
+										<f:setPropertyActionListener value="#{sprint}"
+											target="#{sprintController.sprintSelec}" />
+			                        </p:commandLink>
 			                    </f:facet>
 			                    <f:facet name="input">
 			                        <p:inputText id="nombreInput" value="#{sprint.nombre}" style="width:100%"/>

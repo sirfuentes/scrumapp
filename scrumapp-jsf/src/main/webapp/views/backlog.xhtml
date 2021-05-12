@@ -27,10 +27,15 @@
 				</p:tabMenu>
 
 
-				<p:dataTable var="historia" value="#{backlogController.historias}"
+				<p:dataTable var="historia" value="#{backlogController.historias}" class="tableOrderable"
 					draggableRows="true">
 					<p:ajax event="rowReorder"
 						listener="#{backlogController.onRowReorder}" update=":form:msgs :form:container" />
+					
+					<p:column style="width:20px">
+				        <h:outputText id="dragIcon"
+				            styleClass="ui-icon ui-icon-arrow-4" />
+				    </p:column>
 					
 					<p:column headerText="Código">
 						<h:outputText value="#{historia.codigo}" />
