@@ -15,7 +15,7 @@
                      style="text-align: -webkit-center; width: 400px;margin: 250px 250px 250px 250px; align: center;"
                      columns="1" styleClass="ui-fluid center ui-noborder">
 
-            <h2>Please login</h2>
+            <h2>#{msg['login.loginTitle']}</h2>
 			
 			<p:tooltip/>
             <p:outputLabel value="Login failed!" style="color: red;"
@@ -24,11 +24,14 @@
             <p:inputText id="username" placeholder="#{msg['login.email']}" />
             <p:password id="password" placeholder="#{msg['login.password']}" />
 
-            <p:commandButton value="Login" ajax="false" />
+            <p:commandButton value="#{msg['login.button.login']}" ajax="false" />
             
+            <h:button value="#{msg['login.button.register']}" outcome="gotoregister" style="height: 30px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
             
         </p:panelGrid>
 
     </h:form>
+    
 </h:body>
+
 </html>
