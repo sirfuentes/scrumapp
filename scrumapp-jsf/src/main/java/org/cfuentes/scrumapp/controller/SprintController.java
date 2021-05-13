@@ -23,6 +23,7 @@ import org.cfuentes.scrumapp.service.api.MiembroService;
 import org.cfuentes.scrumapp.service.api.ProyectoService;
 import org.cfuentes.scrumapp.service.api.SprintService;
 import org.cfuentes.scrumapp.service.api.TareaService;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,7 @@ public class SprintController {
 		proyecto = proyectoService.findById(((Proyecto)globalController.getEntidad()).getIdProyecto());
 //		sprintActual = sprintService.findLastByProyecto(proyecto.getIdProyecto());
 		sprintActual = sprintService.findActualByProyecto(proyecto.getIdProyecto());
+		sprintActual = sprintService.findLastByProyecto(proyecto.getIdProyecto());
 		tareasToDo = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "todo");
 		tareasInProgress = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "doing");
 		tareasTesting = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "testing");
@@ -92,6 +94,8 @@ public class SprintController {
 			tareaService.saveOrUpdate(tarea);
 			tareasToDo.add(tarea);
 			tareasInProgress.remove(tarea);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Tarea movida a nueva", tarea.getNombre() + " se ha movido a nueva correctamente."));
 		}
 	}
 	
@@ -102,6 +106,8 @@ public class SprintController {
 			tareaService.saveOrUpdate(tarea);
 			tareasInProgress.add(tarea);
 			tareasToDo.remove(tarea);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Tarea en progreso", tarea.getNombre() + " se ha movido a en progreso."));
 		}
 	}
 	
@@ -112,6 +118,8 @@ public class SprintController {
 			tareaService.saveOrUpdate(tarea);
 			tareasTesting.add(tarea);
 			tareasInProgress.remove(tarea);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Tarea en pruebas", tarea.getNombre() + " se ha movido a testing."));
 		}
 	}
 	
@@ -122,6 +130,8 @@ public class SprintController {
 			tareaService.saveOrUpdate(tarea);
 			tareasCompletadas.add(tarea);
 			tareasTesting.remove(tarea);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Tarea completada", tarea.getNombre() + " se ha movido a completada."));
 		}
 	}
 	
@@ -132,6 +142,8 @@ public class SprintController {
 		tareasTesting = tareaService.findBySprintAndEstado(sprintSelec.getIdSprint(), "testing");
 		tareasCompletadas = tareaService.findBySprintAndEstado(sprintSelec.getIdSprint(), "completed");
 		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Se ha cambiado de sprint", "Mostrando: " + sprintSelec.getNombre()));		
 		//insertarEstadoSprint(sprintSelec);
 	}
 	
@@ -164,11 +176,19 @@ public class SprintController {
 		nuevo = sprintService.saveOrUpdate(nuevo);
 		insertarEstadoSprint(nuevo);
 		sprints.add(nuevo);
+		PrimeFaces.current().ajax().update("sprintsForm:sprints");
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Sprint creado", sprintSelec.getNombre() + " se ha añadido correctamente."));	
 	}
 	
 	 public void actualizarSprint(RowEditEvent<Sprint> event) {
-		 sprintSelec = event.getObject();
+		 sprintSelec = event.getObject();		 
+		 insertarEstadoSprint(sprintSelec);
 		 sprintSelec = sprintService.saveOrUpdate(sprintSelec);
+		 PrimeFaces.current().ajax().update("sprintsForm:sprints");
+//		 FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("");
+		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Sprint modificado", sprintSelec.getNombre() + " se ha editado correctamente."));	
 	 }
 	
 	public void nuevaTarea() {
@@ -205,12 +225,16 @@ public class SprintController {
 				insertarTareaPorEstado();
 				
 			}
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Tarea modificada", tareaSelec.getNombre() + " se ha editado correctamente."));	
 		}
 		
 		tareaSelec = tareaService.saveOrUpdate(tareaSelec);
 		
 		if (nueva) {			
 			insertarTareaPorEstado();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Tarea creada", tareaSelec.getNombre() + " se ha guardado correctamente."));
 		}
 	}
 	
@@ -228,9 +252,10 @@ public class SprintController {
 			tareasCompletadas.add(tareaSelec);
 		}
 	}
-	
-	public void vacio() {
-		
+
+	public void eliminarSprint() {
+		sprints.remove(sprintSelec);
+		sprintService.delete(sprintSelec);
 	}
 
 	public Miembro getMiembroAuth() {

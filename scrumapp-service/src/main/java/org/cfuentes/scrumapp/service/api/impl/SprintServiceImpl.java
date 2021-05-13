@@ -50,7 +50,7 @@ public class SprintServiceImpl implements SprintService {
 
 	@Override
 	public void delete(Sprint entity) {
-		// TODO Auto-generated method stub
+		sprintRepository.delete(entity);
 		
 	}
 

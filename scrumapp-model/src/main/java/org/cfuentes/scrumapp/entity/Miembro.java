@@ -48,9 +48,6 @@ public class Miembro implements Serializable {
 
     @Column
     private String rol;
-
-    @Column(name = "FECHA_NACIMIENTO")
-    private Date fechaNacimiento;
     
     @ManyToMany(mappedBy = "developers")
 	private List<Proyecto> proyectosAsDev;
@@ -85,7 +82,6 @@ public class Miembro implements Serializable {
 		int result = 1;
 		result = prime * result + ((apellidos == null) ? 0 : apellidos.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
 		result = prime * result + ((idMiembro == null) ? 0 : idMiembro.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
@@ -111,11 +107,6 @@ public class Miembro implements Serializable {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
-			return false;
-		if (fechaNacimiento == null) {
-			if (other.fechaNacimiento != null)
-				return false;
-		} else if (!fechaNacimiento.equals(other.fechaNacimiento))
 			return false;
 		if (idMiembro == null) {
 			if (other.idMiembro != null)
@@ -143,7 +134,7 @@ public class Miembro implements Serializable {
 	@Override
 	public String toString() {
 		return "Miembro [idMiembro=" + idMiembro + ", email=" + email + ", nombre=" + nombre + ", apellidos="
-				+ apellidos + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + "]";
+				+ apellidos + ", telefono=" + telefono + "]";
 	}
 
 	public Long getIdMiembro() {
@@ -200,14 +191,6 @@ public class Miembro implements Serializable {
 
     public void setRol(String rol) {
         this.rol = rol;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public List<GrantedAuthority> getRoles() {

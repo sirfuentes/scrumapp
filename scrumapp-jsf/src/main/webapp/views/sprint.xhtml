@@ -75,7 +75,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()" actionListener="#{sprintController.vacio}">
+								oncomplete="PF('editartareaDialog').show()">
 								<f:setPropertyActionListener value="#{tarea}"
 									target="#{sprintController.tareaSelec}" />
 							</p:commandButton>
@@ -117,7 +117,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()" actionListener="#{sprintController.vacio}">
+								oncomplete="PF('editartareaDialog').show()">
 								<f:setPropertyActionListener value="#{tarea}"
 									target="#{sprintController.tareaSelec}" />
 							</p:commandButton>
@@ -149,7 +149,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()" actionListener="#{sprintController.vacio}">
+								oncomplete="PF('editartareaDialog').show()">
 								<f:setPropertyActionListener value="#{tarea}"
 									target="#{sprintController.tareaSelec}" />
 							</p:commandButton>
@@ -183,7 +183,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()" actionListener="#{sprintController.vacio}">
+								oncomplete="PF('editartareaDialog').show()">
 								<f:setPropertyActionListener value="#{tarea}"
 									target="#{sprintController.tareaSelec}" />
 							</p:commandButton>
@@ -311,7 +311,7 @@
 				<f:facet name="footer">
 					<p:commandButton value="Cancelar" icon="fa fa-times"
 						onclick="PF('editartareaDialog').hide()"
-						class="ui-button-secondary">
+						styleClass="ui-button-red" style="margin-right: 10px;">
 						<p:resetInput target=":formDialog:editartareaDialog" />
 					</p:commandButton>
 					<p:commandButton value="Guardar" icon="fa fa-check"
@@ -322,7 +322,7 @@
 		</h:form>
 
 		<h:form id="sprintsForm">
-			<p:dialog id="sprintsDialog" header="Sprints" showEffect="fade"
+			<p:dialog id="sprintsDialog" header="Sprints" showEffect="fade" closable="false"
 				modal="true" widgetVar="sprintsDialog" responsive="true" width="70%">
 				<p:ajax event="close" update="@form" resetValues="true" />
 				<p:panelGrid id="containerDialog" columns="1" layout="grid"
@@ -416,16 +416,15 @@
 						
 						<p:column headerText="Acciones" style="text-align: -webkit-center;"
 						width="10%">
-						
-						 <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-						
-						<p:commandLink value="Ir a" update="@form :form"
-							oncomplete="PF('sprintsDialog').hide()"
-							styleClass="edit-button rounded-button ui-button-success"
-							process="@this" action="#{sprintController.cambiarSprint}">
+						 <p:rowEditor styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-success" editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row">
+						</p:rowEditor>						
+						<p:commandButton icon="fa fa-trash" style="top: 3px;"							
+							styleClass="edit-button rounded-button ui-button-success ui-button-red"
+							process="@this" oncomplete="PF('deleteSprintDialog').show()"
+							rendered="#{sprint.proyecto.productOwner.idMiembro == sprintController.miembroAuth.idMiembro or sprint.proyecto.scrumMaster.idMiembro == sprintController.miembroAuth.idMiembro}">			
 							<f:setPropertyActionListener value="#{sprint}"
-								target="#{sprintController.sprintSelec}" />
-						</p:commandLink>
+								target="#{sprintController.sprintSelec}" />				
+						</p:commandButton>
 						
 					</p:column>
 					
@@ -437,12 +436,27 @@
 							actionListener="#{sprintController.nuevoSprint}"
 							update="sprints" styleClass="ui-button-success" style="margin-right: .5rem">
 						</p:commandButton>
+						
+						
 					</p:toolbarGroup>
 				</p:toolbar>
 				</p:panelGrid>
 
 
 			</p:dialog>
+			
+			<p:confirmDialog id="deleteSprintDialog"
+				widgetVar="deleteSprintDialog" showEffect="fade" width="300"
+				responsive="true" message="Desea eliminar el Sprint &quot;#{sprintController.sprintSelec.nombre}&quot;?" header="Confirm"
+				severity="warn">
+				<p:commandButton value="Sí" icon="pi pi-check"
+					actionListener="#{sprintController.eliminarSprint}"
+					process="@this" oncomplete="PF('deleteSprintDialog').hide()"
+					update="sprints" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-button-secondary" icon="pi pi-times"
+					onclick="PF('deleteSprintDialog').hide()" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 

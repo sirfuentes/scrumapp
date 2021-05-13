@@ -30,7 +30,6 @@
             <p:inputText id="nombre"  value="#{loginController.miembroRegistro.nombre}" placeholder="#{msg['register.nombre.required']}" required="true" label="#{msg['register.nombre']}"/>
             <p:inputText id="apellidos"  value="#{loginController.miembroRegistro.apellidos}" placeholder="#{msg['register.apellidos']}"/>
             <p:inputText id="telefono" value="#{loginController.miembroRegistro.telefono}" placeholder="#{msg['register.telefono']}"/>
-            <p:datePicker id="fnac" value="#{loginController.miembroRegistro.fechaNacimiento}" placeholder="#{msg['register.fechaNacimiento']}" pattern="dd/MM/yyyy" yearRange="1930:2010" monthNavigator="true" yearNavigator="true" />
 
             <p:commandButton value="#{msg['register.registerButton']}" action="#{loginController.register}" update="@form"/>
             

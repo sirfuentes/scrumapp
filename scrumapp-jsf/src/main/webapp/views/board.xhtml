@@ -55,7 +55,7 @@
 								style="width:100%">
 								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
-							<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}">
+							<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}" class="tablatareas">
 							<f:facet name="header">
 								<h:outputText id="header"
 							            value="Tareas" />
@@ -68,7 +68,7 @@
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()" action="#{boardController.vacio}">
+								oncomplete="PF('editarHistoriaDialog').show()">
 								<f:setPropertyActionListener value="#{historia}"
 									target="#{boardController.historiaSelec}" />
 							</p:commandButton>
@@ -89,7 +89,7 @@
 				</p:dataView>
 
 				<p:dataView id="historiasUsuarioApproved" var="historia"
-					value="#{boardController.historiasUsuarioAprobadas}" rows="1"
+					value="#{boardController.historiasUsuarioAprobadas}"
 					layout="grid" gridIcon="pi pi-th-large">
 					<f:facet name="header">
 					 <h:outputText value="Aprobadas"/>
@@ -102,13 +102,20 @@
 							<h:panelGrid columns="1" style="width:100%">
 								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
-								<h:outputText value="Prioridad: #{historia.prioridad}" />
-								<p:separator />
-								<h:outputText value="Esfuerzo: #{historia.esfuerzo}" />
+								<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}" class="tablatareas">
+							<f:facet name="header">
+								<h:outputText id="header"
+							            value="Tareas" />
+							</f:facet>
+								<p:column style="width:20px">
+							        <h:outputText id="code"
+							            value="#{tarea.nombre}" />
+							    </p:column>
+						    </p:dataTable>
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()" action="#{boardController.vacio}">
+								oncomplete="PF('editarHistoriaDialog').show()">
 								<f:setPropertyActionListener value="#{historia}"
 									target="#{boardController.historiaSelec}" />
 							</p:commandButton>
@@ -119,7 +126,7 @@
 				</p:dataView>
 
 				<p:dataView id="historiasUsuarioCommited" var="historia"
-					value="#{boardController.historiasUsuarioEntregadas}" rows="1"
+					value="#{boardController.historiasUsuarioEntregadas}"
 					layout="grid" gridIcon="pi pi-th-large">
 					<f:facet name="header">			            
 			            <h:outputText value="Entregadas"/>
@@ -131,13 +138,20 @@
 							<h:panelGrid columns="1" style="width:100%">
 								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
-								<h:outputText value="Prioridad: #{historia.prioridad}" />
-								<p:separator />
-								<h:outputText value="Esfuerzo: #{historia.esfuerzo}" />
+								<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}" class="tablatareas">
+							<f:facet name="header">
+								<h:outputText id="header"
+							            value="Tareas" />
+							</f:facet>
+								<p:column style="width:20px">
+							        <h:outputText id="code"
+							            value="#{tarea.nombre}" />
+							    </p:column>
+						    </p:dataTable>
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()" action="#{boardController.vacio}">
+								oncomplete="PF('editarHistoriaDialog').show()">
 								<f:setPropertyActionListener value="#{historia}"
 									target="#{boardController.historiaSelec}" />
 							</p:commandButton>
@@ -148,7 +162,7 @@
 				</p:dataView>
 
 				<p:dataView id="historiasUsuarioCompleted" var="historia"
-					value="#{boardController.historiasUsuarioCompletadas}" rows="1"
+					value="#{boardController.historiasUsuarioCompletadas}"
 					layout="grid" gridIcon="pi pi-th-large">
 					<f:facet name="header">
 			            
@@ -161,13 +175,20 @@
 							<h:panelGrid columns="1" style="width:100%">
 								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
-								<h:outputText value="Prioridad: #{historia.prioridad}" />
-								<p:separator />
-								<h:outputText value="Esfuerzo: #{historia.esfuerzo}" />
+								<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}" class="tablatareas">
+							<f:facet name="header">
+								<h:outputText id="header"
+							            value="Tareas" />
+							</f:facet>
+								<p:column style="width:20px">
+							        <h:outputText id="code"
+							            value="#{tarea.nombre}" />
+							    </p:column>
+						    </p:dataTable>
 							</h:panelGrid>
 							<p:commandButton value="Editar" style="background: #5085b1;"
 								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()" action="#{boardController.vacio}">
+								oncomplete="PF('editarHistoriaDialog').show()">
 								<f:setPropertyActionListener value="#{historia}"
 									target="#{boardController.historiaSelec}" />
 							</p:commandButton>
@@ -263,7 +284,7 @@
 				<f:facet name="footer">
 					<p:commandButton value="Cancelar" icon="fa fa-times"
 						onclick="PF('editarHistoriaDialog').hide()"
-						class="ui-button-secondary">
+						styleClass="ui-button-red" style="margin-right: 10px;">
 						<p:resetInput target=":formDialog:editarHistoriaDialog" />
 					</p:commandButton>
 					<p:commandButton value="Guardar" icon="fa fa-check"

@@ -67,7 +67,7 @@ public class ProyectoController {
 		if (!editando) {
 			if (proyectoService.existsByCodigo(proyectoSelec.getCodigo())) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Codigo ya existe", "Ya existe un proyecto con ese código."));
+						"Código repetido", "Ya existe un proyecto con ese código."));
 				return;
 			}
 		}
@@ -84,13 +84,21 @@ public class ProyectoController {
 			nuevo.setFechaInicio(fecIni.getTime());
 			fecIni.add(Calendar.DAY_OF_YEAR, 30);
 			nuevo.setFechaFin(fecIni.getTime());
-			sprintService.saveOrUpdate(nuevo);
+			nuevo = sprintService.saveOrUpdate(nuevo);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Proyecto creado", proyectoSelec.getCodigo() + " se ha creado correctamente."));
+		}
+		if (editando) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Proyecto editado", proyectoSelec.getCodigo() + " se ha editado correctamente."));
 		}
 	}
 
 	public void eliminarProyecto() {
 		proyectoService.delete(proyectoSelec);
 		proyectos = proyectoService.findAll();
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Proyecto eliminado", proyectoSelec.getCodigo() + " se ha borrado correctamente."));
 	}
 
 	public void nuevoProyecto() {

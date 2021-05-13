@@ -134,6 +134,28 @@
 .tableOrderable tbody {
 	cursor:move;
 }
-.ui-panel-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+.ui-panel.ui-widget.ui-widget-content.ui-corner-all.ui-draggable.ui-draggable-handle {
 	cursor:move;
+}
+.ui-row-editor-pencil {
+    height: 27px;
+    width: 32px;
+}
+.tablatareas .ui-datatable-header.ui-widget-header.ui-corner-top {
+	background: bisque;	
+}
+.tablatareas .ui-widget-content.ui-datatable-even {
+	background: #f7ebdd;
+}
+
+.tablatareas .ui-widget-content.ui-datatable-odd {
+	background: #e8d3b9;
+}
+
+.tablatareas thead {
+	display: none;
+}
+
+.ui-dialog {
+	top: 110px;
 }

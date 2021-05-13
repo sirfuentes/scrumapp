@@ -64,6 +64,8 @@ public class BoardController {
 			historiaUsuarioService.saveOrUpdate(historia);
 			historiasUsuarioNuevas.add(historia);
 			historiasUsuarioAprobadas.remove(historia);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Historia de usuario movida a nueva", historia.getCodigo() + " se ha movido a nueva correctamente."));
 		}
 		else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No permitido", "Ese movimiento no está permitido"));
@@ -77,6 +79,8 @@ public class BoardController {
 			historiaUsuarioService.saveOrUpdate(historia);
 			historiasUsuarioAprobadas.add(historia);
 			historiasUsuarioNuevas.remove(historia);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Historia de usuario aprobada", historia.getCodigo() + " se ha movido a aprobada correctamente."));
 		}
 		else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No permitido", "Ese movimiento no está permitido"));
@@ -90,6 +94,8 @@ public class BoardController {
 			historiaUsuarioService.saveOrUpdate(historia);
 			historiasUsuarioEntregadas.add(historia);
 			historiasUsuarioAprobadas.remove(historia);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Historia de usuario entregada", historia.getCodigo() + " se ha movido a entregada correctamente."));
 		}
 		else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No permitido", "Ese movimiento no está permitido"));
@@ -103,6 +109,8 @@ public class BoardController {
 			historiaUsuarioService.saveOrUpdate(historia);
 			historiasUsuarioCompletadas.add(historia);
 			historiasUsuarioEntregadas.remove(historia);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Historia de usuario completada", historia.getCodigo() + " se ha movido a completada correctamente."));
 		}
 		else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No permitido", "Ese movimiento no está permitido"));
@@ -152,6 +160,8 @@ public class BoardController {
 					 historiasUsuarioCompletadas.add(historiaSelec);
 				 }
 			}
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Historia de usuario modificada", historiaSelec.getCodigo() + " se ha modificado correctamente."));
 		}
 		
 		historiaSelec = historiaUsuarioService.saveOrUpdate(historiaSelec);
@@ -169,20 +179,16 @@ public class BoardController {
 			 }
 			 else if (historiaSelec.getEstado().equals("completed")) {
 				 historiasUsuarioCompletadas.add(historiaSelec);
-			 }	
+			 }
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Nueva historia de usuario creada", historiaSelec.getCodigo() + " se ha añadido correctamente."));
 		}
-		
-		
 	}
 	
 	public void nuevaHistoria() {
 		historiaSelec = new HistoriaUsuario();
 		Integer n = proyecto.getHistorias().size()+1;
 		historiaSelec.setCodigo(new String(proyecto.getCodigo()+"-"+ n));
-	}
-	
-	public void vacio() {
-		
 	}
 
 

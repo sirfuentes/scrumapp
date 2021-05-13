@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 import org.cfuentes.scrumapp.entity.HistoriaUsuario;
@@ -68,6 +70,8 @@ public class BacklogController {
 			historiaSelec = historiaUsuarioService.saveOrUpdate(historiaSelec);
 		}
 		proyecto.getHistorias().add(historiaSelec);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Nueva historia de usuario creada", historiaSelec.getCodigo() + " se ha añadido correctamente."));
 	}
 	
 	public void nuevaHistoria() {
@@ -88,6 +92,8 @@ public class BacklogController {
 	public void eliminarHistoria() {
 		historias.remove(historiaSelec);
 		historiaUsuarioService.delete(historiaSelec);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Historia de usuario eliminada", historiaSelec.getCodigo() + " se ha borrado correctamente."));
 	}
 	
 	public Proyecto getProyecto() {
