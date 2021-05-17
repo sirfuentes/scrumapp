@@ -157,5 +157,13 @@
 }
 
 .ui-dialog {
-	top: 110px;
+	top: 200px !important;
+}
+
+.ui-row-editor.ui-helper-clearfix.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only.ui-button-success{
+	text-align: inherit;
+}
+
+.ui-icon.ui-icon-pencil {
+	top: 4px;
 }

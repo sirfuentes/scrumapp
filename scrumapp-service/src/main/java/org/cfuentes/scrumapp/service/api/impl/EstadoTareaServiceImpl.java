@@ -21,8 +21,7 @@ public class EstadoTareaServiceImpl implements EstadoTareaService{
 
 	@Override
 	public List<EstadoTarea> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<EstadoTarea>) estadoTareaRepository.findAll();
 	}
 
 	@Override

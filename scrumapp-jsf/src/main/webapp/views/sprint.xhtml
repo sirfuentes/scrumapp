@@ -305,6 +305,19 @@
 						</p:panelGrid>
 					</p:outputPanel>
 
+				<p:outputPanel id="manage-tarea-content-estado" class="ui-fluid">
+				<div class="p-field">
+							<p:outputLabel for="estado">Estado de tarea</p:outputLabel>
+							<p:selectOneMenu id="estado"
+								value="#{sprintController.tareaSelec.estadoTarea}"
+								converter="#{estadoTareaConverter}">
+								<f:selectItem itemLabel="Selecciona Historia de Usuario"
+									itemValue="#{null}" noSelectionOption="false" />
+								<f:selectItems value="#{sprintController.estadosTarea}" var="e"
+									itemLabel="#{e.nombre}" itemValue="#{e}" />
+							</p:selectOneMenu>
+						</div>
+				</p:outputPanel>
 
 				</p:panelGrid>
 
@@ -322,8 +335,10 @@
 		</h:form>
 
 		<h:form id="sprintsForm">
+		<p:growl id="msgSprint" for="sprint-key" showDetail="true" skipDetailIfEqualsSummary="true"  sticky="true" />
 			<p:dialog id="sprintsDialog" header="Sprints" showEffect="fade" closable="false"
 				modal="true" widgetVar="sprintsDialog" responsive="true" width="70%">
+				
 				<p:ajax event="close" update="@form" resetValues="true" />
 				<p:panelGrid id="containerDialog" columns="1" layout="grid"
 					style="border: 0px;">
@@ -356,7 +371,7 @@
 						<p:ajax event="rowUnselectCheckbox" update="@form" />
 						<p:ajax event="toggleSelect" update="@form" />
 
-						<p:column headerText="Nombre" sortBy="#{sprint.nombre}">
+						<p:column headerText="Nombre" sortBy="#{sprint.nombre}"  width="50%">
 							<p:cellEditor>
 			                    <f:facet name="output">
 				                    <p:commandLink value="#{sprint.nombre}" update="@form :form"
@@ -377,12 +392,12 @@
 						
 						
 						<p:column headerText="Fecha de inicio"
-							sortBy="#{sprint.fechaInicio}" width="25%">
+							sortBy="#{sprint.fechaInicio}" width="15%">
 							
 							<p:cellEditor>
 			                    <f:facet name="output">
 			                        <h:outputText value="#{sprint.fechaInicio}">
-								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" timeZone="GMT+2"/>
 							</h:outputText>
 			                    </f:facet>
 			                    <f:facet name="input">
@@ -392,21 +407,21 @@
 						</p:column>
 						
 						<p:column headerText="Fecha de fin"
-							sortBy="#{sprint.fechaFin}" width="25%">
+							sortBy="#{sprint.fechaFin}" width="15%">
 							
 							<p:cellEditor>
 			                    <f:facet name="output">
 			                        <h:outputText value="#{sprint.fechaFin}">
-								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" timeZone="GMT+2" />
 							</h:outputText>
 			                    </f:facet>
 			                    <f:facet name="input">
-			                        <p:datePicker id="fecFin" pattern="dd/MM/yyyy" value="#{sprint.fechaFin}" />
+			                        <p:datePicker id="fecFin" pattern="dd/MM/yyyy" value="#{sprint.fechaFin}"/>
 			                    </f:facet>
 			                </p:cellEditor>
 						</p:column>
 						
-						<p:column headerText="Estado" width="20%"
+						<p:column headerText="Estado" width="10%"
 							sortBy="#{sprint.estado}">
 							
 							
@@ -420,7 +435,7 @@
 						</p:rowEditor>						
 						<p:commandButton icon="fa fa-trash" style="top: 3px;"							
 							styleClass="edit-button rounded-button ui-button-success ui-button-red"
-							process="@this" oncomplete="PF('deleteSprintDialog').show()"
+							process="@this" oncomplete="PF('deleteSprintDialog').show()" update=":sprintsForm:deleteSprintDialog"
 							rendered="#{sprint.proyecto.productOwner.idMiembro == sprintController.miembroAuth.idMiembro or sprint.proyecto.scrumMaster.idMiembro == sprintController.miembroAuth.idMiembro}">			
 							<f:setPropertyActionListener value="#{sprint}"
 								target="#{sprintController.sprintSelec}" />				
@@ -434,7 +449,7 @@
 					<p:toolbarGroup>
 						<p:commandButton value="Nuevo Sprint" icon="fa fa-plus" process="@this"
 							actionListener="#{sprintController.nuevoSprint}"
-							update="sprints" styleClass="ui-button-success" style="margin-right: .5rem">
+							update="sprints msgSprint" styleClass="ui-button-success" style="margin-right: .5rem">
 						</p:commandButton>
 						
 						
@@ -452,7 +467,7 @@
 				<p:commandButton value="Sí" icon="pi pi-check"
 					actionListener="#{sprintController.eliminarSprint}"
 					process="@this" oncomplete="PF('deleteSprintDialog').hide()"
-					update="sprints" />
+					update="sprints msgSprint" />
 				<p:commandButton value="No" type="button"
 					styleClass="ui-button-secondary" icon="pi pi-times"
 					onclick="PF('deleteSprintDialog').hide()" />

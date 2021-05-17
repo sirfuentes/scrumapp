@@ -55,7 +55,7 @@
 					<p:column headerText="Fecha de inicio"
 						sortBy="#{proyecto.fechaInicio}" width="10%">
 						<h:outputText value="#{proyecto.fechaInicio}">
-							<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							<f:convertDateTime type="date" pattern="dd-MM-yyyy" timeZone="GMT+2"/>
 						</h:outputText>
 					</p:column>
 

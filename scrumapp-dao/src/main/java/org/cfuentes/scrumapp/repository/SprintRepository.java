@@ -17,7 +17,7 @@ public interface SprintRepository extends Dao<Sprint, Long> {
 	List<Sprint> findByProyectoOrderByFechaInicioAsc(Long idProyecto);
 
 	@Query("SELECT s FROM Sprint s WHERE s.proyecto.idProyecto=:idProyecto AND CURRENT_DATE between s.fechaInicio and s.fechaFin")
-	Sprint findActualByProyecto(Long idProyecto);
+	List<Sprint> findActualByProyecto(Long idProyecto);
 
 
 }

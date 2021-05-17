@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
+import org.cfuentes.scrumapp.entity.EstadoTarea;
 import org.cfuentes.scrumapp.entity.HistoriaUsuario;
 import org.cfuentes.scrumapp.entity.Miembro;
 import org.cfuentes.scrumapp.entity.Proyecto;
@@ -47,6 +48,7 @@ public class SprintController {
 	List<Sprint> sprints;
 	Tarea tareaSelec;
 	String estadoSprint;
+	List<EstadoTarea> estadosTarea;
 	
 	@Autowired
 	ProyectoService proyectoService;
@@ -78,6 +80,7 @@ public class SprintController {
 		tareasTesting = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "testing");
 		tareasCompletadas = tareaService.findBySprintAndEstado(sprintActual.getIdSprint(), "completed");
 		tareaSelec = new Tarea();
+		estadosTarea = estadoTareaService.findAll();
 		developers = proyecto.getDevelopers();
 		historias = proyecto.getHistorias();
 		sprints = sprintService.findByProyecto(proyecto.getIdProyecto());
@@ -176,9 +179,9 @@ public class SprintController {
 		nuevo = sprintService.saveOrUpdate(nuevo);
 		insertarEstadoSprint(nuevo);
 		sprints.add(nuevo);
-		PrimeFaces.current().ajax().update("sprintsForm:sprints");
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Sprint creado", sprintSelec.getNombre() + " se ha añadido correctamente."));	
+		//PrimeFaces.current().ajax().update("sprintsForm:sprints");
+		FacesContext.getCurrentInstance().addMessage("sprint-key", new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Sprint creado", nuevo.getNombre() + " se ha añadido correctamente."));	
 	}
 	
 	 public void actualizarSprint(RowEditEvent<Sprint> event) {
@@ -208,7 +211,7 @@ public class SprintController {
 		if (!nueva) {
 			old = tareaService.findById(tareaSelec.getIdTarea());
 			
-			if (!tareaSelec.getEstadoTarea().equals(tareaSelec.getEstadoTarea())) {
+			if (!old.getEstadoTarea().equals(tareaSelec.getEstadoTarea())) {
 				if (tareasToDo.contains(tareaSelec)) {
 					tareasToDo.remove(tareaSelec);
 				}
@@ -254,8 +257,16 @@ public class SprintController {
 	}
 
 	public void eliminarSprint() {
-		sprints.remove(sprintSelec);
-		sprintService.delete(sprintSelec);
+		if (sprints.size()>1) {
+			sprints.remove(sprintSelec);
+			sprintService.delete(sprintSelec);
+			FacesContext.getCurrentInstance().addMessage("sprint-key", new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Sprint eliminado", sprintSelec.getNombre() + " se ha borrado correctamente."));	
+		}
+		else {
+			FacesContext.getCurrentInstance().addMessage("sprint-key", new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Acción inválida", "Debe de haber al menos un sprint"));
+		}
 	}
 
 	public Miembro getMiembroAuth() {
@@ -368,6 +379,14 @@ public class SprintController {
 
 	public void setEstadoSprint(String estadoSprint) {
 		this.estadoSprint = estadoSprint;
+	}
+
+	public List<EstadoTarea> getEstadosTarea() {
+		return estadosTarea;
+	}
+
+	public void setEstadosTarea(List<EstadoTarea> estadosTarea) {
+		this.estadosTarea = estadosTarea;
 	}
 	
 	
