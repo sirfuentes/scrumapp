@@ -156,9 +156,9 @@
 	display: none;
 }
 
-.ui-dialog {
+/* .ui-dialog {
 	top: 200px !important;
-}
+} */
 
 .ui-row-editor.ui-helper-clearfix.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only.ui-button-success{
 	text-align: inherit;
@@ -166,4 +166,44 @@
 
 .ui-icon.ui-icon-pencil {
 	top: 4px;
+}
+
+#formFooter\:footerPanel {
+    /* position: absolute;
+    bottom: 0px; */
+    position: relative;
+    bottom: 0px;
+    top: 300px;
+}
+#formFooter\:footerPanel .ui-panelgrid-content{
+	background: #5284b1;
+}
+
+.statusDialog .ui-widget-content{
+            background: transparent !important;
+            border:none !important; 
+            box-shadow:none !important; 
+        }
+        
+.ui-datatable tbody tr{
+	height: 40px;
+}
+
+.projectsTable .ui-datatable-header.ui-widget-header.ui-corner-top {
+	background: #ecf6ff;	
+}
+.projectsTable .ui-widget-content.ui-datatable-even {
+	background: aliceblue;
+}
+
+.projectsTable .ui-widget-content.ui-datatable-odd {
+	background: #dceefd;
+}
+
+.projectsTable thead th{
+	background: #eafff6 !important;
+}
+
+.projectsTable .ui-paginator.ui-paginator-bottom.ui-widget-header.ui-corner-bottom {
+	background: #ecf6ff;
 }
