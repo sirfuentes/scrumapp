@@ -16,12 +16,19 @@
             <div class="col-md-12">
                 <h:form id="formMenu">
                 <p:panelGrid id="topbar" columns="3" layout="grid" 
-                 columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" style="border: 0px; text-align:center; border: 0px;" >
+                 columnClasses="ui-grid-col-1,ui-grid-col-10,ui-grid-col-1" style="border: 0px; text-align:center; border: 0px;" >
                  <p:panelGrid/>
 	                <h:commandLink action="gotoprojects">
 				        <p:graphicImage library="img" name="logo.png" height="100px" />
 				    </h:commandLink>
-				    <p:panelGrid/>
+				    <p:panelGrid id="langs" columns="2" layout="grid" style="border: 0px; text-align:center; border: 0px;">
+                    <h:commandLink action="#{globalController.setSpanish}">
+				        <p:graphicImage library="img" name="spanish.png" height="20px" />
+				    </h:commandLink>
+				    <h:commandLink action="#{globalController.setEnglish}">
+				        <p:graphicImage library="img" name="english.png" height="20px" />
+				    </h:commandLink>
+                    </p:panelGrid>
 				</p:panelGrid>    
                     <p:menubar style="background: #b8d8f5; padding-left: 50px; padding-right: 20px;">
                         <p:menuitem value="Mis Proyectos"  action="gotoprojects"
@@ -36,6 +43,8 @@
 				                <p:menuitem action="#{loginController.logout}" value="Logout" immediate="true" icon="fa fa-fw fa-sign-out" ajax="false"/>
 				            </p:submenu>
                     </p:menubar>
+                    
+                    
                 </h:form>
             </div>
         </div>
