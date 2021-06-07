@@ -207,3 +207,7 @@
 .projectsTable .ui-paginator.ui-paginator-bottom.ui-widget-header.ui-corner-bottom {
 	background: #ecf6ff;
 }
+
+.ui-datatable th.ui-state-active {
+	color: black !important;
+}

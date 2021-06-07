@@ -63,6 +63,14 @@
 						<p:panel id="pnl1" header="#{tarea.nombre}" collapsed="true"
 							style="text-align:center; min-width:100%; background: #fffbe9;"
 							toggleable="true" toggleSpeed="500" styleClass="pnl1">
+							<f:facet name="header" >
+								<p:commandLink update=":formDialog:editartareaDialog" 
+								oncomplete="PF('editartareaDialog').show()">
+								<f:setPropertyActionListener value="#{tarea}"
+									target="#{sprintController.tareaSelec}" />
+		                        	<h:outputText id="header" value="#{tarea.nombre}" />
+		                        </p:commandLink>
+		                    </f:facet>
 							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
 								style="width:100%">
 								<h:outputText id="descripcion" value="#{tarea.descripcion}" />
@@ -73,12 +81,7 @@
 									<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 								</h:outputText>
 							</h:panelGrid>
-							<p:commandButton value="Editar" style="background: #5085b1;"
-								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()">
-								<f:setPropertyActionListener value="#{tarea}"
-									target="#{sprintController.tareaSelec}" />
-							</p:commandButton>
+							
 						</p:panel>
 
 						<p:draggable for="pnl1" revert="true" stack=".ui-panel" />
@@ -102,9 +105,17 @@
 						<h:outputText value="#{msg['sprint.box.inprogress']}" />
 					</f:facet>
 					<p:dataViewGridItem>
-						<p:panel id="pnl2" header="#{tarea.nombre}" collapsed="true"
+						<p:panel id="pnl2" collapsed="true"
 							style="text-align:center; min-width:100%; background: #fffbe9;"
 							toggleable="true" toggleSpeed="500" styleClass="pnl2">
+							<f:facet name="header" >
+								<p:commandLink update=":formDialog:editartareaDialog" 
+								oncomplete="PF('editartareaDialog').show()">
+								<f:setPropertyActionListener value="#{tarea}"
+									target="#{sprintController.tareaSelec}" />
+		                        	<h:outputText id="header" value="#{tarea.nombre}" />
+		                        </p:commandLink>
+		                    </f:facet>
 							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
 								style="width:100%">
 								<h:outputText id="descripcion" value="#{tarea.descripcion}" />
@@ -115,12 +126,7 @@
 									<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 								</h:outputText>
 							</h:panelGrid>
-							<p:commandButton value="Editar" style="background: #5085b1;"
-								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()">
-								<f:setPropertyActionListener value="#{tarea}"
-									target="#{sprintController.tareaSelec}" />
-							</p:commandButton>
+							
 						</p:panel>
 
 						<p:draggable for="pnl2" revert="true" stack=".ui-panel" />
@@ -137,6 +143,14 @@
 						<p:panel id="pnl3" header="#{tarea.nombre}" collapsed="true"
 							style="text-align:center; min-width:100%; background: #fffbe9;"
 							toggleable="true" toggleSpeed="500" styleClass="pnl3">
+							<f:facet name="header" >
+								<p:commandLink update=":formDialog:editartareaDialog" 
+								oncomplete="PF('editartareaDialog').show()">
+								<f:setPropertyActionListener value="#{tarea}"
+									target="#{sprintController.tareaSelec}" />
+		                        	<h:outputText id="header" value="#{tarea.nombre}" />
+		                        </p:commandLink>
+		                    </f:facet>
 							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
 								style="width:100%">
 								<h:outputText id="descripcion" value="#{tarea.descripcion}" />
@@ -147,12 +161,7 @@
 									<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 								</h:outputText>
 							</h:panelGrid>
-							<p:commandButton value="Editar" style="background: #5085b1;"
-								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()">
-								<f:setPropertyActionListener value="#{tarea}"
-									target="#{sprintController.tareaSelec}" />
-							</p:commandButton>
+							
 						</p:panel>
 
 						<p:draggable for="pnl3" revert="true" stack=".ui-panel" />
@@ -171,6 +180,14 @@
 							toggleable="true" toggleSpeed="500"
 							style="text-align:center; min-width:100%; background: #fffbe9;"
 							styleClass="pnl4">
+							<f:facet name="header" >
+								<p:commandLink update=":formDialog:editartareaDialog" 
+								oncomplete="PF('editartareaDialog').show()">
+								<f:setPropertyActionListener value="#{tarea}"
+									target="#{sprintController.tareaSelec}" />
+		                        	<h:outputText id="header" value="#{tarea.nombre}" />
+		                        </p:commandLink>
+		                    </f:facet>
 							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
 								style="width:100%">
 								<h:outputText id="descripcion" value="#{tarea.descripcion}" />
@@ -181,12 +198,7 @@
 									<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 								</h:outputText>
 							</h:panelGrid>
-							<p:commandButton value="Editar" style="background: #5085b1;"
-								update=":formDialog:editartareaDialog" icon="fa fa-edit"
-								oncomplete="PF('editartareaDialog').show()">
-								<f:setPropertyActionListener value="#{tarea}"
-									target="#{sprintController.tareaSelec}" />
-							</p:commandButton>
+							
 						</p:panel>
 
 						<p:draggable for="pnl4" revert="true" stack=".ui-panel" />
@@ -406,7 +418,7 @@
 			                </p:cellEditor>
 						</p:column>
 						
-						<p:column headerText="Fecha de fin"
+						<p:column headerText="#{msg['sprint.sprintsDialog.column.enddate']}"
 							sortBy="#{sprint.fechaFin}" width="15%">
 							
 							<p:cellEditor>
@@ -421,7 +433,7 @@
 			                </p:cellEditor>
 						</p:column>
 						
-						<p:column headerText="Estado" width="10%"
+						<p:column headerText="#{msg['sprint.sprintsDialog.column.state']}" width="10%"
 							sortBy="#{sprint.estado}">
 							
 							
@@ -429,9 +441,10 @@
 			                    
 						</p:column>
 						
-						<p:column headerText="Acciones" style="text-align: -webkit-center;"
+						<p:column headerText="#{msg['sprint.sprintsDialog.column.actions']}" style="text-align: -webkit-center;"
 						width="10%">
-						 <p:rowEditor styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-success" editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row">
+						 <p:rowEditor styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-success" editTitle="#{msg['sprint.sprintsDialog.column.editor.editrow']}" 
+						 cancelTitle="#{msg['sprint.sprintsDialog.column.editor.canceledit']}" saveTitle="#{msg['sprint.sprintsDialog.column.editor.saverow']}">
 						</p:rowEditor>						
 						<p:commandButton icon="fa fa-trash" style="top: 3px;"							
 							styleClass="edit-button rounded-button ui-button-success ui-button-red"
@@ -447,7 +460,7 @@
 					
 					<p:toolbar style="float:right;">
 					<p:toolbarGroup>
-						<p:commandButton value="Nuevo Sprint" icon="fa fa-plus" process="@this"
+						<p:commandButton value="#{msg['sprint.sprintsDialog.button.newsprint']}" icon="fa fa-plus" process="@this"
 							actionListener="#{sprintController.nuevoSprint}"
 							update="sprints msgSprint" styleClass="ui-button-success" style="margin-right: .5rem">
 						</p:commandButton>
@@ -462,13 +475,13 @@
 			
 			<p:confirmDialog id="deleteSprintDialog"
 				widgetVar="deleteSprintDialog" showEffect="fade" width="300"
-				responsive="true" message="Desea eliminar el Sprint &quot;#{sprintController.sprintSelec.nombre}&quot;?" header="Confirm"
+				responsive="true" message="#{msg['sprint.deleteSprintDialog.message.removesprint']} &quot;#{sprintController.sprintSelec.nombre}&quot;?" header="#{msg['sprint.deleteSprintDialog.header']}"
 				severity="warn">
-				<p:commandButton value="Sí" icon="pi pi-check"
+				<p:commandButton value="#{msg['sprint.deleteSprintDialog.yes']}" icon="pi pi-check"
 					actionListener="#{sprintController.eliminarSprint}"
 					process="@this" oncomplete="PF('deleteSprintDialog').hide()"
 					update="sprints msgSprint" />
-				<p:commandButton value="No" type="button"
+				<p:commandButton value="#{msg['sprint.deleteSprintDialog.no']}" type="button"
 					styleClass="ui-button-secondary" icon="pi pi-times"
 					onclick="PF('deleteSprintDialog').hide()" />
 			</p:confirmDialog>

@@ -169,7 +169,7 @@
 
 						<div class="p-field">
 							<p:outputLabel for="productOwner">#{msg['projects.editarProyectoDialog.po']}</p:outputLabel>
-							<p:selectOneMenu id="productOwner" disabled="true"
+							<p:selectOneMenu id="productOwner" disabled="true" required="true"
 								value="#{proyectoController.proyectoSelec.productOwner}"
 								converter="#{miembroConverter}">
 								<f:selectItem itemLabel="#{msg['projects.editarProyectoDialog.selectpo']}" itemValue="#{null}"
@@ -185,7 +185,7 @@
 
 						<div class="p-field">
 							<p:outputLabel for="scrumMaster">#{msg['projects.editarProyectoDialog.sm']}</p:outputLabel>
-							<p:selectOneMenu id="scrumMaster"
+							<p:selectOneMenu id="scrumMaster" required="true"
 								value="#{proyectoController.proyectoSelec.scrumMaster}"
 								converter="#{miembroConverter}">
 								<f:selectItem itemLabel="#{msg['projects.editarProyectoDialog.selectsm']}" itemValue="#{null}"

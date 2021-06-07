@@ -64,6 +64,11 @@ public class ProyectoServiceImpl implements ProyectoService{
 		// TODO Auto-generated method stub
 		return proyectoRepository.existsByCodigo(codigo);
 	}
+
+	@Override
+	public List<Proyecto> findProyectosInvolucrado(Long idMiembro) {
+		return proyectoRepository.findProyectosInvolucrado(idMiembro);
+	}
 	
 	
 

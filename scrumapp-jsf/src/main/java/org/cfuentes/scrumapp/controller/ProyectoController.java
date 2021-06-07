@@ -2,6 +2,7 @@ package org.cfuentes.scrumapp.controller;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,11 +51,22 @@ public class ProyectoController {
 	@PostConstruct
 	public void init() {
 		miembroAuth = ((UsuarioAutenticado)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-		proyectos = proyectoService.findAll();
+		//proyectos = proyectoService.findProyectosInvolucrado(miembroAuth.getIdMiembro());
+		proyectos = new ArrayList<Proyecto>();
+		proyectos.addAll(miembroAuth.getProyectosAsPO());
+		proyectos.addAll(miembroAuth.getProyectosAsSM());
+		proyectos.addAll(miembroAuth.getProyectosAsDev());
 		productOwnerDisponibles = miembroService.findAll();
 		scrumMasterDisponibles = miembroService.findAll();
 		developersDisponibles = miembroService.findAll();
 		
+	}
+	
+	public void actualizarProyectosInvolucrado() {
+		proyectos = new ArrayList<Proyecto>();
+		proyectos.addAll(miembroAuth.getProyectosAsPO());
+		proyectos.addAll(miembroAuth.getProyectosAsSM());
+		proyectos.addAll(miembroAuth.getProyectosAsDev());
 	}
 
 	public void guardarProyecto() {
@@ -73,7 +85,7 @@ public class ProyectoController {
 		}
 		
 		proyectoSelec = proyectoService.saveOrUpdate(proyectoSelec);
-		proyectos = proyectoService.findAll();
+		actualizarProyectosInvolucrado();
 		
 		if (!editando) {
 			Sprint nuevo = new Sprint();
@@ -96,7 +108,7 @@ public class ProyectoController {
 
 	public void eliminarProyecto() {
 		proyectoService.delete(proyectoSelec);
-		proyectos = proyectoService.findAll();
+		actualizarProyectosInvolucrado();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Proyecto eliminado", proyectoSelec.getCodigo() + " se ha borrado correctamente."));
 	}
