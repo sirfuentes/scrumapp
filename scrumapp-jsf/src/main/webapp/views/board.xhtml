@@ -24,13 +24,13 @@
 					styleClass="tittle" />
 
 				<p:tabMenu activeIndex="1" style="border: 0px;">
-					<p:menuitem value="Backlog" action="gotobacklog" title="Backlog">
+					<p:menuitem value="#{msg['projectMenu.backlog']}" action="gotobacklog" title="Backlog">
 					</p:menuitem>
-					<p:menuitem value="Board" action="gotoboard" title="Board">
+					<p:menuitem value="#{msg['projectMenu.board']}" action="gotoboard" title="Board">
 					</p:menuitem>
-					<p:menuitem value="Sprints" action="gotosprints" title="Sprints">
+					<p:menuitem value="#{msg['projectMenu.sprints']}" action="gotosprints" title="Sprints">
 					</p:menuitem>
-					<p:menuitem value="Detalles" action="gotoprojectdetails"
+					<p:menuitem value="#{msg['projectMenu.details']}" action="gotoprojectdetails"
 						title="Detalles">
 					</p:menuitem>
 
@@ -45,20 +45,28 @@
 				<p:dataView id="historiasUsuarioNew" var="historia" 
 					value="#{boardController.historiasUsuarioNuevas}" layout="grid">
 					<f:facet name="header">
-			            <h:outputText value="Nuevas"/>
+			            <h:outputText value="#{msg['board.news']}"/>
 			        </f:facet>
 					<p:dataViewGridItem>
-						<p:panel id="pnl1" header="#{historia.codigo}" collapsed="true"
+						<p:panel id="pnl1" collapsed="true"
 							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true"
 							toggleSpeed="500" styleClass="pnl1">
+							<f:facet name="header" >
+								<p:commandLink update=":formDialog:editarHistoriaDialog"
+								oncomplete="PF('editarHistoriaDialog').show()">
+								<f:setPropertyActionListener value="#{historia}"
+									target="#{boardController.historiaSelec}" />
+		                        	<h:outputText id="header" value="#{historia.codigo}" />
+		                        </p:commandLink>
+		                    </f:facet>
 							<h:panelGrid columns="1" columnClasses="ui-grid-col-12"
 								style="width:100%">
-								<h:outputText id="nombre" value="#{historia.nombre}" />
+								<h:outputText id="#{msg['board.story.name']}" value="#{historia.nombre}" />
 								<p:separator />
 							<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}" class="tablatareas">
 							<f:facet name="header">
 								<h:outputText id="header"
-							            value="Tareas" />
+							            value="#{msg['board.story.tasks']}" />
 							</f:facet>
 								<p:column style="width:20px">
 							        <h:outputText id="code"
@@ -66,18 +74,13 @@
 							    </p:column>
 						    </p:dataTable>
 							</h:panelGrid>
-							<p:commandButton value="Editar" style="background: #5085b1;"
-								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()">
-								<f:setPropertyActionListener value="#{historia}"
-									target="#{boardController.historiaSelec}" />
-							</p:commandButton>
+							
 						</p:panel>
 
 						<p:draggable for="pnl1" revert="true" stack=".ui-panel" />
 					</p:dataViewGridItem>
 					<f:facet name="footer">
-			            <p:commandButton value="Nueva Historia" icon="fa fa-plus"
+			            <p:commandButton value="#{msg['board.newStory']}" icon="fa fa-plus"
 			           		actionListener="#{boardController.nuevaHistoria}"
 							update=":formDialog" oncomplete="PF('editarHistoriaDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">
@@ -92,20 +95,28 @@
 					value="#{boardController.historiasUsuarioAprobadas}"
 					layout="grid" gridIcon="pi pi-th-large">
 					<f:facet name="header">
-					 <h:outputText value="Aprobadas"/>
+					 <h:outputText value="#{msg['board.approved']}"/>
 			            
 			        </f:facet>
 					<p:dataViewGridItem>
 						<p:panel id="pnl2" header="#{historia.codigo}" collapsed="true"
 							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true" toggleSpeed="500"
 							styleClass="pnl2">
+							<f:facet name="header" >
+								<p:commandLink update=":formDialog:editarHistoriaDialog"
+								oncomplete="PF('editarHistoriaDialog').show()">
+								<f:setPropertyActionListener value="#{historia}"
+									target="#{boardController.historiaSelec}" />
+		                        	<h:outputText id="header" value="#{historia.codigo}" />
+		                        </p:commandLink>
+		                    </f:facet>
 							<h:panelGrid columns="1" style="width:100%">
 								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
 								<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}" class="tablatareas">
 							<f:facet name="header">
 								<h:outputText id="header"
-							            value="Tareas" />
+							            value="#{msg['board.story.tasks']}" />
 							</f:facet>
 								<p:column style="width:20px">
 							        <h:outputText id="code"
@@ -113,12 +124,7 @@
 							    </p:column>
 						    </p:dataTable>
 							</h:panelGrid>
-							<p:commandButton value="Editar" style="background: #5085b1;"
-								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()">
-								<f:setPropertyActionListener value="#{historia}"
-									target="#{boardController.historiaSelec}" />
-							</p:commandButton>
+							
 						</p:panel>
 
 						<p:draggable for="pnl2" revert="true" stack=".ui-panel" />
@@ -129,19 +135,27 @@
 					value="#{boardController.historiasUsuarioEntregadas}"
 					layout="grid" gridIcon="pi pi-th-large">
 					<f:facet name="header">			            
-			            <h:outputText value="Entregadas"/>
+			            <h:outputText value="#{msg['board.delivered']}"/>
 			        </f:facet>
 					<p:dataViewGridItem>
 						<p:panel id="pnl3" header="#{historia.codigo}" collapsed="true"
 							style="text-align:center; min-width:100%; background: #fffbe9;" toggleable="true" toggleSpeed="500"
 							styleClass="pnl3">
+							<f:facet name="header" >
+								<p:commandLink update=":formDialog:editarHistoriaDialog"
+								oncomplete="PF('editarHistoriaDialog').show()">
+								<f:setPropertyActionListener value="#{historia}"
+									target="#{boardController.historiaSelec}" />
+		                        	<h:outputText id="header" value="#{historia.codigo}" />
+		                        </p:commandLink>
+		                    </f:facet>
 							<h:panelGrid columns="1" style="width:100%">
 								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
 								<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}" class="tablatareas">
 							<f:facet name="header">
 								<h:outputText id="header"
-							            value="Tareas" />
+							            value="#{msg['board.story.tasks']}" />
 							</f:facet>
 								<p:column style="width:20px">
 							        <h:outputText id="code"
@@ -149,12 +163,7 @@
 							    </p:column>
 						    </p:dataTable>
 							</h:panelGrid>
-							<p:commandButton value="Editar" style="background: #5085b1;"
-								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()">
-								<f:setPropertyActionListener value="#{historia}"
-									target="#{boardController.historiaSelec}" />
-							</p:commandButton>
+							
 						</p:panel>
 
 						<p:draggable for="pnl3" revert="true" stack=".ui-panel" />
@@ -166,19 +175,27 @@
 					layout="grid" gridIcon="pi pi-th-large">
 					<f:facet name="header">
 			            
-			             <h:outputText value="Completadas"/>
+			             <h:outputText value="#{msg['board.completed']}"/>
 			        </f:facet>
 					<p:dataViewGridItem>
 						<p:panel id="pnl4" header="#{historia.codigo}" collapsed="true"
 							toggleable="true" toggleSpeed="500" style="text-align:center; min-width:100%; background: #fffbe9;"
 							styleClass="pnl4">
+							<f:facet name="header" >
+								<p:commandLink update=":formDialog:editarHistoriaDialog"
+								oncomplete="PF('editarHistoriaDialog').show()">
+								<f:setPropertyActionListener value="#{historia}"
+									target="#{boardController.historiaSelec}" />
+		                        	<h:outputText id="header" value="#{historia.codigo}" />
+		                        </p:commandLink>
+		                    </f:facet>
 							<h:panelGrid columns="1" style="width:100%">
 								<h:outputText id="nombre" value="#{historia.nombre}" />
 								<p:separator />
 								<p:dataTable var="tarea" value="#{historia.tareas}" rendered="#{not empty historia.tareas}" class="tablatareas">
 							<f:facet name="header">
 								<h:outputText id="header"
-							            value="Tareas" />
+							            value="#{msg['board.story.tasks']}" />
 							</f:facet>
 								<p:column style="width:20px">
 							        <h:outputText id="code"
@@ -186,12 +203,7 @@
 							    </p:column>
 						    </p:dataTable>
 							</h:panelGrid>
-							<p:commandButton value="Editar" style="background: #5085b1;"
-								update=":formDialog:editarHistoriaDialog" icon="fa fa-edit"
-								oncomplete="PF('editarHistoriaDialog').show()">
-								<f:setPropertyActionListener value="#{historia}"
-									target="#{boardController.historiaSelec}" />
-							</p:commandButton>
+							
 						</p:panel>
 
 						<p:draggable for="pnl4" revert="true" stack=".ui-panel" />
@@ -242,14 +254,14 @@
 					style="border: 0px;">
 					<p:outputPanel id="manage-historia-content-nombre" class="ui-fluid">
 						<div class="p-field">
-							<p:outputLabel for="nombre">Nombre</p:outputLabel>
+							<p:outputLabel for="nombre">#{msg['board.editarHistoriaDialog.name']}</p:outputLabel>
 							<p:inputText id="nombre"
 								value="#{boardController.historiaSelec.nombre}" required="true" />
 						</div>
 					</p:outputPanel>
 					<p:outputPanel id="manage-historia-content-desc" class="ui-fluid">
 						<div class="p-field">
-							<p:outputLabel for="descripcion">Descripcion</p:outputLabel>
+							<p:outputLabel for="descripcion">#{msg['board.editarHistoriaDialog.desc']}</p:outputLabel>
 							<p:inputTextarea id="descripcion"
 								value="#{boardController.historiaSelec.descripcion}" rows="9" />
 						</div>
@@ -257,7 +269,7 @@
 					<p:outputPanel id="manage-historia-content-esfuerzo"
 						class="ui-fluid">
 						<div class="p-field">
-							<p:outputLabel for="esfuerzo">Esfuerzo</p:outputLabel>
+							<p:outputLabel for="esfuerzo">#{msg['board.editarHistoriaDialog.effort']}</p:outputLabel>
 							<p:inputText id="esfuerzo"
 								value="#{boardController.historiaSelec.esfuerzo}"
 								required="true" />
@@ -266,15 +278,15 @@
 					<p:outputPanel id="manage-historia-content-estado"
 						class="ui-fluid">
 						<div class="p-field">
-							<p:outputLabel for="estado">Estado</p:outputLabel>
+							<p:outputLabel for="estado">#{msg['board.editarHistoriaDialog.state']}</p:outputLabel>
 							<p:selectOneMenu id="estado"
 								value="#{boardController.historiaSelec.estado}"
 								required="true" >
-								<f:selectItem itemLabel="Seleccione estado" itemValue=""/>
-			                    <f:selectItem itemLabel="Nueva" itemValue="new"/>
-			                    <f:selectItem itemLabel="Aprobada" itemValue="approved"/>
-			                    <f:selectItem itemLabel="Entregada" itemValue="commited"/>
-			                    <f:selectItem itemLabel="Completada" itemValue="completed"/>
+								<f:selectItem itemLabel="#{msg['board.editarHistoriaDialog.state.selectone']}" itemValue=""/>
+			                    <f:selectItem itemLabel="#{msg['board.editarHistoriaDialog.state.new']}" itemValue="new"/>
+			                    <f:selectItem itemLabel="#{msg['board.editarHistoriaDialog.state.approved']}" itemValue="approved"/>
+			                    <f:selectItem itemLabel="#{msg['board.editarHistoriaDialog.state.commited']}" itemValue="commited"/>
+			                    <f:selectItem itemLabel="#{msg['board.editarHistoriaDialog.state.completed']}" itemValue="completed"/>
                     		</p:selectOneMenu>
 						</div>
 					</p:outputPanel>
@@ -282,12 +294,12 @@
 				</p:panelGrid>
 
 				<f:facet name="footer">
-					<p:commandButton value="Cancelar" icon="fa fa-times"
+					<p:commandButton value="#{msg['board.editarHistoriaDialog.cancel']}" icon="fa fa-times"
 						onclick="PF('editarHistoriaDialog').hide()"
 						styleClass="ui-button-red" style="margin-right: 10px;">
 						<p:resetInput target=":formDialog:editarHistoriaDialog" />
 					</p:commandButton>
-					<p:commandButton value="Guardar" icon="fa fa-check"
+					<p:commandButton value="#{msg['board.editarHistoriaDialog.save']}" icon="fa fa-check"
 						actionListener="#{boardController.guardarHistoria}"
 						oncomplete="PF('editarHistoriaDialog').hide()" update=":form" />
 				</f:facet>

@@ -24,13 +24,13 @@
 					styleClass="tittle" />
 
 				<p:tabMenu activeIndex="2" style="border: 0px;">
-					<p:menuitem value="Backlog" action="gotobacklog" title="Backlog">
+					<p:menuitem value="#{msg['projectMenu.backlog']}" action="gotobacklog" title="Backlog">
 					</p:menuitem>
-					<p:menuitem value="Board" action="gotoboard" title="Board">
+					<p:menuitem value="#{msg['projectMenu.board']}" action="gotoboard" title="Board">
 					</p:menuitem>
-					<p:menuitem value="Sprints" action="gotosprints" title="Sprints">
+					<p:menuitem value="#{msg['projectMenu.sprints']}" action="gotosprints" title="Sprints">
 					</p:menuitem>
-					<p:menuitem value="Detalles" action="gotoprojectdetails"
+					<p:menuitem value="#{msg['projectMenu.details']}" action="gotoprojectdetails"
 						title="Detalles">
 					</p:menuitem>
 
@@ -42,7 +42,7 @@
 					styleClass="subtittle" >
 				</h:outputText>
 
-				<p:commandButton value="Cambiar Sprint" 	
+				<p:commandButton value="#{msg['sprint.button.changeSprint']}" 	
 					update=":sprintsForm" oncomplete="PF('sprintsDialog').show()"
 					styleClass="ui-button-success" style="margin-right: .5rem">
 				</p:commandButton>
@@ -57,7 +57,7 @@
 				<p:dataView id="tareasToDo" var="tarea"
 					value="#{sprintController.tareasToDo}" layout="grid">
 					<f:facet name="header">
-						<h:outputText value="Para hacer" />
+						<h:outputText value="#{msg['sprint.box.todo']}" />
 					</f:facet>
 					<p:dataViewGridItem>
 						<p:panel id="pnl1" header="#{tarea.nombre}" collapsed="true"
@@ -67,7 +67,7 @@
 								style="width:100%">
 								<h:outputText id="descripcion" value="#{tarea.descripcion}" />
 								<p:separator />
-								<h:outputText value="#{tarea.horasDedicadas} / #{tarea.estimacion} horas" />
+								<h:outputText value="#{tarea.horasDedicadas} / #{tarea.estimacion} #{msg['sprint.label.hours']}" />
 								<p:separator />
 								<h:outputText value="#{tarea.fechaEstimadaFin}" >
 									<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
@@ -84,7 +84,7 @@
 						<p:draggable for="pnl1" revert="true" stack=".ui-panel" />
 					</p:dataViewGridItem>
 					<f:facet name="footer">
-						<p:commandButton value="Nueva tarea" icon="fa fa-plus"
+						<p:commandButton value="#{msg['sprint.button.newTask']}" icon="fa fa-plus"
 							update=":formDialog" oncomplete="PF('editartareaDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem"
 							actionListener="#{sprintController.nuevaTarea}">
@@ -99,7 +99,7 @@
 					value="#{sprintController.tareasInProgress}" rows="1" layout="grid"
 					gridIcon="pi pi-th-large">
 					<f:facet name="header">
-						<h:outputText value="En progreso" />
+						<h:outputText value="#{msg['sprint.box.inprogress']}" />
 					</f:facet>
 					<p:dataViewGridItem>
 						<p:panel id="pnl2" header="#{tarea.nombre}" collapsed="true"
@@ -131,7 +131,7 @@
 					value="#{sprintController.tareasTesting}" rows="1" layout="grid"
 					gridIcon="pi pi-th-large">
 					<f:facet name="header">
-						<h:outputText value="Probando" />
+						<h:outputText value="#{msg['sprint.box.testing']}" />
 					</f:facet>
 					<p:dataViewGridItem>
 						<p:panel id="pnl3" header="#{tarea.nombre}" collapsed="true"
@@ -164,7 +164,7 @@
 					layout="grid" gridIcon="pi pi-th-large">
 					<f:facet name="header">
 
-						<h:outputText value="Completadas" />
+						<h:outputText value="#{msg['sprint.box.completed']}" />
 					</f:facet>
 					<p:dataViewGridItem>
 						<p:panel id="pnl4" header="#{tarea.nombre}" collapsed="true"
@@ -227,7 +227,7 @@
 
 		</h:form>
 		<h:form id="formDialog">
-			<p:dialog id="editartareaDialog" header="Tarea"
+			<p:dialog id="editartareaDialog" header="#{msg['sprint.editartareaDialog.header']}"
 				showEffect="fade" modal="true" widgetVar="editartareaDialog"
 				responsive="true" width="70%">
 				<p:ajax event="close" update=":formDialog:editartareaDialog"
@@ -236,27 +236,27 @@
 					style="border: 0px;">
 					<p:outputPanel id="manage-tarea-content-nombre" class="ui-fluid">
 						<div class="p-field">
-							<p:outputLabel for="nombre">Nombre</p:outputLabel>
+							<p:outputLabel for="nombre">#{msg['sprint.editartareaDialog.name']}</p:outputLabel>
 							<p:inputText id="nombre"
 								value="#{sprintController.tareaSelec.nombre}" required="true" />
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="asginado">Asignado a</p:outputLabel>
+							<p:outputLabel for="asginado">#{msg['sprint.editartareaDialog.assignedto']}</p:outputLabel>
 							<p:selectOneMenu id="asginado"
 								value="#{sprintController.tareaSelec.developer}"
 								converter="#{miembroConverter}">
-								<f:selectItem itemLabel="Selecciona desarrollador"
+								<f:selectItem itemLabel="#{msg['sprint.editartareaDialog.assignedto.selectone']}"
 									itemValue="#{null}" noSelectionOption="true" />
 								<f:selectItems value="#{sprintController.developers}" var="dev"
 									itemLabel="#{dev.email}" itemValue="#{dev}" />
 							</p:selectOneMenu>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="historia">Historia de usuario</p:outputLabel>
+							<p:outputLabel for="historia">#{msg['sprint.editartareaDialog.userStory']}</p:outputLabel>
 							<p:selectOneMenu id="historia"
 								value="#{sprintController.tareaSelec.historiaUsuario}"
 								converter="#{historiaConverter}">
-								<f:selectItem itemLabel="Selecciona Historia de Usuario"
+								<f:selectItem itemLabel="#{msg['sprint.editartareaDialog.userStory.selectone']}"
 									itemValue="#{null}" noSelectionOption="true" />
 								<f:selectItems value="#{sprintController.historias}" var="h"
 									itemLabel="#{h.codigo}" itemValue="#{h}" />
@@ -266,7 +266,7 @@
 					
 					<p:outputPanel id="manage-tarea-content-desc" class="ui-fluid">
 						<div class="p-field">
-							<p:outputLabel for="descripcion">Descripcion</p:outputLabel>
+							<p:outputLabel for="descripcion">#{msg['sprint.editartareaDialog.desc']}</p:outputLabel>
 							<p:inputTextarea id="descripcion"
 								value="#{sprintController.tareaSelec.descripcion}" rows="9" />
 						</div>
@@ -277,13 +277,13 @@
 					<p:panelGrid id="containerEstimacion" columns="2" layout="grid" 
 					style="border: 0px;">
 						<p:outputPanel>
-							<p:outputLabel for="estimacion">Estimacion</p:outputLabel>
+							<p:outputLabel for="estimacion">#{msg['sprint.editartareaDialog.estimation']}</p:outputLabel>
 							<p:inputText id="estimacion"
 								value="#{sprintController.tareaSelec.estimacion}"/>
 						</p:outputPanel>
 						
 						<p:outputPanel>
-							<p:outputLabel for="dedicadas">Horas dedicadas</p:outputLabel>
+							<p:outputLabel for="dedicadas">#{msg['sprint.editartareaDialog.hoursdedicated']}</p:outputLabel>
 							<p:inputText id="dedicadas"
 								value="#{sprintController.tareaSelec.horasDedicadas}" />
 						</p:outputPanel>
@@ -294,12 +294,12 @@
 					<p:panelGrid id="containerFecIni" columns="2" layout="grid" 
 					style="border: 0px;">
 						<p:outputPanel>
-							<p:outputLabel for="fecini">Fecha inicio</p:outputLabel>
+							<p:outputLabel for="fecini">#{msg['sprint.editartareaDialog.startingdate']}</p:outputLabel>
 							 <p:datePicker id="fecini" pattern="dd/MM/yyyy" value="#{sprintController.tareaSelec.fechaInicio}" />
 						</p:outputPanel>
 						
 						<p:outputPanel>
-							<p:outputLabel for="fecestfin">Fecha est. fin</p:outputLabel>
+							<p:outputLabel for="fecestfin">#{msg['sprint.editartareaDialog.endestdate']}</p:outputLabel>
 							 <p:datePicker id="fecestfin" pattern="dd/MM/yyyy" value="#{sprintController.tareaSelec.fechaEstimadaFin}" />
 						</p:outputPanel>
 						</p:panelGrid>
@@ -307,11 +307,11 @@
 
 				<p:outputPanel id="manage-tarea-content-estado" class="ui-fluid">
 				<div class="p-field">
-							<p:outputLabel for="estado">Estado de tarea</p:outputLabel>
+							<p:outputLabel for="estado">#{msg['sprint.editartareaDialog.state']}</p:outputLabel>
 							<p:selectOneMenu id="estado"
 								value="#{sprintController.tareaSelec.estadoTarea}"
 								converter="#{estadoTareaConverter}">
-								<f:selectItem itemLabel="Selecciona Historia de Usuario"
+								<f:selectItem itemLabel="#{msg['sprint.editartareaDialog.state.selectone']}"
 									itemValue="#{null}" noSelectionOption="false" />
 								<f:selectItems value="#{sprintController.estadosTarea}" var="e"
 									itemLabel="#{e.nombre}" itemValue="#{e}" />
@@ -322,12 +322,12 @@
 				</p:panelGrid>
 
 				<f:facet name="footer">
-					<p:commandButton value="Cancelar" icon="fa fa-times"
+					<p:commandButton value="#{msg['sprint.editartareaDialog.button.cancel']}" icon="fa fa-times"
 						onclick="PF('editartareaDialog').hide()"
 						styleClass="ui-button-red" style="margin-right: 10px;">
 						<p:resetInput target=":formDialog:editartareaDialog" />
 					</p:commandButton>
-					<p:commandButton value="Guardar" icon="fa fa-check"
+					<p:commandButton value="#{msg['sprint.editartareaDialog.button.save']}" icon="fa fa-check"
 						actionListener="#{sprintController.guardarTarea}"
 						oncomplete="PF('editartareaDialog').hide()" update="@form :form" />
 				</f:facet>
@@ -336,7 +336,7 @@
 
 		<h:form id="sprintsForm">
 		<p:growl id="msgSprint" for="sprint-key" showDetail="true" skipDetailIfEqualsSummary="true"  sticky="true" />
-			<p:dialog id="sprintsDialog" header="Sprints" showEffect="fade" closable="false"
+			<p:dialog id="sprintsDialog" header="#{msg['sprint.sprintsDialog.header']}" showEffect="fade" closable="false"
 				modal="true" widgetVar="sprintsDialog" responsive="true" width="70%">
 				
 				<p:ajax event="close" update="@form" resetValues="true" />
@@ -358,7 +358,7 @@
 
 							<p:outputPanel>
 								<div style="text-align: right;">
-									<p:commandButton id="toggler" type="button" value="Mostrar/Ocultar columnas"
+									<p:commandButton id="toggler" type="button" value="#{msg['sprint.sprintsDialog.columns']}"
 										icon="pi pi-align-justify" />
 									<p:columnToggler datasource="sprints" trigger="toggler" />
 								</div>
@@ -371,7 +371,7 @@
 						<p:ajax event="rowUnselectCheckbox" update="@form" />
 						<p:ajax event="toggleSelect" update="@form" />
 
-						<p:column headerText="Nombre" sortBy="#{sprint.nombre}"  width="50%">
+						<p:column headerText="#{msg['sprint.sprintsDialog.column.name']}" sortBy="#{sprint.nombre}"  width="50%">
 							<p:cellEditor>
 			                    <f:facet name="output">
 				                    <p:commandLink value="#{sprint.nombre}" update="@form :form"
@@ -391,7 +391,7 @@
 						
 						
 						
-						<p:column headerText="Fecha de inicio"
+						<p:column headerText="#{msg['sprint.sprintsDialog.column.startdate']}"
 							sortBy="#{sprint.fechaInicio}" width="15%">
 							
 							<p:cellEditor>

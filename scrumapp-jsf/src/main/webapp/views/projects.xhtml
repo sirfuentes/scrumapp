@@ -172,7 +172,7 @@
 							<p:selectOneMenu id="productOwner" disabled="true"
 								value="#{proyectoController.proyectoSelec.productOwner}"
 								converter="#{miembroConverter}">
-								<f:selectItem itemLabel="Selecciona PO" itemValue="#{null}"
+								<f:selectItem itemLabel="#{msg['projects.editarProyectoDialog.selectpo']}" itemValue="#{null}"
 									noSelectionOption="true" />
 								<f:selectItems
 									value="#{proyectoController.productOwnerDisponibles}" var="po"
@@ -188,7 +188,7 @@
 							<p:selectOneMenu id="scrumMaster"
 								value="#{proyectoController.proyectoSelec.scrumMaster}"
 								converter="#{miembroConverter}">
-								<f:selectItem itemLabel="Selecciona PO" itemValue="#{null}"
+								<f:selectItem itemLabel="#{msg['projects.editarProyectoDialog.selectsm']}" itemValue="#{null}"
 									noSelectionOption="true" />
 								<f:selectItems
 									value="#{proyectoController.scrumMasterDisponibles}" var="po"
